@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $user = auth()->id();
-    return view('home', ["user" => $user]);
+    return view('login', ["user" => $user]);
 });
 
 Route::post('/register', [StudentController::class, 'registerStudent']);
