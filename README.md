@@ -7,6 +7,36 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## How to run this project to VS Code
+
+1. clone this repository (https://github.com/RON2814/enrollment-system.git)
+2. open Visual Studio Code (VS Code)
+3. open/navigate to the cloned repository
+4. open the terminal
+5. run these command:
+   ```
+   composer install
+   npm install
+   ```
+   this will take a while just wait.
+   
+   ```
+   cp .env.example .env
+   ```
+   ```
+   php artisan key:generate
+   ```
+   ```
+   php artisan migrate
+   ```
+
+   run both command in different terminal:
+   ```
+   php artisan migrate
+   npm run dev
+   ```
+   Now, you can access the application at `http://localhost:8000`.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
