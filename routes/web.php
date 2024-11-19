@@ -4,10 +4,9 @@ use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $user = auth()->id();
-    return view('login', ["user" => $user]);
-});
+    return view('posts.index');
+})->name("home");
 
-Route::post('/register', [StudentController::class, 'registerStudent']);
-Route::post("/logout", [StudentController::class, "logoutStudent"]);
-Route::post("/login", [StudentController::class, "loginStudent"]);
+Route::get('/login', function () {
+    return view('auth.login');
+})->name("login");
