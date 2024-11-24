@@ -1,13 +1,40 @@
 <?php
 
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
+// Welcome Page
 Route::get('/', function () {
-    $user = auth()->id();
-    return view('login', ["user" => $user]);
+    return view('welcome');
 });
 
-Route::post('/register', [StudentController::class, 'registerStudent']);
-Route::post("/logout", [StudentController::class, "logoutStudent"]);
-Route::post("/login", [StudentController::class, "loginStudent"]);
+// Student Dashboard
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name('dashboard');
+
+// Department Dashboard
+Route::get('/department/dashboard', function () {
+    return view('department.dashboard');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':department'])->name('department.dashboard');
+
+// Registrar Dashboard
+Route::get('/registrar/dashboard', function () {
+    return view('registrar.dashboard');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])->name('registrar.dashboard');
+
+// Admin Dashboard
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])->name('admin.dashboard');
+
+// Profile Management
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Include Auth Routes
+require __DIR__ . '/auth.php';
