@@ -21,29 +21,29 @@ class RoleMiddleware
             return redirect()->route('login');
         }
 
-        $userRole = Auth::user()->role;
+        $userRole = Auth::user()->role_id;
 
         // Redirect based on roles
         switch ($userRole) {
-            case 'admin':
+            case '4':
                 if ($role !== 'admin') {
                     return redirect()->route('admin.dashboard');
                 }
                 break;
 
-            case 'department':
+            case '2':
                 if ($role !== 'department') {
                     return redirect()->route('department.dashboard');
                 }
                 break;
 
-            case 'registrar':
+            case '3':
                 if ($role !== 'registrar') {
                     return redirect()->route('registrar.dashboard');
                 }
                 break;
 
-            case 'student':
+            case '1':
                 if ($role !== 'student') {
                     return redirect()->route('dashboard');
                 }
