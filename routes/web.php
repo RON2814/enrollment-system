@@ -9,6 +9,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// // Redirect '/' to login
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
+
 // Student Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
