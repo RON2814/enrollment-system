@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 // Welcome Page
 Route::get('/', function () {
@@ -14,25 +15,30 @@ Route::get('/', function () {
 //     return redirect()->route('login');
 // });
 
+
 // Student Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name('dashboard');
+
 
 // Department Dashboard
 Route::get('/department/dashboard', function () {
     return view('department.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':department'])->name('department.dashboard');
 
+
 // Registrar Dashboard
 Route::get('/registrar/dashboard', function () {
     return view('registrar.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])->name('registrar.dashboard');
 
+
 // Admin Dashboard
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])->name('admin.dashboard');
+
 
 // Profile Management
 Route::middleware('auth')->group(function () {
@@ -40,6 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+// for table sa dashboard admin (lahatan)
+Route::get('/admin/dashboard', [UserController::class, 'dashboard']);
 
 // Include Auth Routes
 require __DIR__ . '/auth.php';

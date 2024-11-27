@@ -47,4 +47,10 @@ class User extends Authenticatable
         ];
     }
 
+     // relationship with the Role model
+     public function role()
+     {
+         return $this->belongsTo(Role::class); 
+     }
+
 }
