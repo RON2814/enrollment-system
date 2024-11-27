@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function dashboard()
     {
-        // Eager load the 'role' relationship to avoid N+1 queries
-        $users = User::with('role')->get();
+        // Fetch users
+        $users = User::all(); // You can modify this if you need a specific query
 
-        // Return the view with the users data
+        // Pass $users variable to the view
         return view('admin.dashboard', compact('users'));
     }
 }
+
