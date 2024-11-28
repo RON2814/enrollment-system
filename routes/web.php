@@ -4,16 +4,12 @@ use App\Http\Controllers\NewStudentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 // Welcome Page
 Route::get('/', function () {
     return view('welcome');
 });
-
-// // Redirect '/' to login
-// Route::get('/', function () {
-//     return redirect()->route('login');
-// });
 
 // Student Dashboard
 Route::get('/dashboard', function () {
@@ -33,11 +29,11 @@ Route::get('/registrar/dashboard', function () {
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     ->name('registrar.dashboard');
 
-// Admin Dashboard
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
+// Admin Dashboard - Using Controller
+Route::get('/admin/dashboard', [UserController::class, 'dashboard'])
+    ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
     ->name('admin.dashboard');
+
 
 // Profile Management
 Route::middleware('auth')->group(function () {
