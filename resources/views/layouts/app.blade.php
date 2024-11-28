@@ -11,30 +11,59 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        {{-- icons --}}
-        <link href="https://cdn.jsdelivr.net/npm/@heroicons/react@1.0.6/outline.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+
+        <style>
+            body .main{
+                background: #ebe9e9;
+
+            }
+        </style>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
+                @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+                {{-- @if (auth()->check())
+                <p>User Role: {{ auth()->user()->role }}</p> <!-- Debugging line -->
+                @if (auth()->user()->role == 'admin')
+                    @include('admin.admin-navbar') <!-- Admin Navbar -->
+                @elseif(auth()->user()->role == 'student')
+                    @include('student.student-navbar') <!-- Student Navbar -->
+                @elseif(auth()->user()->role == 'registrar')
+                    @include('registrar.registrar-navbar') <!-- Registrar Navbar -->
+                @elseif(auth()->user()->role == 'department')
+                    @include('department.department-navbar') <!-- Department Navbar -->
+                @endif
+            @else
+                <p>User not authenticated</p> <!-- Debugging line -->
+            @endif --}}
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+
+            </aside>
+
+            <!-- Main Content -->
+            <div class="flex-1 bg-gray-100 dark:bg-gray-900 main">
+                <!-- Page Heading -->
+                @isset($header)
+                    <header class="bg-white dark:bg-gray-800 shadow">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
+    
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
     </body>
 </html>

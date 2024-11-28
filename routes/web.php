@@ -34,6 +34,10 @@ Route::get('/admin/dashboard', [UserController::class, 'dashboard'])
     ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
     ->name('admin.dashboard');
 
+// Admin Profile Route - Using Controller
+Route::get('/admin/profile', [UserController::class, 'profile'])
+    ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
+    ->name('admin.profile');
 
 // Profile Management
 Route::middleware('auth')->group(function () {

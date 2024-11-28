@@ -15,5 +15,9 @@ class UserController extends Controller
         // Pass $users variable to the view
         return view('admin.dashboard', compact('users'));
     }
-}
 
+    public function profile()
+    {
+        return view('admin.profile'); // Adjust the view path as needed
+    }
+}
