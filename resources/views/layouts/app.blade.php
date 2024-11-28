@@ -31,7 +31,6 @@
                 @include('layouts.navigation')
 
                 {{-- @if (auth()->check())
-                <p>User Role: {{ auth()->user()->role }}</p> <!-- Debugging line -->
                 @if (auth()->user()->role == 'admin')
                     @include('admin.admin-navbar') <!-- Admin Navbar -->
                 @elseif(auth()->user()->role == 'student')
