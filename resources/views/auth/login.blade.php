@@ -9,15 +9,15 @@
 </head>
 
 <body class="bg-gradient-to-r from-green-100 to-green-200 flex items-center justify-center h-screen">
-  <div class="text-center w-[900px]">
+  <div class="text-center w-[55vw]">
     {{-- <div class="mb-4">
             <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="University Logo" class="w-20 mx-auto">
         </div>
         <h1 class="text-2xl font-semibold text-green-700 mb-2">Cavite State University</h1>
         <h2 class="text-lg font-medium text-green-800 mb-8">Bacoor Campus</h2> --}}
 
-    <div class="flex justify-between bg-white rounded-3xl shadow-lg overflow-hidden">
-      <div class="w-[45%] p-8">
+    <div class="flex flex-col lg:flex-row justify-between bg-white rounded-3xl shadow-lg overflow-hidden">
+      <div class="lg:w-[55%] p-8">
         <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-4">
           @csrf
 
@@ -58,7 +58,7 @@
         </form>
       </div>
 
-      <div class="w-[45%] flex items-center justify-center bg-gray-100">
+      <div class="md:w-[45%] hidden lg:flex items-center justify-center bg-gray-100">
         <img src="{{ Vite::asset('resources/assets/stingrays.png') }}" alt="University Logo"
           class="w-full h-full object-cover rounded-lg">
       </div>

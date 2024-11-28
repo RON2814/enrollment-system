@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Checklist\course;
+use App\Models\Program;
 use App\Models\Role;
 use App\Models\Roles\Admin;
 use App\Models\Roles\Department;
@@ -24,55 +26,40 @@ class DatabaseSeeder extends Seeder
         Role::create(["id" => 3, "title" => "Registrar"]);
         Role::create(["id" => 4, "title" => "Admin"]);
 
-        // User::factory()->create([
-        //     "id" => 1,
-        //     'name' => 'Test User Student',
-        //     'email' => 'test@example.com',
-        //     'password' => bcrypt('password'),
-        //     'role_id' => 1,
-        // ]);
+        Program::create(["id" => 1, "title" => "BSCS", "description" => "Bachelor of Science in Computer Science"]);
+        Program::create(["id" => 2, "title" => "BSIT", "description" => "Bachelor of Science in Information Technology"]);
 
-        // User::factory()->create([
-        //     "id" => 2,
-        //     'name' => 'Test User Department',
-        //     'email' => 'test@example.com',
-        //     'password' => bcrypt('password'),
-        //     'role_id' => 2,
-        // ]);
+        User::create([
+            "id" => "1",
+            "name" => "Test User Student",
+            "email" => "student@email.com",
+            "password" => bcrypt("password"),
+            "role_id" => 1,
+        ]);
 
-        // User::factory()->create([
-        //     "id" => 3,
-        //     'name' => 'Test User Registrar',
-        //     'email' => "test@examil.com",
-        //     "password" => bcrypt("password"),
-        //     "role_id" => 4,
-        // ]);
+        User::create([
+            "id" => "2",
+            'name' => 'Test User Department',
+            'email' => 'department@email.com',
+            'password' => bcrypt('password'),
+            'role_id' => 2,
+        ]);
 
-        // Student::factory()->create([
-        //     "id" => 1,
-        //     "user_id" => 1,
-        //     "first_name" => "Test",
-        //     "last_name" => "User",
-        //     "middle_name" => "Student",
-        //     "contact_number" => "09123456789",
-        // ]);
+        User::create([
+            "id" => "3",
+            'name' => 'Test User Registrar',
+            'email' => "registrar@email.com",
+            "password" => bcrypt("password"),
+            "role_id" => 3,
+        ]);
 
-        // Department::factory()->create([
-        //     "id" => 1,
-        //     "user_id" => 2,
-        //     "first_name" => "Test",
-        //     "last_name" => "User",
-        //     "middle_name" => "Department",
-        //     "contact_number" => "09123456789",
-        // ]);
+        User::create([
+            "id" => "4",
+            'name' => 'Test User Admin',
+            'email' => "admin@email.com",
+            "password" => bcrypt("password"),
+            "role_id" => 4,
+        ]);
 
-        // Admin::factory()->create([
-        //     "id" => 1,
-        //     "user_id" => 3,
-        //     "first_name" => "Test",
-        //     "last_name" => "User",
-        //     "middle_name" => "Admin",
-        //     "contact_number" => "09123456789",
-        // ]);
     }
 }
