@@ -25,9 +25,9 @@ class RoleMiddleware
 
         // Redirect based on roles
         switch ($userRole) {
-            case '4':
-                if ($role !== 'admin') {
-                    return redirect()->route('admin.dashboard');
+            case '1':
+                if ($role !== 'student') {
+                    return redirect()->route('dashboard');
                 }
                 break;
 
@@ -43,9 +43,9 @@ class RoleMiddleware
                 }
                 break;
 
-            case '1':
-                if ($role !== 'student') {
-                    return redirect()->route('dashboard');
+            case '4':
+                if ($role !== 'admin') {
+                    return redirect()->route('admin.dashboard');
                 }
                 break;
 

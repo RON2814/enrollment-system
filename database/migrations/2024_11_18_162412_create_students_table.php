@@ -12,9 +12,10 @@ return new class extends Migration {
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
-            $table->string("first_name");
+            $table->string("student_number");
+            $table->foreign("student_number")->references("id")->on("users")->onDelete("cascade");
             $table->string("last_name");
+            $table->string("first_name");
             $table->string("middle_name");
             $table->string("contact_number");
             $table->foreignId("program_id")->constrained("programs");
