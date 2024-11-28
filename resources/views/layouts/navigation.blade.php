@@ -3,10 +3,8 @@
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo h-[80px] p-4 flex items-center gap-4">
-            <!-- Logo Image -->
             <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="CvSU-B Logo"
                 class="h-12 w-12 object-contain">
-            <!-- Title -->
             <h2 class="text-xl font-medium opacity-80">CvSU-B</h2>
         </div>
         <hr class="border-t-2 border-[#2c8c6d] mb-6">
