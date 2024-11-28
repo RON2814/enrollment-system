@@ -23,14 +23,6 @@
             </a>
         </li>
 
-        <!-- Profile -->
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Profile</span>
-            </a>
-        </li>
 
         <!-- Manage Users -->
         <li
