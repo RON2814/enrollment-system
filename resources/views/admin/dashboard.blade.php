@@ -28,6 +28,7 @@
     body {
         display: flex;
         height: 100vh;
+        background: #ebe9e9;
     }
 
     .sidebar {
@@ -149,8 +150,7 @@
 
     .submenu .submenu-icon {
         margin-left: auto;
-        /* Align the icon to the right */
-        transition: transform 0.3s;
+        transition: transform 0.1s;
     }
 
     .submenu.open .submenu-icon {
@@ -226,14 +226,11 @@
         padding: 2rem;
         border-radius: 10px;
         margin-top: 20px;
-        /* Add margin to separate from other sections */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        /* Add shadow for depth */
     }
 
     .card-wrapper {
         display: grid;
-        /* Use grid layout for better alignment */
         grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
         gap: 1rem;
     }
@@ -242,42 +239,34 @@
         color: rgba(113, 99, 186, 255);
         padding-bottom: 10px;
         font-size: 18px;
-        /* Increased font size for better visibility */
         font-weight: bold;
-        /* Make it bolder for emphasis */
     }
 
     .item-card {
         background: rgba(229, 223, 223);
         border-radius: 10px;
         padding: 1.5rem;
-        /* Increase padding for better spacing */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 180px;
-        /* Increase height for more content space */
+        height: 160px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        /* Add shadow for visual separation */
         transition: all 0.3s ease-in-out;
-        /* Shortened transition time */
     }
 
     .item-card:hover {
-        transform: translateY(-8px);
-        /* Slightly stronger hover effect */
+        transform: translateY(-4px);
     }
 
     .card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 15px;
-        /* Adjusted spacing for better balance */
+        margin-bottom: 20px;
     }
 
     .card-detail {
-        padding-bottom: 12px;
+        padding-bottom: 10px;
     }
 
     .total {
@@ -289,12 +278,10 @@
         font-size: 14px;
         font-weight: 300;
         color: rgba(0, 0, 0, 0.7);
-        /* Slightly darker title text */
     }
 
     .total-value {
         font-size: 26px;
-        /* Increased font size for value */
         font-family: 'Poppins', monospace;
         font-weight: 600;
     }
@@ -307,7 +294,6 @@
         text-align: center;
         border-radius: 50%;
         font-size: 1.6rem;
-        /* Slightly larger icon */
         background: red;
     }
 
@@ -432,10 +418,10 @@
                     <i class="fas fa-chevron-down submenu-icon"></i>
                 </a>
                 <ul class="submenu-list">
-                    <li><a href="#"><i class="fas fa-graduation-cap"></i><span>Student</span></a></li>
-                    <li><a href="#"><i class="fas fa-clipboard-list"></i><span>Registrar</span></a></li>
-                    <li><a href="#"><i class="fas fa-building"></i><span>Department</span></a></li>
-                    <li><a href="#"><i class="fas fa-building"></i><span>Admin</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right"></i><span>Student</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right"></i><span>Registrar</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right"></i><span>Department</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right"></i><span>Admin</span></a></li>
                 </ul>
             </li>
 
@@ -482,7 +468,7 @@
         </div>
 
         <div class="card-container">
-            <h3 class="main-title">Admin Data</h3>
+            {{-- <h3 class="main-title">Admin Data</h3> --}}
             <div class="card-wrapper">
                 <div class="item-card light-red">
                     <div class="card-header">
@@ -519,32 +505,32 @@
             </div>
         </div>
 
-        <div class="bg-white mt-4 rounded-xl p-8">
-            <h3 class="text-xl font-semibold">Active users</h3>
+        <div class="bg-white mt-6 rounded-lg shadow-md p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Active Users</h3>
             <div class="overflow-x-auto">
-                <table class="min-w-full table-auto border-collapse">
-                    <thead class="bg-[#0A6847] text-white">
+                <table class="min-w-full table-auto border-collapse border border-gray-200 rounded-lg">
+                    <thead class="bg-[#0A6847] q text-white text-sm uppercase tracking-wide">
                         <tr>
-                            <th class="py-4 px-6 text-left">Name</th>
-                            <th class="py-4 px-6 text-left">Email</th>
-                            <th class="py-4 px-6 text-left">Role</th>
-                            <th class="py-4 px-6 text-left">Created at</th>
-
+                            <th class="py-3 px-6 text-left">Name</th>
+                            <th class="py-3 px-6 text-left">Email</th>
+                            <th class="py-3 px-6 text-left">Role</th>
+                            <th class="py-3 px-6 text-left">Created At</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-gray-100">
-                      @foreach ($users as $user)
-                      <tr class="even:bg-white">
-                          <td class="py-4 px-6 text-sm text-gray-800">{{ $user->name }}</td>
-                          <td class="py-4 px-6 text-sm text-gray-800">{{ $user->email }}</td>
-                          <td class="py-4 px-6 text-sm text-gray-800">{{ $user->role->title }}</td>
-                          <td class="py-4 px-6 text-sm text-gray-800">{{ $user->created_at->format('Y-m-d') }}</td>
-                      </tr>
-                  @endforeach
+                    <tbody class="text-gray-700 divide-y divide-gray-200">
+                        @foreach ($users as $user)
+                            <tr class="hover:bg-gray-100 transition-colors">
+                                <td class="py-4 px-6 text-sm">{{ $user->name }}</td>
+                                <td class="py-4 px-6 text-sm">{{ $user->email }}</td>
+                                <td class="py-4 px-6 text-sm">{{ $user->role->title }}</td>
+                                <td class="py-4 px-6 text-sm">{{ $user->created_at->format('Y-m-d') }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-
+        </div>
+        
 
         </div>
 
