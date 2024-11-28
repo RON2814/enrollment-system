@@ -30,7 +30,7 @@
                 <span class="text-sm opacity-80">Manage Users</span>
                 <i class="fas fa-chevron-down ml-auto text-sm transition-transform duration-100"></i>
             </a>
-            <ul class="submenu-list list-none pl-5 hidden">
+            <ul class="submenu-list list-none pl-5">
                 <li
                     class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
                     <a href="#" class="text-white no-underline flex items-center gap-3">
