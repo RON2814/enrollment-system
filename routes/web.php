@@ -12,10 +12,10 @@ Route::get('/', function () {
 });
 
 // Student Dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/student/dashboard', function () {
+    return view('student.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('dashboard');
+    ->name('student.dashboard');
 
 // Department Dashboard
 Route::get('/department/dashboard', function () {

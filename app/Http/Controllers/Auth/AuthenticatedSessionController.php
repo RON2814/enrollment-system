@@ -45,7 +45,7 @@ class AuthenticatedSessionController extends Controller
             }
 
             // Default redirect when no matching role
-            return redirect()->intended(route('dashboard', absolute: false));
+            return redirect()->intended(route('student.dashboard', absolute: false));
         }
 
         // If login fails, return back with error
