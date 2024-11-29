@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-gradient-to-r from-green-100 to-green-200 flex items-center justify-center h-screen">
-  <div class="text-center w-[55vw]">
+  <div class="text-center w-[80vw] md:w-[55vw]">
     {{-- <div class="mb-4">
             <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="University Logo" class="w-20 mx-auto">
         </div>

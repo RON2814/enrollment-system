@@ -8,7 +8,14 @@ use App\Http\Controllers\UserController;
 
 // Welcome Page
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
     return view('welcome');
+});
+
+Route::fallback(function () {
+    return redirect()->route('dashboard');
 });
 
 // Student Dashboard
@@ -59,6 +66,8 @@ Route::get("/admin/add-student", [NewStudentController::class, 'create'])
 Route::post("/admin/add-student", [NewStudentController::class, 'store'])
     ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
     ->name("admin.store-student");
+
+Route::view("/view-test", "layout.app");
 
 // Include Auth Routes
 require __DIR__ . '/auth.php';
