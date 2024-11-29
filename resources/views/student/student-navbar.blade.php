@@ -17,7 +17,7 @@
         <!-- Dashboard -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="{{ route('admin.dashboard') }}" class="text-white no-underline flex items-center gap-3">
+            <a href="{{ route('student.dashboard') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-tachometer-alt text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Dashboard</span>
             </a>
@@ -26,7 +26,7 @@
         <!-- Student Information -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
+            <a href="{{ route('student.student-information') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Student Information</span>
             </a>
@@ -35,7 +35,7 @@
         <!-- Enrolled Subjects -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
+            <a href="{{ route('student.enrolled-sub') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Enrolled Subjects</span>
             </a>
@@ -44,7 +44,7 @@
         <!-- Class Schedule -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
+            <a href="{{ route('student.schedule') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Class Schedule</span>
             </a>
@@ -53,7 +53,7 @@
         <!-- Student Grades -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
+            <a href="{{ route('student.student-grades') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Student Grades</span>
             </a>
@@ -63,7 +63,7 @@
         <!-- Enrollment Module -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
+            <a href="{{ route('student.enrollment') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Enrollment Module</span>
             </a>
