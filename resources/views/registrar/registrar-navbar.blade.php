@@ -1,5 +1,5 @@
 <aside
-    class="sidebar fixed top-0 left-0 bottom-0 w-60 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+    class="sidebar fixed top-0 left-0 bottom-0 w-1/6 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo h-[80px] p-4 flex items-center gap-4">
@@ -18,8 +18,8 @@
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
             <a href="{{ route('admin.dashboard') }}" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-tachometer-alt text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Dashboard</span>
+                <i class="fas fa-tachometer-alt text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Dashboard</span>
             </a>
         </li>
 
@@ -27,8 +27,8 @@
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
             <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Request Grades</span>
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Request Grades</span>
             </a>
         </li>
 
@@ -36,8 +36,8 @@
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
             <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Record of Students</span>
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Record of Students</span>
             </a>
         </li>
 
@@ -45,8 +45,8 @@
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
             <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Add new Student</span>
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Add new Student</span>
             </a>
         </li>
 
@@ -54,8 +54,8 @@
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
             <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">COR</span>
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">COR</span>
             </a>
         </li>
 

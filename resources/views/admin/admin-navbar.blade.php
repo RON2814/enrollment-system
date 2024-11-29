@@ -18,7 +18,7 @@
     }
 </style>
 <aside
-    class="sidebar fixed top-0 left-0 bottom-0 w-60 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+    class="sidebar fixed top-0 left-0 bottom-0 w-1/6 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo h-[80px] p-4 flex items-center gap-4">
@@ -35,7 +35,7 @@
         <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
             <a href="{{ route('admin.dashboard') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-tachometer-alt text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Dashboard</span>
+                <span class="text-xs opacity-80">Dashboard</span>
             </a>
         </li>
 
@@ -43,35 +43,35 @@
         <li class="submenu relative p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
             <a href="#" id="manage-users-toggle" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-users text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Manage Users</span>
-                <i class="fas fa-chevron-down ml-auto text-sm transition-transform duration-100"></i>
+                <span class="text-xs opacity-80">Manage Users</span>
+                <i class="fas fa-chevron-down ml-auto text-xs transition-transform duration-100"></i>
             </a>
             <ul class="submenu-list list-none pl-5">
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.student') }}" class="text-white no-underline flex items-center gap-3">
-                        <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
-                        <span class="text-sm opacity-80">Student</span>
+                        <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
+                        <span class="text-xs opacity-80">Student</span>
                     </a>
                 </li>
 
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.department') }}" class="text-white no-underline flex items-center gap-3">
-                        <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
-                        <span class="text-sm opacity-80">Department</span>
+                        <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
+                        <span class="text-xs opacity-80">Department</span>
                     </a>
                 </li>
                 
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.registrar') }}" class="text-white no-underline flex items-center gap-3">
-                        <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
-                        <span class="text-sm opacity-80">Registrar</span>
+                        <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
+                        <span class="text-xs opacity-80">Registrar</span>
                     </a>
                 </li>
                
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.admin') }}" class="text-white no-underline flex items-center gap-3">
-                        <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
-                        <span class="text-sm opacity-80">Admin</span>
+                        <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
+                        <span class="text-xs opacity-80">Admin</span>
                     </a>
                 </li>
             </ul>

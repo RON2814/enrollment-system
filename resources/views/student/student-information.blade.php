@@ -64,6 +64,10 @@
                 <label class="block text-sm font-medium text-gray-600 mb-1" for="middleName">Middle Name</label>
                 <input id="middleName" type="text" value="Valles" class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none" disabled />
               </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-600 mb-1" for="middleName">Extension Name</label>
+                <input id="middleName" type="text" value="" class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none" disabled />
+              </div>
             </div>
           </div>
           
@@ -89,7 +93,7 @@
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-600 mb-1" for="dateOfBirth">Date of Birth</label>
-                <input id="dateOfBirth" type="text" value="2003-11-06" class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none" disabled />
+                <input id="dateOfBirth" type="text" value="February 08, 2003" class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none" disabled />
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-600 mb-1" for="sex">Sex</label>
