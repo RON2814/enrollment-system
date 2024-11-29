@@ -8,7 +8,7 @@ use App\Http\Controllers\UserController;
 
 // Welcome Page
 Route::get('/', function () {
-    if (auth()->check()) {
+    if (\Illuminate\Support\Facades\Auth::check()) {
         return redirect()->route('dashboard');
     }
     return view('welcome');
@@ -19,10 +19,9 @@ Route::fallback(function () {
 });
 
 // STUDENT Dashboard
-Route::get('/student/dashboard', function () {
-    return view('student.dashboard');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('student.dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name('dashboard');('dashboard');
 
 // Student Information Route
 Route::get('/student/student-information', function () {
