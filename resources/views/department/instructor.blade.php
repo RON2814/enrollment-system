@@ -3,7 +3,7 @@
       <div class="header-wrapper flex justify-between items-center flex-wrap bg-white rounded-lg p-4 mb-4">
           <div class="header-title text-[#27984b]">
               <span></span>
-              <h2>Enrollment Module</h2>
+              <h2>Instructor Module</h2>
           </div>
 
           <div class="user-info flex items-center gap-2">
@@ -32,7 +32,6 @@
 
 
       {{-- edit here below--}}
-
 
 
 
