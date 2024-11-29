@@ -7,17 +7,34 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // Admin Dashboard
     public function dashboard()
     {
-        // Fetch users
-        $users = User::all(); // You can modify this if you need a specific query
+        // Fetch users for the dashboard (if needed)
+        $users = User::all();
 
-        // Pass $users variable to the view
+        // Return the view with the users data
         return view('admin.dashboard', compact('users'));
     }
 
-    public function profile()
+    public function manageStudent()
     {
-        return view('admin.profile'); // Adjust the view path as needed
+        return view('admin.manage-users.student');
     }
+
+    public function manageRegistrar()
+    {
+        return view('admin.manage-users.registrar');
+    }
+
+    public function manageDepartment()
+    {
+        return view('admin.manage-users.department');
+    }
+
+    public function manageAdmin()
+    {
+        return view('admin.manage-users.admin');
+    }
+
 }

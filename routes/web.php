@@ -29,15 +29,22 @@ Route::get('/registrar/dashboard', function () {
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     ->name('registrar.dashboard');
 
-// Admin Dashboard - Using Controller
+// Admin Dashboard Route
 Route::get('/admin/dashboard', [UserController::class, 'dashboard'])
     ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
     ->name('admin.dashboard');
 
-// Admin Profile Route - Using Controller
-Route::get('/admin/profile', [UserController::class, 'profile'])
-    ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
-    ->name('admin.profile');
+// Admin Manage Users Routes
+Route::middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/manage-users/student', [UserController::class, 'manageStudent'])->name('manageUsers.student');
+        Route::get('/manage-users/registrar', [UserController::class, 'manageRegistrar'])->name('manageUsers.registrar');
+        Route::get('/manage-users/department', [UserController::class, 'manageDepartment'])->name('manageUsers.department');
+        Route::get('/manage-users/admin', [UserController::class, 'manageAdmin'])->name('manageUsers.admin');
+    });
+
 
 // Profile Management
 Route::middleware('auth')->group(function () {

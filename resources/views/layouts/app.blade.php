@@ -29,27 +29,23 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
+        <aside class="w-60 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
             {{-- @include('layouts.navigation') --}}
 
             
             @if (auth()->check())
             <p>User is authenticated</p>
             <p>User Role: {{ auth()->user()->role->title }}</p>
-        
             @switch(auth()->user()->role->id)
                 @case(1) <!-- Student -->
                     @include('student.student-navbar')
                     @break
-        
                 @case(2) <!-- Department -->
                     @include('department.department-navbar')
                     @break
-        
                 @case(3) <!-- Registrar -->
                     @include('registrar.registrar-navbar')
                     @break
-        
                 @case(4) <!-- Admin -->
                     @include('admin.admin-navbar')
                     @break

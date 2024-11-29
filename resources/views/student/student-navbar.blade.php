@@ -1,5 +1,5 @@
 <aside
-    class="sidebar fixed top-0 left-0 bottom-0 w-64 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+    class="sidebar fixed top-0 left-0 bottom-0 w-60 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo h-[80px] p-4 flex items-center gap-4">
@@ -73,19 +73,4 @@
     </ul>
 </aside>
 
-<script>
-    document.getElementById('manage-users-toggle').addEventListener('click', function() {
-        const submenu = this.closest('li').querySelector('.submenu-list');
-        submenu.classList.toggle('hidden');
-        this.querySelector('i').classList.toggle('rotate-180');
-    });
 
-    // Highlight active menu item
-    const menuItems = document.querySelectorAll('.menu-item, .submenu-item');
-    menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            menuItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-        });
-    });
-</script>

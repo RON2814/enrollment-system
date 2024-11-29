@@ -3,7 +3,7 @@
     <div class="main-content p-4 bg-[#ebe9e9]">
         <div class="header-wrapper flex justify-between items-center flex-wrap bg-white rounded-lg p-4 mb-4">
             <div class="header-title text-[#27984b]">
-                <span>Primary</span>
+                <span>Admin</span>
                 <h2>Dashboard</h2>
             </div>
 
@@ -65,31 +65,48 @@
             </div>
         </div>
 
-        <div class="bg-white mt-6 rounded-lg shadow-md p-8">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">Active Users</h3>
-            <div class="overflow-x-auto">
-                <table class="min-w-full table-auto border-collapse border border-gray-200 rounded-lg">
+        <div class="bg-white mt-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-semibold text-gray-900">Active Users</h3>
+        
+                <!-- Search and Filter Section -->
+                <div class="flex space-x-4">
+                    <!-- Search Bar -->
+                    <input 
+                        type="text" 
+                        placeholder="Search..." 
+                        class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                    />
+        
+                </div>
+            </div>
+        
+            <div class="overflow-x-auto rounded-lg">
+                <table class="min-w-full table-auto border-separate border-spacing-0">
                     <thead class="bg-[#0A6847] text-white text-sm uppercase tracking-wide">
                         <tr>
-                            <th class="py-3 px-6 text-left">Name</th>
-                            <th class="py-3 px-6 text-left">Email</th>
-                            <th class="py-3 px-6 text-left">Role</th>
-                            <th class="py-3 px-6 text-left">Created At</th>
+                            <th class="py-3 px-6 text-left font-medium">Name</th>
+                            <th class="py-3 px-6 text-left font-medium">Email</th>
+                            <th class="py-3 px-6 text-left font-medium">Role</th>
+                            <th class="py-3 px-6 text-left font-medium">Created At</th>
+ 
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 divide-y divide-gray-200">
                         @foreach ($users as $user)
-                            <tr class="hover:bg-gray-100 transition-colors">
-                                <td class="py-4 px-6 text-sm">{{ $user->name }}</td>
-                                <td class="py-4 px-6 text-sm">{{ $user->email }}</td>
-                                <td class="py-4 px-6 text-sm">{{ $user->role->title }}</td>
-                                <td class="py-4 px-6 text-sm">{{ $user->created_at->format('Y-m-d') }}</td>
+                            <tr class="hover:bg-gray-100 transition-colors duration-200">
+                                <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->name }}</td>
+                                <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->email }}</td>
+                                <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->role->title }}</td>
+                                <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->created_at->format('Y-m-d') }}</td>
+
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+        
     </div>
 <script>
     function toggleDropdown() {
