@@ -56,4 +56,7 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class); // Adjust if your role relationship is different
     }
 
+
+
+
 }

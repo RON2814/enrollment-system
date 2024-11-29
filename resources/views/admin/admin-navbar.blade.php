@@ -1,5 +1,24 @@
+<style>
+    .submenu-item:hover,
+    .submenu-item.active {
+        background-color: #2c8c6d;
+    }
+
+    .submenu-item:active {
+        background-color: #4F9A85;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+        background-color: #2c8c6d;
+    }
+
+    .menu-item:active {
+        background-color: #4F9A85;
+    }
+</style>
 <aside
-    class="sidebar fixed top-0 left-0 bottom-0 w-55 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+    class="sidebar fixed top-0 left-0 bottom-0 w-60 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo h-[80px] p-4 flex items-center gap-4">
@@ -13,48 +32,44 @@
     <!-- Sidebar Navigation Menu -->
     <ul class="menu h-[80%] relative list-none p-0">
         <!-- Dashboard -->
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+        <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
             <a href="{{ route('admin.dashboard') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-tachometer-alt text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Dashboard</span>
             </a>
         </li>
 
-
         <!-- Manage Users -->
-        <li
-            class="submenu relative p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+        <li class="submenu relative p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
             <a href="#" id="manage-users-toggle" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-users text-lg opacity-75 mr-2"></i>
                 <span class="text-sm opacity-80">Manage Users</span>
                 <i class="fas fa-chevron-down ml-auto text-sm transition-transform duration-100"></i>
             </a>
             <ul class="submenu-list list-none pl-5">
-                <li
-                    class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-                    <a href="#" class="text-white no-underline flex items-center gap-3">
+                <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
+                    <a href="{{ route('admin.manageUsers.student') }}" class="text-white no-underline flex items-center gap-3">
                         <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
                         <span class="text-sm opacity-80">Student</span>
                     </a>
                 </li>
-                <li
-                    class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-                    <a href="#" class="text-white no-underline flex items-center gap-3">
-                        <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
-                        <span class="text-sm opacity-80">Registrar</span>
-                    </a>
-                </li>
-                <li
-                    class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-                    <a href="#" class="text-white no-underline flex items-center gap-3">
+
+                <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
+                    <a href="{{ route('admin.manageUsers.department') }}" class="text-white no-underline flex items-center gap-3">
                         <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
                         <span class="text-sm opacity-80">Department</span>
                     </a>
                 </li>
-                <li
-                    class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-                    <a href="#" class="text-white no-underline flex items-center gap-3">
+                
+                <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
+                    <a href="{{ route('admin.manageUsers.registrar') }}" class="text-white no-underline flex items-center gap-3">
+                        <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
+                        <span class="text-sm opacity-80">Registrar</span>
+                    </a>
+                </li>
+               
+                <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
+                    <a href="{{ route('admin.manageUsers.admin') }}" class="text-white no-underline flex items-center gap-3">
                         <i class="fa-solid fa-chevron-right text-sm mr-2"></i>
                         <span class="text-sm opacity-80">Admin</span>
                     </a>
@@ -71,12 +86,4 @@
         this.querySelector('i').classList.toggle('rotate-180');
     });
 
-    // Highlight active menu item
-    const menuItems = document.querySelectorAll('.menu-item, .submenu-item');
-    menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            menuItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-        });
-    });
 </script>

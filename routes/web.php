@@ -18,28 +18,70 @@ Route::fallback(function () {
     return redirect()->route('dashboard');
 });
 
-// Student Dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
+// STUDENT Dashboard
+Route::get('/student/dashboard', function () {
+    return view('student.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('dashboard');
+    ->name('student.dashboard');
 
-// Department Dashboard
+// Student Information Route
+Route::get('/student/student-information', function () {
+    return view('student.student-information');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
+    ->name('student.student-information');
+
+// Enrolled Subjects Route
+Route::get('/student/enrolled-sub', function () {
+    return view('student.enrolled-sub');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
+    ->name('student.enrolled-sub');
+
+// Class Schedule Route
+Route::get('/student/schedule', function () {
+    return view('student.schedule');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
+    ->name('student.schedule');
+
+// Student Grades Route
+Route::get('/student/grades', function () {
+    return view('student.student-grades');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
+    ->name('student.student-grades');
+
+// Enrollment Module Route
+Route::get('/student/enrollment', function () {
+    return view('student.enrollment');
+})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
+    ->name('student.enrollment');
+
+
+// DEPARTMENT Dashboard
 Route::get('/department/dashboard', function () {
     return view('department.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
     ->name('department.dashboard');
 
-// Registrar Dashboard
+// REGISTRAR Dashboard
 Route::get('/registrar/dashboard', function () {
     return view('registrar.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     ->name('registrar.dashboard');
 
-// Admin Dashboard - Using Controller
+// ADMIN Dashboard Route
 Route::get('/admin/dashboard', [UserController::class, 'dashboard'])
     ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
     ->name('admin.dashboard');
+
+// Admin Manage Users Routes
+Route::middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/manage-users/student', [UserController::class, 'manageStudent'])->name('manageUsers.student');
+        Route::get('/manage-users/registrar', [UserController::class, 'manageRegistrar'])->name('manageUsers.registrar');
+        Route::get('/manage-users/department', [UserController::class, 'manageDepartment'])->name('manageUsers.department');
+        Route::get('/manage-users/admin', [UserController::class, 'manageAdmin'])->name('manageUsers.admin');
+    });
 
 
 // Profile Management
