@@ -11,16 +11,16 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('registrars', function (Blueprint $table) {
-            $table->id();
-            $table->string("user_id");
-            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
+            $table->string("registrar_id")->primary();
             $table->string("last_name");
             $table->string("first_name");
             $table->string("middle_name");
             $table->string("email");
             $table->string("contact_number");
-            $table->foreignId("address_id")->constrained("addresses")->onDelete("cascade");
             $table->timestamps();
+
+            // Foreign keys
+            $table->foreign("registrar_id")->references("id")->on("users")->onDelete("cascade");
         });
     }
 
