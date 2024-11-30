@@ -18,43 +18,41 @@ Route::fallback(function () {
     return redirect()->route('index');
 });
 
-// STUDENT Dashboard
-Route::get('/dashboard', function () {
-    return view('student.dashboard');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('student.dashboard');
+// Student Authentication / Routes
+Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name("student.")->group(function () {
+    // STUDENT Dashboard
+    Route::get('/dashboard', function () {
+        return view('student.dashboard');
+    })->name('dashboard');
 
-// Student Information Route
-Route::get('/student-information', function () {
-    return view('student.student-information');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('student.student-information');
+    // Student Information Route
+    Route::get('/student-information', function () {
+        return view('student.student-information');
+    })->name('student-information');
 
-// Enrolled Subjects Route
-Route::get('/enrolled-sub', function () {
-    return view('student.enrolled-sub');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('student.enrolled-sub');
+    // Enrolled Subjects Route
+    Route::get('/enrolled-sub', function () {
+        return view('student.enrolled-sub');
+    })->name('enrolled-sub');
 
-// Class Schedule Route
-Route::get('/schedule', function () {
-    return view('student.schedule');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('student.schedule');
+    // Class Schedule Route
+    Route::get('/schedule', function () {
+        return view('student.schedule');
+    })->name('schedule');
 
-// Student Grades Route
-Route::get('/grades', function () {
-    return view('student.student-grades');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('student.student-grades');
+    // Student Grades Route
+    Route::get('/grades', function () {
+        return view('student.student-grades');
+    })->name('student-grades');
 
-// Enrollment Module Route
-Route::get('/enrollment', function () {
-    return view('student.enrollment');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
-    ->name('student.enrollment');
+    // Enrollment Module Route
+    Route::get('/enrollment', function () {
+        return view('student.enrollment');
+    })->name('enrollment');
+});
 
-// Department Routes
+
+// Department Authentication / Routes
 Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])->prefix('department')->name('department.')->group(function () {
     // Dashboard
     Route::get('/dashboard', function () {
