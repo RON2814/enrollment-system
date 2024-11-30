@@ -41,7 +41,7 @@
                         class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
 
                     <!-- Add New Button -->
-                    <button onclick="openaddAvisers()"
+                    <button onclick="openAddAdvisers()"
                         class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         Add New Advisers
                     </button>
@@ -76,7 +76,7 @@
                             <td class="py-4 px-4 text-sm  max-w-xs">Computer Science</td>
                             <td class="py-4 px-4 text-sm">
                                 <div class="flex items-center">
-                                    <button class="text-blue-500 hover:text-blue-700" onclick="openModal('123', 'Apayong', 'John', 'Aaron', '123-456-7890', '123 Main St.', 'department@gmail.com', 'Computer Science')">
+                                    <button class="text-blue-500 hover:text-blue-700" onclick="open_Advisers_modal('123', 'Apayong', 'John', 'Aaron', '123-456-7890', '123 Main St.', 'department@gmail.com', 'Computer Science')">
                                         <i class="fas fa-edit"></i> <!-- Update icon -->
                                     </button>
                                     <button class="ml-4 text-red-500 hover:text-red-700">

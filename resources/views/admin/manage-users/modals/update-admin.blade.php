@@ -5,55 +5,54 @@
         class="bg-white p-8 rounded-xl w-full max-w-2xl shadow-lg transform transition-transform duration-300 ease-in-out scale-95 hover:scale-100">
         <h3 class="text-2xl font-semibold mb-6 text-gray-800">Update Admin Information</h3>
         <form id="updateForm">
-            <input type="hidden" id="userID">
+            <input type="hidden" id="user_id">
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="mb-4">
-                    <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                    <input type="text" id="lastName"
+                    <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <input type="text" id="last_name" name="last_name"
                         class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
                         required />
                 </div>
                 <div class="mb-4">
-                    <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                    <input type="text" id="firstName"
+                    <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+                    <input type="text" id="first_name" name="first_name"
                         class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
                         required />
                 </div>
                 <div class="mb-4">
-                    <label for="middleName" class="block text-sm font-medium text-gray-700">Middle Name</label>
-                    <input type="text" id="middleName"
+                    <label for="middle_name" class="block text-sm font-medium text-gray-700">Middle Name</label>
+                    <input type="text" id="middle_name" name="middle_name"
                         class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
                         required />
                 </div>
                 <div class="mb-4">
-                    <label for="contactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
-                    <input type="text" id="contactNumber"
+                    <label for="contact_number" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                    <input type="text" id="contact_number" name="contact_number"
                         class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
                         required />
                 </div>
+            </div>
 
-
-                <!-- Action buttons -->
-                <div class="flex justify-end space-x-4 mt-6">
-                    <button type="button" onclick="closeModal()"
-                        class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none transition duration-200 ease-in-out">Cancel</button>
-                    <button type="submit"
-                        class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none transition duration-200 ease-in-out">Update</button>
-                </div>
+            <!-- Action buttons -->
+            <div class="flex justify-end space-x-4 mt-6">
+                <button type="button" onclick="closeModal()"
+                    class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none transition duration-200 ease-in-out">Cancel</button>
+                <button type="submit"
+                    class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none transition duration-200 ease-in-out">Update</button>
+            </div>
         </form>
     </div>
 </div>
 
 <script>
-    function openModal(studentId, lastName, firstName, middleName, contactNumber, address, email, program) {
+    function openAdminModal(last_name, first_name, middle_name, contact_number) {
         const modal = document.getElementById('updateModal');
         modal.classList.remove('hidden'); // Make the modal visible
-        document.getElementById('userID').value = studentId || '';
-        document.getElementById('lastName').value = lastName || '';
-        document.getElementById('firstName').value = firstName || '';
-        document.getElementById('middleName').value = middleName || '';
-        document.getElementById('contactNumber').value = contactNumber || '';
+        document.getElementById('last_name').value = last_name || '';
+        document.getElementById('first_name').value = first_name || '';
+        document.getElementById('middle_name').value = middle_name || '';
+        document.getElementById('contact_number').value = contact_number || '';
     }
 
     // Close modal
@@ -65,13 +64,12 @@
         e.preventDefault();
 
         const updatedData = {
-            userID: document.getElementById('userID').value,
-            lastName: document.getElementById('lastName').value,
-            firstName: document.getElementById('firstName').value,
-            middleName: document.getElementById('middleName').value,
-            contactNumber: document.getElementById('contactNumber').value,
+            user_id: document.getElementById('user_id').value,
+            last_name: document.getElementById('last_name').value,
+            first_name: document.getElementById('first_name').value,
+            middle_name: document.getElementById('middle_name').value,
+            contact_number: document.getElementById('contact_number').value,
         };
-
 
         closeModal();
         alert("Admin info updated!");

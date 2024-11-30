@@ -41,9 +41,9 @@
                         class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
 
                     <!-- Add New Admin Button -->
-                    <button onclick="openAddAdmin()"
+                    <button onclick="open_add_admin()"
                         class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Add New Advisers
+                        Add New Admin
                     </button>
                 </div>
             </div>
@@ -69,9 +69,10 @@
                             <td class="py-4 px-4 text-sm">
                                 <div class="flex items-center">
                                     <button class="text-blue-500 hover:text-blue-700"
-                                        onclick="openModal('Kim', 'Mingyu', 'Svt', '123-456-7890', '2024-12-23', 'admin@gmail.com',)">
-                                        <i class="fas fa-edit"></i> <!-- Update icon -->
+                                        onclick="openAdminModal('Kim', 'Mingyu', 'Svt', '123-456-7890')">
+                                        <i class="fas fa-edit"></i>
                                     </button>
+
                                     <button class="ml-4 text-red-500 hover:text-red-700">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>

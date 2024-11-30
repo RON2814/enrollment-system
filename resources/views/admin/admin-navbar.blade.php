@@ -35,7 +35,7 @@
         <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
             <a href="{{ route('admin.dashboard') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-tachometer-alt text-lg opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Dashboard</span>
+                <span class="text-sm opacity-80">Dashboard</span>
             </a>
         </li>
 
@@ -43,39 +43,40 @@
         <li class="submenu relative p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
             <a href="#" id="manage-users-toggle" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-users text-lg opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Manage Users</span>
+                <span class="text-sm opacity-80">Manage Users</span>
                 <i class="fas fa-chevron-down ml-auto text-xs transition-transform duration-100"></i>
             </a>
-            <ul class="submenu-list list-none pl-5">
+            <ul class="submenu-list list-none pl-0 mt-2">
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.student') }}" class="text-white no-underline flex items-center gap-3">
                         <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
-                        <span class="text-xs opacity-80">Student</span>
+                        <span class="text-sm opacity-80">Student</span>
                     </a>
                 </li>
-
+        
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.department') }}" class="text-white no-underline flex items-center gap-3">
                         <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
-                        <span class="text-xs opacity-80">Department</span>
+                        <span class="text-sm opacity-80">Department</span>
                     </a>
                 </li>
                 
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.registrar') }}" class="text-white no-underline flex items-center gap-3">
                         <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
-                        <span class="text-xs opacity-80">Registrar</span>
+                        <span class="text-sm opacity-80">Registrar</span>
                     </a>
                 </li>
                
                 <li class="submenu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out">
                     <a href="{{ route('admin.manageUsers.admin') }}" class="text-white no-underline flex items-center gap-3">
                         <i class="fa-solid fa-chevron-right text-xs mr-2"></i>
-                        <span class="text-xs opacity-80">Admin</span>
+                        <span class="text-sm opacity-80">Admin</span>
                     </a>
                 </li>
             </ul>
         </li>
+        
     </ul>
 </aside>
 

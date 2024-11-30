@@ -123,16 +123,5 @@
         document.getElementById('addStudentModal').classList.add('hidden');
     }
 
-    // Open Edit Student Modal (populate modal with current data)
-    function openModal(studentNumber, lastName, firstName, middleName, contactNumber, address, program,
-    classification) {
-        document.getElementById("userID").value = studentNumber;
-        document.getElementById("lastName").value = lastName;
-        document.getElementById("firstName").value = firstName;
-        document.getElementById("middleName").value = middleName;
-        document.getElementById("contactNumber").value = contactNumber;
-        document.getElementById("address").value = address;
-        document.getElementById("program").value = program;
-        openAddStudentModal(); // Open the modal when editing
-    }
+ 
 </script>

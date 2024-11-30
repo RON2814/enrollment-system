@@ -1,42 +1,42 @@
 <!-- Add Department - Advisers Modal -->
-<div id="addAvisers" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
+<div id="add_advisers" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
     <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl">
         <h3 class="text-2xl font-semibold mb-6 text-gray-800">Add New Registration Advisers</h3>
-        <form id="addStudentForm">
+        <form id="add_advisers_form">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div>
-                    <label for="userID" class="block text-sm font-medium text-gray-700">User ID</label>
-                    <input type="text" id="studentNumber" name="studentNumber"
+                    <label for="user_id" class="block text-sm font-medium text-gray-700">User ID</label>
+                    <input type="text" id="user_id" name="user_id"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <div>
-                    <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                    <input type="text" id="lastName" name="lastName"
+                    <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <input type="text" id="last_name" name="last_name"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <div>
-                    <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                    <input type="text" id="firstName" name="firstName"
+                    <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+                    <input type="text" id="first_name" name="first_name"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <div>
-                    <label for="middleName" class="block text-sm font-medium text-gray-700">Middle Name</label>
-                    <input type="text" id="middleName" name="middleName"
+                    <label for="middle_name" class="block text-sm font-medium text-gray-700">Middle Name</label>
+                    <input type="text" id="middle_name" name="middle_name"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                    <input type="text" id="email" name="email"
+                    <label for="email_address" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="text" id="email_address" name="email_address"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <div>
-                    <label for="contactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
-                    <input type="text" id="contactNumber" name="contactNumber"
+                    <label for="contact_number" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                    <input type="text" id="contact_number" name="contact_number"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
@@ -52,8 +52,8 @@
                 </div>
 
                 <div>
-                    <label for="houseNumber" class="block text-sm font-medium text-gray-700">House Number</label>
-                    <input type="text" id="houseNumber" name="houseNumber"
+                    <label for="house_number" class="block text-sm font-medium text-gray-700">House Number</label>
+                    <input type="text" id="house_number" name="house_number"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
@@ -82,13 +82,10 @@
                 </div>
 
                 <div>
-                    <label for="zipCode" class="block text-sm font-medium text-gray-700">Zip Code</label>
-                    <input type="text" id="zipCode" name="zipCode"
+                    <label for="zip_code" class="block text-sm font-medium text-gray-700">Zip Code</label>
+                    <input type="text" id="zip_code" name="zip_code"
                         class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
-
-
-
             </div>
 
             <!-- Modal Actions -->
@@ -108,26 +105,14 @@
 </div>
 
 <script>
-    // Open Add Student Modal
-    function openaddAvisers() {
-        document.getElementById("addAvisers").classList.remove("hidden");
+    // Open Add Advisers Modal
+    function openAddAdvisers() {
+        document.getElementById("add_advisers").classList.remove("hidden");
     }
 
     // Close modal
     function closeModal() {
-        document.getElementById('addAvisers').classList.add('hidden');
+        document.getElementById('add_advisers').classList.add('hidden');
     }
 
-    function openModal(studentNumber, lastName, firstName, middleName, contactNumber, address, program,
-        classification) {
-        document.getElementById("userID").value = studentNumber;
-        document.getElementById("lastName").value = lastName;
-        document.getElementById("firstName").value = firstName;
-        document.getElementById("middleName").value = middleName;
-        document.getElementById("email").value = contactNumber;
-        document.getElementById("contactNumber").value = contactNumber;
-        document.getElementById("program").value = program;
-        document.getElementById("address").value = address;
-        openaddAvisers(); 
-    }
 </script>
