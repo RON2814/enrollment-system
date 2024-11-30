@@ -11,9 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
             $table->string("student_number");
-            $table->foreign("student_number")->references("id")->on("users")->onDelete("cascade");
             $table->string("last_name");
             $table->string("first_name");
             $table->string("middle_name");
@@ -22,6 +20,9 @@ return new class extends Migration {
             $table->enum("classification", ["regular", "irregular", "transferee", "returnee"]);
             $table->foreignId("address_id")->constrained("addresses")->onDelete("cascade");
             $table->timestamps();
+
+            // Foreign keys
+            $table->foreign("student_number")->references("id")->on("users")->onDelete("cascade");
         });
     }
 

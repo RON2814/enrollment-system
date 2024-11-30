@@ -41,6 +41,14 @@
       <x-input-error :messages="$errors->get('contact_number')" class="mt-2" />
     </div>
 
+    {{-- Email Input Field --}}
+    <div>
+      <x-input-label for="email" :value="__('Email')" />
+      <x-text-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" required
+        autofocus autocomplete="email" />
+      <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    </div>
+
     <!-- Program Dropdown -->
     <div class="mt-4">
       <x-input-label for="program" :value="__('Program')" />

@@ -9,47 +9,47 @@ use App\Http\Controllers\UserController;
 // Welcome Page
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('dashboard');
+        return redirect()->route('student.dashboard');
     }
     return view('welcome');
-});
+})->name("index");
 
 Route::fallback(function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('index');
 });
 
 // STUDENT Dashboard
-Route::get('/student/dashboard', function () {
+Route::get('/dashboard', function () {
     return view('student.dashboard');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
     ->name('student.dashboard');
 
 // Student Information Route
-Route::get('/student/student-information', function () {
+Route::get('/student-information', function () {
     return view('student.student-information');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
     ->name('student.student-information');
 
 // Enrolled Subjects Route
-Route::get('/student/enrolled-sub', function () {
+Route::get('/enrolled-sub', function () {
     return view('student.enrolled-sub');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
     ->name('student.enrolled-sub');
 
 // Class Schedule Route
-Route::get('/student/schedule', function () {
+Route::get('/schedule', function () {
     return view('student.schedule');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
     ->name('student.schedule');
 
 // Student Grades Route
-Route::get('/student/grades', function () {
+Route::get('/grades', function () {
     return view('student.student-grades');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
     ->name('student.student-grades');
 
 // Enrollment Module Route
-Route::get('/student/enrollment', function () {
+Route::get('/enrollment', function () {
     return view('student.enrollment');
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
     ->name('student.enrollment');
