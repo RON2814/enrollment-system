@@ -30,9 +30,7 @@
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
         <!-- Sidebar -->
         <aside class="w-1/6 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
-            {{-- @include('layouts.navigation') --}}
-
-            
+            {{-- @include('layouts.navigation') --}}   
             @if (auth()->check())
             <p>User is authenticated</p>
             <p>User Role: {{ auth()->user()->role->title }}</p>
@@ -55,21 +53,11 @@
             @endswitch
         @else
             <p>User not authenticated</p>
-        @endif
-        
+        @endif      
         </aside>
 
         <!-- Main Content -->
         <div class="flex-1 bg-gray-100 dark:bg-gray-900 main">
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
             <!-- Page Content -->
             <main>
                 {{ $slot }}

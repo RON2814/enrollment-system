@@ -1,86 +1,91 @@
 <x-app-layout>
-    <!-- main-content -->
-    <div class="main-content p-4 bg-[#ebe9e9]">
-        <div class="header-wrapper flex justify-between items-center flex-wrap bg-white rounded-lg p-4 mb-4">
-            <div class="header-title text-[#27984b]">
-                <span>Admin</span>
-                <h2>Dashboard</h2>
-            </div>
 
-            <div class="user-info flex items-center gap-2">
-                <div class="dropdown relative inline-block">
-                    <button class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer" onclick="toggleDropdown()">
-                        <span id="username">{{ Auth::user()->name }}</span>
-                        <i class="fas fa-chevron-down ml-2"></i>
-                    </button>
+    <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3 ">
+        <div class="header-title">
+            <h2 class="pl-3 font-semibold  text-[#243642]">Administrator Dashboard</h2>
+        </div>
 
-                    <div class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
-                        <a href="{{ route('profile.edit') }}" class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
-                        <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                            @csrf
-                            <button type="submit" class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log Out</button>
-                        </form>
-                    </div>
+        <div class="user-info flex items-center gap-2">
+            <div class="dropdown relative inline-block">
+                <button
+                    class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer"
+                    onclick="toggleDropdown()">
+                    <span id="username">{{ Auth::user()->name }}</span>
+                    <i class="fas fa-chevron-down ml-2"></i>
+                </button>
+
+                <div
+                    class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
+                    <a href="{{ route('profile.edit') }}"
+                        class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
+                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                        @csrf
+                        <button type="submit"
+                            class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log
+                            Out</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- main-content -->
+    <div class="main-content p-4 py-0 bg-[#ebe9e9]">
 
-        <div class="card-container bg-white p-8 rounded-xl mt-5 shadow-md">
+        <div class="card-container bg-white p-8 rounded-xl mt-4 shadow-md">
             <div class="card-wrapper grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Card 1: No. of Students -->
-                <div class="item-card bg-[#fce2fe] rounded-lg p-6 flex flex-col justify-between h-[150px] shadow-md transition-all ease-in-out hover:transform hover:translate-y-[-4px]">
+                <div
+                    class="item-card bg-[#fce2fe] rounded-lg p-6 flex flex-col justify-between h-[150px] shadow-md transition-all ease-in-out hover:transform hover:translate-y-[-4px]">
                     <div class="card-header flex justify-between items-center mb-5">
                         <div class="total flex flex-col">
                             <span class="title text-sm font-light text-[#333]">No. of Students</span>
                             <span class="total-value text-3xl font-semibold">{{ 'number' }}</span>
                         </div>
-                        <i class="fa-regular fa-user text-white bg-[#8b0000] p-4 h-16 w-16 text-center rounded-full text-xl"></i>
+                        <i
+                            class="fa-regular fa-user text-white bg-[#8b0000] p-4 h-16 w-16 text-center rounded-full text-xl"></i>
                     </div>
                     <span class="card-detail text-sm">Active enrolled students</span>
                 </div>
 
                 <!-- Card 2: No. of Registrars -->
-                <div class="item-card bg-[#ccffe0] rounded-lg p-6 flex flex-col justify-between h-[150px] shadow-md transition-all ease-in-out hover:transform hover:translate-y-[-4px]">
+                <div
+                    class="item-card bg-[#ccffe0] rounded-lg p-6 flex flex-col justify-between h-[150px] shadow-md transition-all ease-in-out hover:transform hover:translate-y-[-4px]">
                     <div class="card-header flex justify-between items-center mb-5">
                         <div class="total flex flex-col">
                             <span class="title text-sm font-light text-[#333]">No. of Registrars</span>
                             <span class="total-value text-3xl font-semibold">{{ 'number' }}</span>
                         </div>
-                        <i class="fa-regular fa-user text-white bg-[#006400] p-4 h-16 w-16 text-center rounded-full text-xl"></i>
+                        <i
+                            class="fa-regular fa-user text-white bg-[#006400] p-4 h-16 w-16 text-center rounded-full text-xl"></i>
                     </div>
                     <span class="card-detail text-sm">Active registrars</span>
                 </div>
 
                 <!-- Card 3: No. of Registration Advisers -->
-                <div class="item-card bg-[#add8e6] rounded-lg p-6 flex flex-col justify-between h-[150px] shadow-md transition-all ease-in-out hover:transform hover:translate-y-[-4px]">
+                <div
+                    class="item-card bg-[#add8e6] rounded-lg p-6 flex flex-col justify-between h-[150px] shadow-md transition-all ease-in-out hover:transform hover:translate-y-[-4px]">
                     <div class="card-header flex justify-between items-center mb-5">
                         <div class="total flex flex-col">
                             <span class="title text-sm font-light text-[#333]">No. of Registration Advisers</span>
                             <span class="total-value text-3xl font-semibold">{{ 'number' }}</span>
                         </div>
-                        <i class="fa-regular fa-user text-white bg-[#00008b] p-4 h-16 w-16 text-center rounded-full text-xl"></i>
+                        <i
+                            class="fa-regular fa-user text-white bg-[#00008b] p-4 h-16 w-16 text-center rounded-full text-xl"></i>
                     </div>
                     <span class="card-detail text-sm">Active department faculty advisers</span>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white mt-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
+        <div class="bg-white mt-5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-semibold text-gray-900">Active Users</h3>
-        
-                <!-- Search and Filter Section -->
-                <div class="flex space-x-4">
-                    <!-- Search Bar -->
-                    <input 
-                        type="text" 
-                        placeholder="Search..." 
-                        class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                    />
-        
-                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 border-b border-gray-200">Active Users</h3>
+                <!-- Search Bar -->
+                <input type="text" placeholder="Search..."
+                    class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+
             </div>
-        
+
             <div class="overflow-x-auto rounded-lg">
                 <table class="min-w-full table-auto border-separate border-spacing-0">
                     <thead class="bg-[#0A6847] text-white text-sm uppercase tracking-wide">
@@ -89,7 +94,7 @@
                             <th class="py-3 px-6 text-left font-medium">Email</th>
                             <th class="py-3 px-6 text-left font-medium">Role</th>
                             <th class="py-3 px-6 text-left font-medium">Created At</th>
- 
+
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 divide-y divide-gray-200">
@@ -98,7 +103,8 @@
                                 <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->name }}</td>
                                 <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->email }}</td>
                                 <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->role->title }}</td>
-                                <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->created_at->format('Y-m-d') }}</td>
+                                <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->created_at->format('Y-m-d') }}
+                                </td>
 
                             </tr>
                         @endforeach
@@ -106,12 +112,12 @@
                 </table>
             </div>
         </div>
-        
+
     </div>
-<script>
-    function toggleDropdown() {
-        const dropdownContent = document.querySelector('.dropdown-content');
-        dropdownContent.classList.toggle('hidden');
-    }
-</script>
+    <script>
+        function toggleDropdown() {
+            const dropdownContent = document.querySelector('.dropdown-content');
+            dropdownContent.classList.toggle('hidden');
+        }
+    </script>
 </x-app-layout>
