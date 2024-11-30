@@ -9,7 +9,7 @@ use App\Http\Controllers\UserController;
 // Welcome Page
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('student.dashboard');
+        return redirect()->route('dashboard');
     }
     return view('welcome');
 })->name("index");
@@ -54,12 +54,39 @@ Route::get('/enrollment', function () {
 })->middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
     ->name('student.enrollment');
 
+// Department Routes
+Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])->prefix('department')->name('department.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('department.dashboard');
+    })->name('dashboard');
 
-// DEPARTMENT Dashboard
-Route::get('/department/dashboard', function () {
-    return view('department.dashboard');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
-    ->name('department.dashboard');
+    // Student Checklist
+    Route::get('/student-checklist', function () {
+        return view('department.studentChecklist');
+    })->name('studentChecklist');
+
+    // Courses
+    Route::get('/courses', function () {
+        return view('department.courses');
+    })->name('courses');
+
+    // Program
+    Route::get('/program', function () {
+        return view('department.program');
+    })->name('program');
+
+    // Instructors
+    Route::get('/instructors', function () {
+        return view('department.instructors');
+    })->name('instructor');
+
+    // Schedule
+    Route::get('/schedule', function () {
+        return view('department.schedule');
+    })->name('schedule');
+});
+
 
 // REGISTRAR Dashboard
 Route::get('/registrar/dashboard', function () {

@@ -1,5 +1,5 @@
 <aside
-    class="sidebar fixed top-0 left-0 bottom-0 w-60 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+    class="sidebar fixed top-0 left-0 bottom-0 w-1/6 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo h-[80px] p-4 flex items-center gap-4">
@@ -17,45 +17,54 @@
         <!-- Dashboard -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="{{ route('admin.dashboard') }}" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-tachometer-alt text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Dashboard</span>
+            <a href="{{ route('department.dashboard') }}" class="text-white no-underline flex items-center gap-3">
+                <i class="fas fa-tachometer-alt text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Dashboard</span>
             </a>
         </li>
 
-        <!-- Student Information -->
+        <!-- Student Checklist -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Student Checklist</span>
+            <a href="{{ route('department.studentChecklist') }}" class="text-white no-underline flex items-center gap-3">
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Student Checklist</span>
             </a>
         </li>
 
-        <!-- Enrolled Subjects -->
+        <!-- Courses -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Courses</span>
+            <a href="{{ route('department.courses') }}" class="text-white no-underline flex items-center gap-3">
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Courses</span>
             </a>
         </li>
 
-        <!-- Class Schedule -->
+        <!--Program -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Program</span>
+            <a href="{{ route('department.program') }}" class="text-white no-underline flex items-center gap-3">
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Program</span>
             </a>
         </li>
 
-        <!-- Student Grades -->
+
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-lg opacity-75 mr-2"></i>
-                <span class="text-sm opacity-80">Schedule</span>
+            <a href="{{ route('department.instructor') }}" class="text-white no-underline flex items-center gap-3">
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Instructors</span>
+            </a>
+        </li>
+
+        <!-- Schedule -->
+        <li
+            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+            <a href="{{ route('department.schedule') }}" class="text-white no-underline flex items-center gap-3">
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Schedule</span>
             </a>
         </li>
 

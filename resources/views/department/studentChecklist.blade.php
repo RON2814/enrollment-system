@@ -1,10 +1,9 @@
 <x-app-layout>
-  <!-- main-content -->
   <div class="main-content p-4 bg-[#ebe9e9]">
       <div class="header-wrapper flex justify-between items-center flex-wrap bg-white rounded-lg p-4 mb-4">
           <div class="header-title text-[#27984b]">
-              <span>Primary</span>
-              <h2>Dashboard</h2>
+              <span></span>
+              <h2>Student Checklist</h2>
           </div>
 
           <div class="user-info flex items-center gap-2">
@@ -31,21 +30,18 @@
           </div>
       </div>
 
-      <div class="flex space-x-5 mt-2">
-          <div class="card-container bg-white p-8 rounded-xl shadow-md w-2/3">
-              
-          </div>
 
-          <div class="card-container bg-white p-8 rounded-xl shadow-md w-1/2">
-          </div>
-      </div>
+      {{-- edit here below--}}
+
+
 
   </div>
 
+
   <script>
-      function toggleDropdown() {
-          const dropdownContent = document.querySelector('.dropdown-content');
-          dropdownContent.classList.toggle('hidden');
-      }
-  </script>
+    function toggleDropdown() {
+        const dropdownContent = document.querySelector('.dropdown-content');
+        dropdownContent.classList.toggle('hidden');
+    }
+</script>
 </x-app-layout>
