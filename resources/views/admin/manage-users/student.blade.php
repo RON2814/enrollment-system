@@ -96,13 +96,12 @@
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 
   <!-- Include modals -->
-  @include('admin.manage-users.modals.add-student')
-  @include('admin.manage-users.modals.update-student')
+  @include('modals.manage-users.add-student')
+  @include('modals.manage-users.update-student')
 
   <script>
     // Function to toggle dropdown visibility
