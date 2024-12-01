@@ -7,6 +7,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -27,30 +29,45 @@ class AuthenticatedSessionController extends Controller
         // Check if the 'remember' checkbox was checked
         $remember = $request->filled('remember');  // This will return true if 'remember' is checked, false otherwise.
 
+        // Determine if the input is an email or user ID
+        $loginField = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'id';
+
+        // Validate the login field
+        $validator = Validator::make($request->all(), [
+            'login' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            throw ValidationException::withMessages([
+                'login' => [trans('auth.failed')],
+            ]);
+        }
+
         // Authenticate the user with 'remember' flag
-        if (Auth::attempt($request->only('email', 'password'), $remember)) {
+        if (Auth::attempt([$loginField => $request->input('login'), 'password' => $request->input('password')], $remember)) {
             // Regenerate the session to avoid session fixation
             $request->session()->regenerate();
 
             // Get the logged-in user's role
-            $loggedInUserRole = $request->user()->role;
+            $loggedInUserRole = $request->user()->role_id;
 
             // Redirect based on user role
-            if ($loggedInUserRole == 'department') {
-                return redirect()->intended(route('department.dashboard', absolute: false));
-            } elseif ($loggedInUserRole == 'registrar') {
-                return redirect()->intended(route('registrar.dashboard', absolute: false));
-            } elseif ($loggedInUserRole == 'admin') {
-                return redirect()->intended(route('admin.dashboard', absolute: false));
+            switch ($loggedInUserRole) {
+                case '2':
+                    return redirect()->intended(route('department.dashboard', false));
+                case '3':
+                    return redirect()->intended(route('registrar.dashboard', false));
+                case '4':
+                    return redirect()->intended(route('admin.dashboard', false));
+                default:
+                    return redirect()->intended(route('dashboard', false));
             }
-
-            // Default redirect when no matching role
-            return redirect()->intended(route('student.dashboard', absolute: false));
         }
 
-        // If login fails, return back with error
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+        // If authentication fails, throw a validation exception
+        throw ValidationException::withMessages([
+            'login' => [trans('auth.failed')],
         ]);
     }
 

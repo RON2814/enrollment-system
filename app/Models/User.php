@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -50,9 +51,9 @@ class User extends Authenticatable
         ];
     }
 
-     // relationship with the Role model
-     public function role()
-     {
+    // relationship with the Role model
+    public function role()
+    {
         return $this->belongsTo(Role::class); // Adjust if your role relationship is different
     }
 

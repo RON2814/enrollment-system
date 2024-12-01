@@ -5,9 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
-  <script src="https://cdn.tailwindcss.com"></script>
   <title>CvSU-B Enrollment System</title>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-gradient-to-r from-green-100 to-green-200 flex items-center justify-center h-screen">
@@ -22,21 +21,21 @@
       <div class="lg:w-[55%] p-8">
         <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-4">
           @csrf
-
           <!-- Email Address -->
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 text-left">Email</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-              autocomplete="username" placeholder="Enter your email"
+            <label for="login" class="block text-sm font-medium text-gray-700 text-left mb-2">User id or
+              Email</label>
+            <input id="login" type="text" name="login" value="{{ old('login') }}" required autofocus
+              autocomplete="username" placeholder="Enter your login credential"
               class="p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-green-500 w-full">
-            @error('email')
+            @error('login')
               <span class="text-sm text-red-500 mt-2">{{ $message }}</span>
             @enderror
           </div>
 
           <!-- Password -->
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 text-left">Password</label>
+            <label for="password" class="block text-sm font-medium text-gray-700 text-left mb-2">Password</label>
             <input id="password" type="password" name="password" required autocomplete="current-password"
               placeholder="Enter your password"
               class="p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-green-500 w-full">
