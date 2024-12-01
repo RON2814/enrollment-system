@@ -77,14 +77,17 @@
                 </div>
                 <div class="flex items-end gap-2">
                     <button
-                        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-2 rounded-md shadow text-sm">
+                        class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-2 rounded-md shadow text-sm">
                         Display Grades
                     </button>
-                    <button
-                        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-2 rounded-md shadow text-sm">
-                        View Checklist
-                    </button>
+                    <form action="{{ route('student.student-checklist') }}" method="GET" class="flex-1">
+                        <button
+                            class="w-full bg-blue-500 hover:bg-blue-600 text-white py-1.5 px-2 rounded-md shadow text-sm">
+                            View Checklist
+                        </button>
+                    </form>
                 </div>
+                
             </div>
 
             <div class="overflow-x-auto rounded-lg mt-4">

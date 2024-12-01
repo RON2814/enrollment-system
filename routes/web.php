@@ -46,6 +46,11 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
         return view('student.student-grades');
     })->name('student-grades');
 
+    // Student Checklist Routes
+    Route::get('/student-checklist', function () {
+        return view('student.checklist.student-checklist');
+    })->name('student-checklist');
+
     // Enrollment Module Route
     Route::get('/enrollment', function () {
         return view('student.enrollment');
