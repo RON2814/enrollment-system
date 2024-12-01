@@ -6,6 +6,9 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DepartmentController;
+
 
 // Welcome Page
 Route::get('/', function () {
@@ -58,38 +61,32 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
 });
 
 
-// Department Authentication / Routes
-Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])->prefix('department')->name('department.')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', function () {
-        return view('department.dashboard');
-    })->name('dashboard');
+// DEPARTMENT ROUTES
+Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
+    ->prefix('department')
+    ->name('department.')
+    ->group(function () {
 
-    // Student Checklist
-    Route::get('/student-checklist', function () {
-        return view('department.studentChecklist');
-    })->name('studentChecklist');
+        // Dashboard
+        Route::get('/dashboard', function () {
+            return view('department.dashboard');
+        })->name('dashboard');
 
-    // Courses
-    Route::get('/courses', function () {
-        return view('department.courses');
-    })->name('courses');
+        // Student Checklist
+        Route::get('/student-checklist', function () {
+            return view('department.studentChecklist');
+        })->name('studentChecklist');
 
-    // Program
-    Route::get('/program', function () {
-        return view('department.program');
-    })->name('program');
+        // Courses (Controller Method)
+        Route::get('/courses', [CourseController::class, 'showCourses'])->name('courses');
 
-    // Instructors
-    Route::get('/instructors', function () {
-        return view('department.instructors');
-    })->name('instructor');
+        // Department - Programs and Instructors
+        Route::get('/department', [DepartmentController::class, 'department'])->name('department');
 
-    // Schedule
-    Route::get('/schedule', function () {
-        return view('department.schedule');
-    })->name('schedule');
-});
+        // Schedule (Controller method)
+        Route::get('/schedule', [DepartmentController::class, 'schedule'])->name('schedule');
+    });
+
 
 
 // REGISTRAR Dashboard
@@ -131,6 +128,8 @@ Route::post("/registrar/add-student", [ProfileController::class, 'store'])
     ->name("registrar.store-student");
 
 Route::view("/view-test", "layout.app");
+
+
 
 // Include Auth Routes
 require __DIR__ . '/auth.php';

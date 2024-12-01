@@ -23,6 +23,16 @@
             </a>
         </li>
 
+             <!--Department -->
+             <li
+             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+             <a href="{{ route('department.department') }}" class="text-white no-underline flex items-center gap-3">
+                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                 <span class="text-xs opacity-80">Department</span>
+             </a>
+         </li>
+ 
+
         <!-- Student Checklist -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
@@ -41,23 +51,7 @@
             </a>
         </li>
 
-        <!--Program -->
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="{{ route('department.program') }}" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Program</span>
-            </a>
-        </li>
-
-
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="{{ route('department.instructor') }}" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Instructors</span>
-            </a>
-        </li>
+   
 
         <!-- Schedule -->
         <li

@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->tinyInteger("contact_hours_lecture")->unsigned();
             $table->tinyInteger("contact_hours_laboratory")->unsigned();
             $table->string("pre_requisite")->nullable();
+            // $table->foreignId('program_id')->nullable()->constrained('programs')->onDelete('set null');
+
         });
     }
 

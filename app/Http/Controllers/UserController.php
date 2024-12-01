@@ -9,11 +9,8 @@ class UserController extends Controller
 {
     // Admin Dashboard
     public function dashboard()
-    {
-        // Fetch users for the dashboard (if needed)
-        $users = User::all();
+    {        $users = User::all();
 
-        // Return the view with the users data
         return view('admin.dashboard', compact('users'));
     }
 
