@@ -106,6 +106,9 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
         Route::get('/manage-users/registrar', [UserController::class, 'manageRegistrar'])->name('manageUsers.registrar');
         Route::get('/manage-users/department', [UserController::class, 'manageDepartment'])->name('manageUsers.department');
         Route::get('/manage-users/admin', [UserController::class, 'manageAdmin'])->name('manageUsers.admin');
+
+        // Add Student
+        Route::post("/manage-users/student/store", [NewStudentController::class, 'store'])->name("manage-users.store-student");
     });
 
 
@@ -117,22 +120,9 @@ Route::middleware('auth')->group(function () {
 });
 
 // Add Student with registrar role
-Route::get("/registrar/add-student", [NewStudentController::class, 'create'])
-    ->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
-    ->name("registrar.add-student");
-
 Route::post("/registrar/add-student", [ProfileController::class, 'store'])
     ->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     ->name("registrar.store-student");
-
-// Add Student with admin role
-Route::get("/admin/add-student", [NewStudentController::class, 'create'])
-    ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
-    ->name("admin.add-student");
-
-Route::post("/admin/add-student", [NewStudentController::class, 'store'])
-    ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
-    ->name("admin.store-student");
 
 Route::view("/view-test", "layout.app");
 
