@@ -4,12 +4,13 @@ use App\Http\Controllers\NewStudentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 
 // Welcome Page
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
+    if (Auth::check()) {
+        return redirect()->route('student.dashboard');
     }
     return view('welcome');
 })->name("index");

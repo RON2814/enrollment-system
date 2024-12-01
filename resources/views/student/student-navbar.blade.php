@@ -4,12 +4,19 @@
   <div class="sidebar-header mb-6">
     <div class="logo h-[80px] p-4 flex items-center gap-4">
       <!-- Logo Image -->
-      <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="CvSU-B Logo" class="h-12 w-12 object-contain">
+      <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="CvSU-B Logo" class="h-10 w-10 object-contain">
       <!-- Title -->
       <h2 class="text-xl font-medium opacity-80">CvSU-B</h2>
     </div>
+    <!-- Close Button for Mobile -->
+    <button
+      id="closeSidebar"
+      class="lg:hidden text-white text-xl focus:outline-none">
+      &times;
+    </button>
     <hr class="border-t-2 border-[#2c8c6d] mb-6">
   </div>
+  
 
   <!-- Sidebar Navigation Menu -->
   <ul class="menu h-[80%] relative list-none p-0">
@@ -41,13 +48,13 @@
     </li>
 
     <!-- Class Schedule -->
-    <li
+    {{-- <li
       class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
       <a href="{{ route('student.schedule') }}" class="text-white no-underline flex items-center gap-3">
         <i class="fas fa-user text-xs opacity-75 mr-2"></i>
         <span class="text-xs opacity-80">Class Schedule</span>
       </a>
-    </li>
+    </li> --}}
 
     <!-- Student Grades -->
     <li
