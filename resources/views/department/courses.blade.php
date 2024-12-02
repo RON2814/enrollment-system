@@ -48,7 +48,7 @@
                         </div>
                         <input type="text" id="table-search"
                             class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Search for course code/title" oninput="filterTable()">
+                            placeholder="Search for course code or code title" oninput="filterTable()">
                     </div>
 
                     <!-- Add New Course Button -->
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="border-b border-gray-300 mt-0 py-0"></div>
-            <div class="overflow-x-auto mt-2">
+            <div class="overflow-x-auto mt-2 rounded-md">
                 <table class="min-w-full table-auto border-collapse border-spacing-0 table-fixed">
                     <thead class="bg-[#0A6847] text-white text-xs">
                         <tr>
@@ -100,7 +100,7 @@
                     </thead>
                     <tbody class="text-gray-700" id="course-table-body">
                         @forelse($courses as $course)
-                            <tr class="hover:bg-gray-100 transition-colors duration-200">
+                            <tr class="hover:bg-gray-200 transition-colors duration-200">
                                 <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_code }}</td>
                                 <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_title }}</td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">

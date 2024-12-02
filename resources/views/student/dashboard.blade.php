@@ -1,4 +1,9 @@
 <x-app-layout>
+    <style>
+        .haha {
+            color: red;
+        }
+    </style>
     {{-- header  --}}
     <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3">
         <div class="header-title pl-3 font-semibold  text-[#206A5D]">
@@ -33,10 +38,10 @@
     <div class="main-content p-4 bg-[#ebe9e9]">
         <div class="flex space-x-5 mt-2">
             <div class="card-container bg-white p-8 rounded-xl shadow w-2/3">
-
+                <div class="haha border-solid font-semibold"> HASJDHJASHDJHSAJDHAS</div>
             </div>
 
-            <div class="card-container bg-white p-8 rounded-xl shadow-md w-1/2">
+            <div class=" card-container bg-white p-8 rounded-xl shadow-md w-1/2">
             </div>
         </div>
 

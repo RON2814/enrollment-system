@@ -31,8 +31,8 @@
 
     <div class="main-content p-4 py-0 bg-[#ebe9e9]">
         <div class="bg-white p-8 rounded-lg shadow mt-4">
-            <div class="overflow-x-auto rounded-lg">
-                <table class="min-w-full table-auto border-collapse border-spacing-0">
+            <div class="overflow-x-auto rounded-md">
+                <table class="min-w-full table-auto border-collapse border-spacing-0 ">
                     <h2 class="text-xl font-medium border-b border-gray-200 text-gray-800 mb-4">List of Programs:</h2>
                     <thead class="bg-[#0A6847] text-white text-xs">
                         <tr>

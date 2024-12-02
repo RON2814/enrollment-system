@@ -281,13 +281,7 @@
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
         <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="e.g. 8:00 AM - 10:00 AM"></td>
-        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Course Day"></td>
-        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Course Day"></td>
-        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Course Day"></td>
-        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Course Day"></td>
-        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Course Day"></td>
-        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Course Day"></td>
-        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Course Code"></td>
+        <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" 
         <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Instructor"></td>
         <td class="p-2 border"><input type="text" class="w-full p-1 border border-gray-300" placeholder="Room"></td>
         <td class="p-2 border text-center space-x-2">
