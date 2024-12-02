@@ -13,8 +13,10 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-    
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -30,30 +32,37 @@
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
         <!-- Sidebar -->
         <aside class="w-1/6 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
-            {{-- @include('layouts.navigation') --}}   
+            {{-- @include('layouts.navigation') --}}
             @if (auth()->check())
-            <p>User is authenticated</p>
-            <p>User Role: {{ auth()->user()->role->title }}</p>
-            @switch(auth()->user()->role->id)
-                @case(1) <!-- Student -->
-                    @include('student.student-navbar')
+                <p>User is authenticated</p>
+                <p>User Role: {{ auth()->user()->role->title }}</p>
+                @switch(auth()->user()->role->id)
+                    @case(1)
+                        <!-- Student -->
+                        @include('student.student-navbar')
                     @break
-                @case(2) <!-- Department -->
-                    @include('department.department-navbar')
+
+                    @case(2)
+                        <!-- Department -->
+                        @include('department.department-navbar')
                     @break
-                @case(3) <!-- Registrar -->
-                    @include('registrar.registrar-navbar')
+
+                    @case(3)
+                        <!-- Registrar -->
+                        @include('registrar.registrar-navbar')
                     @break
-                @case(4) <!-- Admin -->
-                    @include('admin.admin-navbar')
+
+                    @case(4)
+                        <!-- Admin -->
+                        @include('admin.admin-navbar')
                     @break
-        
-                @default
-                    <p>Role not recognized: {{ auth()->user()->role->id }}</p>
-            @endswitch
-        @else
-            <p>User not authenticated</p>
-        @endif      
+
+                    @default
+                        <p>Role not recognized: {{ auth()->user()->role->id }}</p>
+                @endswitch
+            @else
+                <p>User not authenticated</p>
+            @endif
         </aside>
 
         <!-- Main Content -->

@@ -15,4 +15,8 @@ class DepartmentController extends Controller
 
         return view('department.department', compact('programs', 'instructors'));
     }
+    public function schedule()
+    {
+        return view('department.schedule'); 
+    }
 }

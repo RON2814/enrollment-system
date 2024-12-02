@@ -101,8 +101,8 @@
                     <tbody class="text-gray-700" id="course-table-body">
                         @forelse($courses as $course)
                             <tr class="hover:bg-gray-100 transition-colors duration-200">
-                                <td class="py-4 px-3 text-sm truncate max-w-xs">{{ $course->course_code }}</td>
-                                <td class="py-4 px-3 text-sm truncate max-w-xs">{{ $course->course_title }}</td>
+                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_code }}</td>
+                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_title }}</td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
                                     {{ $course->credit_unit_lecture }}</td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
@@ -111,7 +111,7 @@
                                     {{ $course->contact_hours_lecture }}</td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
                                     {{ $course->contact_hours_laboratory }}</td>
-                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[100px] break-words">
+                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[100px] break-words font-medium">
                                     {{ $course->pre_requisite ?: '...' }}</td>
                                 <td class="p-2 text-center">
                                     <button class="text-blue-500 hover:text-blue-700">

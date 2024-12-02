@@ -32,11 +32,11 @@
 
     {{-- main content  --}}
     <div class="main-content p-4 bg-[#ebe9e9]">
-        <div class="bg-white p-8 rounded-lg shadow mt-2">
+        <div class="overflow-x-auto bg-white p-8 rounded-lg shadow mt-2">
             <!-- Student Information Section -->
-            <h2 class="text-2xl font-medium border-b border-gray-300 text-gray-800 mb-5">Enrollment • <span
+            <h2 class=" text-2xl font-medium border-b border-gray-300 text-gray-800 mb-5">Enrollment • <span
                     class="text-sm text-blue-500">Student Evaluation</span></h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="student_number">Student
                         Number</label>

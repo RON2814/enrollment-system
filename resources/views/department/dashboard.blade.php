@@ -31,8 +31,41 @@
 
     {{-- main contnet  --}}
     <div class="main-content p-4 bg-[#ebe9e9]">
-        {{-- edit here below --}}
+        <h2 class="text-3xl font-semibold text-primary mb-6">Welcome to the Department Dashboard</h2>
 
+        <!-- Dashboard Cards -->
+        <section id="dashboard-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-primary">Total Students</h3>
+                <p class="text-3xl font-bold">1,250</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-primary">Verifying Students</h3>
+                <p class="text-3xl font-bold">100</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-primary">Courses</h3>
+                <p class="text-3xl font-bold">35</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-primary">Programs</h3>
+                <p class="text-3xl font-bold">2</p>
+            </div>
+        </section>
+
+        <!-- Announcements Section -->
+        <section id="announcement-view" class="bg-white p-6 rounded-lg shadow-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-semibold text-primary">Announcements</h3>
+                <a href="announcement_manage.html" class="px-4 py-2 bg-accent text-white rounded hover:bg-yellow-500 text-sm lg:text-base">Manage Announcements</a>
+            </div>
+            <div id="announcementList">
+                <div class="border-b pb-4">
+                    <h4 class="font-semibold text-primary">Announcement Title</h4>
+                    <p class="text-sm text-gray-600">Announcement content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </div>
+        </section>
 
 
     </div>

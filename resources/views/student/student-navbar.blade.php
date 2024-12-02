@@ -21,8 +21,8 @@
   <!-- Sidebar Navigation Menu -->
   <ul class="menu h-[80%] relative list-none p-0">
     <!-- Dashboard -->
-    <li
-      class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+    <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+      @if(request()->routeIs('student.dashboard')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
       <a href="{{ route('student.dashboard') }}" class="text-white no-underline flex items-center gap-3">
         <i class="fas fa-tachometer-alt text-xs opacity-75 mr-2"></i>
         <span class="text-xs opacity-80">Dashboard</span>
@@ -30,8 +30,8 @@
     </li>
 
     <!-- Student Information -->
-    <li
-      class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+    <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+      @if(request()->routeIs('student.student-information')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
       <a href="{{ route('student.student-information') }}" class="text-white no-underline flex items-center gap-3">
         <i class="fas fa-user text-xs opacity-75 mr-2"></i>
         <span class="text-xs opacity-80">Student Information</span>
@@ -39,8 +39,8 @@
     </li>
 
     <!-- Enrolled Subjects -->
-    <li
-      class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+    <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+      @if(request()->routeIs('student.enrolled-sub')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
       <a href="{{ route('student.enrolled-sub') }}" class="text-white no-underline flex items-center gap-3">
         <i class="fas fa-user text-xs opacity-75 mr-2"></i>
         <span class="text-xs opacity-80">Enrolled Subjects</span>
@@ -48,17 +48,17 @@
     </li>
 
     <!-- Class Schedule -->
-    {{-- <li
-      class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+    <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+      @if(request()->routeIs('student.schedule')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
       <a href="{{ route('student.schedule') }}" class="text-white no-underline flex items-center gap-3">
         <i class="fas fa-user text-xs opacity-75 mr-2"></i>
         <span class="text-xs opacity-80">Class Schedule</span>
       </a>
-    </li> --}}
+    </li>
 
     <!-- Student Grades -->
-    <li
-      class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+    <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+      @if(request()->routeIs('student.student-grades')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
       <a href="{{ route('student.student-grades') }}" class="text-white no-underline flex items-center gap-3">
         <i class="fas fa-user text-xs opacity-75 mr-2"></i>
         <span class="text-xs opacity-80">Student Grades</span>
@@ -66,8 +66,8 @@
     </li>
 
     <!-- Enrollment Module -->
-    <li
-      class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+    <li class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+      @if(request()->routeIs('student.enrollment')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
       <a href="{{ route('student.enrollment') }}" class="text-white no-underline flex items-center gap-3">
         <i class="fas fa-user text-xs opacity-75 mr-2"></i>
         <span class="text-xs opacity-80">Enrollment Module</span>
