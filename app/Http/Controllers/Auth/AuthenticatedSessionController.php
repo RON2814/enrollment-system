@@ -53,16 +53,13 @@ class AuthenticatedSessionController extends Controller
             $loggedInUserRole = $request->user()->role_id;
 
             // Redirect based on user role
-            switch ($loggedInUserRole) {
-                case '2':
-                    return redirect()->intended(route('department.dashboard', false));
-                case '3':
-                    return redirect()->intended(route('registrar.dashboard', false));
-                case '4':
-                    return redirect()->intended(route('admin.dashboard', false));
-                default:
-                    return redirect()->intended(route('dashboard', false));
-            }
+            return match ($loggedInUserRole) {
+                '1' => redirect()->intended(route('dashboard', false)),
+                '2' => redirect()->intended(route('department.dashboard', false)),
+                '3' => redirect()->intended(route('registrar.dashboard', false)),
+                '4' => redirect()->intended(route('admin.dashboard', false)),
+                default => redirect()->intended(route('index', false)),
+            };
         }
 
         // If authentication fails, throw a validation exception

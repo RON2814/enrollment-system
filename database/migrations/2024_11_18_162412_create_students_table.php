@@ -16,9 +16,9 @@ return new class extends Migration {
             $table->string("first_name");
             $table->string("middle_name");
             $table->string("extension_name")->nullable();
-            $table->string("contact_number");
-            $table->date("birthday"); 
-            $table->enum("sex", ["Male", "Female", "Other"]); 
+            $table->string("contact_number")->nullable();
+            $table->date("birthday")->nullable();
+            $table->enum("sex", ["male", "female", "other"])->nullable();
             $table->foreignId("program_id")->constrained("programs");
             $table->enum("classification", ["Regular", "Irregular", "Transferee", "Returnee"]);
             $table->foreignId("address_id")->constrained("addresses")->onDelete("cascade");

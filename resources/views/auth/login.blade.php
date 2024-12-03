@@ -23,8 +23,7 @@
           @csrf
           <!-- Email Address -->
           <div>
-            <label for="login" class="block text-sm font-medium text-gray-700 text-left mb-2">User id or
-              Email</label>
+            <label for="login" class="block text-sm font-medium text-gray-700 text-left mb-2">Email or UserId</label>
             <input id="login" type="text" name="login" value="{{ old('login') }}" required autofocus
               autocomplete="username" placeholder="Enter your login credential"
               class="p-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-green-500 w-full">

@@ -56,7 +56,7 @@
         <div>
           <label for="program" class="text-sm font-medium text-gray-700">Program <span
               class="text-red-400">*</span></label>
-          <select required id="program" name="program"
+          <select required id="program" name="program_id"
             class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             <option value="" disabled selected>Select Program</option>
             <option value="1">BS Computer Science</option>
@@ -86,10 +86,8 @@
           Cancel
         </button>
 
-        <button type="submit"
+        <input type="submit" value="Save"
           class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 transition">
-          Save
-        </button>
       </div>
     </form>
   </div>

@@ -3,21 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
-use App\Models\Program;
-use App\Models\Student;
+use App\Models\Checklist\Checklist;
+use App\Models\Roles\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class NewStudentController extends Controller
 {
-  public function create(): View
-  {
-    // Fetch all roles from the database
-    $programs = Program::all();
-
-    return view('students.add-student', compact('programs'));
-  }
 
   public function store(Request $request)
   {
@@ -27,8 +19,7 @@ class NewStudentController extends Controller
       "last_name" => ["required", "string", "max:50"],
       "first_name" => ["required", "string", "max:50"],
       "middle_name" => ["required", "string", "max:50"],
-      "extension_name" => ["string", "max:10"],
-      "contact_number" => ["string", "max:11"],
+      "extension_name" => ["nullable", "string", "max:10"],
       "program_id" => ["required", "exists:programs,id"],
       "classification" => ["required", "in:regular,irregular,transferee,returnee"],
     ]);
@@ -60,6 +51,147 @@ class NewStudentController extends Controller
       "address_id" => $address->id,
     ]);
 
-    return redirect()->route('index')->with('success', 'Student added successfully.');
+    // Create checklist for the new student
+    $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [
+      ['course_code' => 'GNED 02', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'GNED 05', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'GNED 11', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 50', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 21', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 22', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'FITT 1', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'NSTP 1', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'CVSU 101', 'year' => "First Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'GNED 01', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 03', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 06', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 12', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'DCIT 23', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 50', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'FITT 2', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'NSTP 2', 'year' => "First Year", 'semester' => "Second Semester"],
+
+      ['course_code' => 'GNED 04', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'MATH 1', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 55', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 60', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 50', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 24', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'INSY 50', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'FITT 3', 'year' => "Second Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'GNED 08', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 14', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'MATH 2', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'COSC 65', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'COSC 70', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'DCIT 25', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'DCIT 55', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'FITT 4', 'year' => "Second Year", 'semester' => "Second Semester"],
+
+      ['course_code' => 'MATH 3', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 75', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 80', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 85', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 101', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 26', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 65', 'year' => "Third Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'GNED 09', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'MATH 4', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'COSC 90', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'COSC 95', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'COSC 106', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'DCIT 60', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 85', 'year' => "Third Year", 'semester' => "Second Semester"],
+
+      ['course_code' => 'COSC 199', 'year' => "Third Year", 'semester' => "Midyear"],
+
+      ['course_code' => 'ITEC 80', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 100', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 105', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 111', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 200A', 'year' => "Fourth Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'GNED 07', 'year' => "Fourth Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 10', 'year' => "Fourth Year", 'semester' => "Second Semester"],
+      ['course_code' => 'COSC 110', 'year' => "Fourth Year", 'semester' => "Second Semester"],
+      ['course_code' => 'COSC 200B', 'year' => "Fourth Year", 'semester' => "Second Semester"],
+    ] : [ // Program ID 2 is BSIT
+      ['course_code' => 'GNED 02', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'GNED 05', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'GNED 11', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'COSC 50', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 21', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 22', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'FITT 1', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'NSTP 1', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'CVSU 101', 'year' => "First Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'GNED 01', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 03', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 06', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'GNED 12', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'DCIT 23', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 50', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'FITT 2', 'year' => "First Year", 'semester' => "Second Semester"],
+      ['course_code' => 'NSTP 2', 'year' => "First Year", 'semester' => "Second Semester"],
+
+      ['course_code' => 'GNED 04', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'GNED 07', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'GNED 10', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'GNED 14', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'ITEC 55', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 24', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 50', 'year' => "Second Year", 'semester' => "First Semester"],
+      ['course_code' => 'FITT 3', 'year' => "Second Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'GNED 08', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'DCIT 25', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 60', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 65', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'DCIT 55', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 70', 'year' => "Second Year", 'semester' => "Second Semester"],
+      ['course_code' => 'FITT 4', 'year' => "Second Year", 'semester' => "Second Semester"],
+
+      ['course_code' => 'STAT 2', 'year' => "Second Year", 'semester' => "Midyear"],
+      ['course_code' => 'ITEC 75', 'year' => "Second Year", 'semester' => "Midyear"],
+
+      ['course_code' => 'ITEC 80', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'ITEC 85', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'ITEC 90', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'INSY 55', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 26', 'year' => "Third Year", 'semester' => "First Semester"],
+      ['course_code' => 'DCIT 60', 'year' => "Third Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'GNED 09', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 95', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 101', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 106', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 100', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 105', 'year' => "Third Year", 'semester' => "Second Semester"],
+      ['course_code' => 'ITEC 200A', 'year' => "Third Year", 'semester' => "Second Semester"],
+
+      ['course_code' => 'DCIT 65', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'ITEC 111', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'ITEC 116', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'ITEC 110', 'year' => "Fourth Year", 'semester' => "First Semester"],
+      ['course_code' => 'ITEC 200B', 'year' => "Fourth Year", 'semester' => "First Semester"],
+
+      ['course_code' => 'ITEC 199', 'year' => "Fourth Year", 'semester' => "Second Semester"],
+    ];
+
+    foreach ($checklistItems as $item) {
+      Checklist::create([
+        'student_number' => $request->student_number,
+        'course_code' => $item['course_code'],
+        'instructor_id' => null,
+        'year' => $item['year'],
+        'semester' => $item['semester'],
+      ]);
+    }
+
+    return redirect()->route('admin.manageUsers.student')->with('success', 'Student added successfully.');
   }
 }
