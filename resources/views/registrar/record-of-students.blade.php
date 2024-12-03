@@ -44,8 +44,8 @@
           <!-- Filter Dropdown -->
           <select id="programFilter"
             class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <option value="all" selected disabled class="text-gray-600">Filter by Program</option>
-            <option value="">All</option>
+            <option value="" selected class="text-gray-600">Filter by Program</option>
+            <option value="all">All</option>
             <option value="1">Computer Science</option>
             <option value="2">Information Technology</option>
           </select>
@@ -66,7 +66,8 @@
               <th class="py-3 px-4 text-left font-medium">Last Name</th>
               <th class="py-3 px-4 text-left font-medium">First Name</th>
               <th class="py-3 px-4 text-left font-medium">Middle Name</th>
-              <th class="py-3 px-4 text-left font-medium">Email</th>
+              <th class="py-3 px-4 text-left font-medium">Contact Number</th>
+              <th class="py-3 px-4 text-left font-medium">Address</th>
               <th class="py-3 px-4 text-left font-medium">Program</th>
               <th class="py-3 px-4 text-left font-medium">Classification</th>
               <th class="py-3 px-4 text-left font-medium">Action</th>
@@ -79,7 +80,12 @@
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->last_name }}</td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->first_name }}</td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->middle_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->user->email }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->contact_number }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">
+                  {{ $student->address->house_number || '' }} {{ $student->address->street || '' }}
+                  {{ $student->address->barangay || '' }} {{ $student->address->city || '' }}
+                  {{ $student->address->province || '' }} {{ $student->address->zip_code || '' }}
+                </td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program->title }}</td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->classification }}</td>
                 <td class="py-4 px-4 text-sm">
@@ -137,7 +143,8 @@
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.last_name}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.first_name}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.middle_name || ""}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.user.email || ""}</td>
+              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.contact_number || ""}</td>
+              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.address}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.program.title}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.classification}</td>
               <td class="py-4 px-4 text-sm">

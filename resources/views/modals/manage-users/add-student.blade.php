@@ -52,6 +52,51 @@
             class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         </div>
 
+        <div>
+          <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+          <input type="text" id="email" name="email"
+            class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+
+        {{-- registrar add student --}}
+        @if (auth()->user()->role_id === 3)
+          <div>
+            <label for="houseNumber" class="text-sm font-medium text-gray-700">House Number</label>
+            <input type="text" id="houseNumber" name="house_number"
+              class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label for="street" class="text-sm font-medium text-gray-700">Street</label>
+            <input type="text" id="street" name="street"
+              class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label for="barangay" class="text-sm font-medium text-gray-700">Barangay</label>
+            <input type="text" id="barangay" name="barangay"
+              class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label for="city" class="text-sm font-medium text-gray-700">City</label>
+            <input type="text" id="city" name="city"
+              class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label for="province" class="text-sm font-medium text-gray-700">Province</label>
+            <input type="text" id="province" name="province"
+              class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+
+          <div>
+            <label for="zipcode" class="text-sm font-medium text-gray-700">Zip code</label>
+            <input type="text" id="zipcode" name="zip_code"
+              class="mt-1 px-4 py-2 border border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+        @endif
+
         <!-- Program Dropdown -->
         <div>
           <label for="program" class="text-sm font-medium text-gray-700">Program <span

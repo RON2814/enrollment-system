@@ -1,14 +1,8 @@
 <?php
 
-use App\Http\Controllers\NewStudentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\DepartmentController;
-
 
 // Welcome Page
 Route::get('/', function () {
@@ -22,99 +16,6 @@ Route::fallback(function () {
     return redirect()->route('index');
 });
 
-// Student Authentication / Routes
-Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name("student.")->group(function () {
-    // STUDENT Dashboard
-    Route::get('/dashboard', function () {
-        return view('student.dashboard');
-    })->name('dashboard');
-
-    // Student Information Route
-    Route::get('/student-information', function () {
-        return view('student.student-information');
-    })->name('student-information');
-
-    // Enrolled Subjects Route
-    Route::get('/enrolled-sub', function () {
-        return view('student.enrolled-sub');
-    })->name('enrolled-sub');
-
-    // Class Schedule Route
-    Route::get('/schedule', function () {
-        return view('student.schedule');
-    })->name('schedule');
-
-    // Student Grades Route
-    Route::get('/grades', function () {
-        return view('student.student-grades');
-    })->name('student-grades');
-
-    // Student Checklist Routes
-    Route::get('/student-checklist', function () {
-        return view('student.checklist.student-checklist');
-    })->name('student-checklist');
-
-    // Enrollment Module Route
-    Route::get('/enrollment', function () {
-        return view('student.enrollment');
-    })->name('enrollment');
-});
-
-
-// DEPARTMENT ROUTES
-Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
-    ->prefix('department')
-    ->name('department.')
-    ->group(function () {
-
-        // Dashboard
-        Route::get('/dashboard', function () {
-            return view('department.dashboard');
-        })->name('dashboard');
-
-        // Student Checklist
-        Route::get('/student-checklist', function () {
-            return view('department.studentChecklist');
-        })->name('studentChecklist');
-
-        // Courses (Controller Method)
-        Route::get('/courses', [CourseController::class, 'showCourses'])->name('courses');
-
-        // Department - Programs and Instructors
-        Route::get('/department', [DepartmentController::class, 'department'])->name('department');
-
-        // Schedule (Controller method)
-        Route::get('/schedule', [DepartmentController::class, 'schedule'])->name('schedule');
-    });
-
-
-
-// REGISTRAR Dashboard
-Route::get('/registrar/dashboard', function () {
-    return view('registrar.dashboard');
-})->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
-    ->name('registrar.dashboard');
-
-// ADMIN Dashboard Route
-Route::get('/admin/dashboard', [UserController::class, 'dashboard'])
-    ->middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
-    ->name('admin.dashboard');
-
-// Admin Manage Users Routes
-Route::middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::get('/manage-users/student', [UserController::class, 'manageStudent'])->name('manageUsers.student');
-        Route::get('/manage-users/registrar', [UserController::class, 'manageRegistrar'])->name('manageUsers.registrar');
-        Route::get('/manage-users/department', [UserController::class, 'manageDepartment'])->name('manageUsers.department');
-        Route::get('/manage-users/admin', [UserController::class, 'manageAdmin'])->name('manageUsers.admin');
-
-        // Add Student
-        Route::post("/manage-users/student/store", [NewStudentController::class, 'store'])->name("manage-users.store-student");
-    });
-
-
 // Profile Management
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -122,14 +23,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Add Student with registrar role
-Route::post("/registrar/add-student", [ProfileController::class, 'store'])
-    ->middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
-    ->name("registrar.store-student");
-
 Route::view("/view-test", "layout.app");
 
 
+// Include Admin Routes
+require __DIR__ . '/admin.php';
+
+// Include Registrar Routes
+require __DIR__ . '/registrar.php';
+
+// Include Department Routes
+require __DIR__ . '/department.php';
+
+// Include Student Routes
+require __DIR__ . '/student.php';
 
 // Include Auth Routes
 require __DIR__ . '/auth.php';

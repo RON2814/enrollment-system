@@ -28,17 +28,16 @@ class Student extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'student_number', "id");
+        return $this->belongsTo(User::class, 'student_number', 'id');
     }
-
 
     public function program()
     {
-        return $this->belongsTo(Program::class, 'program_id');
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
     public function address()
     {
-        return $this->belongsTo(Address::class, 'address_id');
+        return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 }

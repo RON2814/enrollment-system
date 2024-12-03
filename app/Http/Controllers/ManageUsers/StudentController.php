@@ -1,15 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ManageUsers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Checklist\Checklist;
 use App\Models\Roles\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class NewStudentController extends Controller
+class StudentController extends Controller
 {
+  public function update(Request $request, $studentNumber)
+  {
+    $request->validate([
+      "last_name" => ["required", "string", "max:50"],
+      "first_name" => ["required", "string", "max:50"],
+      "middle_name" => ["required", "string", "max:50"],
+      "extension_name" => ["nullable", "string", "max:10"],
+      "contact_number" => ["required", "string", "max:15"],
+      "program_id" => ["required", "exists:programs,id"],
+      "classification" => ["required", "in:regular,irregular,transferee,returnee"],
+    ]);
+  }
 
   public function store(Request $request)
   {
