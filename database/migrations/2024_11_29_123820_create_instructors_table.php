@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string("last_name");
             $table->string("extention_name")->nullable();
             $table->string("program");
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

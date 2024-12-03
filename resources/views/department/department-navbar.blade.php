@@ -16,16 +16,28 @@
     <ul class="menu h-[80%] relative list-none p-0">
         <!-- Dashboard -->
         <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+                @if (request()->routeIs('department.dashboard')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
             <a href="{{ route('department.dashboard') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-tachometer-alt text-xs opacity-75 mr-2"></i>
                 <span class="text-xs opacity-80">Dashboard</span>
             </a>
         </li>
 
+        <!-- Department -->
+        <li
+            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+                @if (request()->routeIs('department.department')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
+            <a href="{{ route('department.department') }}" class="text-white no-underline flex items-center gap-3">
+                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+                <span class="text-xs opacity-80">Department</span>
+            </a>
+        </li>
+
         <!-- Student Checklist -->
         <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+                @if (request()->routeIs('department.studentChecklist')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
             <a href="{{ route('department.studentChecklist') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
                 <span class="text-xs opacity-80">Student Checklist</span>
@@ -34,43 +46,22 @@
 
         <!-- Courses -->
         <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+                @if (request()->routeIs('department.courses')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
             <a href="{{ route('department.courses') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
                 <span class="text-xs opacity-80">Courses</span>
             </a>
         </li>
 
-        <!--Program -->
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="{{ route('department.program') }}" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Program</span>
-            </a>
-        </li>
-
-
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
-            <a href="{{ route('department.instructor') }}" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Instructors</span>
-            </a>
-        </li>
-
         <!-- Schedule -->
         <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#2c8c6d] active:bg-[#4F9A85]">
+            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+                @if (request()->routeIs('department.schedule')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
             <a href="{{ route('department.schedule') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
                 <span class="text-xs opacity-80">Schedule</span>
             </a>
         </li>
-
-
-    
-        
     </ul>
 </aside>
-

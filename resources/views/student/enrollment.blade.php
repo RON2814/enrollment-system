@@ -32,11 +32,11 @@
 
     {{-- main content  --}}
     <div class="main-content p-4 bg-[#ebe9e9]">
-        <div class="bg-white p-8 rounded-lg shadow mt-2">
+        <div class="overflow-x-auto bg-white p-8 rounded-lg shadow mt-2">
             <!-- Student Information Section -->
-            <h2 class="text-2xl font-medium border-b border-gray-200 text-gray-800 mb-5">Enrollment • <span
+            <h2 class=" text-2xl font-medium border-b border-gray-300 text-gray-800 mb-5">Enrollment • <span
                     class="text-sm text-blue-500">Student Evaluation</span></h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="student_number">Student
                         Number</label>
@@ -90,19 +90,19 @@
 
 
             </div>
-            <div class="border-b border-gray-300 py-3"></div>
+            <div class="border-b border-gray-400 py-3"></div>
 
             <div class="overflow-x-auto rounded-lg mt-4 ">
 
                 <table class="min-w-full table-auto border-collapse border-spacing-0">
                     <thead class="bg-gray-200  text-xs">
                         <tr>
-                            <th class="border border-gray-300 py-3 px-4 text-left font-medium">Course Code</th>
-                            <th class="border border-gray-300 py-3 px-4 text-left font-medium">Course Title</th>
-                            <th class="border border-gray-300 py-3 px-4 text-left font-medium">Credit Units</th>
-                            <th class="border border-gray-300 py-3 px-4 text-left font-medium">Final Grade</th>
-                            <th class="border border-gray-300 py-3 px-4 text-left font-medium">Instructor</th>
-                            <th class="border border-gray-300 py-3 px-4 text-left font-medium">Remark</th>
+                            <th class="border border-gray-300 py-3 px-4 text-left font-semibold">Course Code</th>
+                            <th class="border border-gray-300 py-3 px-4 text-left font-semibold">Course Title</th>
+                            <th class="border border-gray-300 py-3 px-4 text-left font-semibold">Credit Units</th>
+                            <th class="border border-gray-300 py-3 px-4 text-left font-semibold">Final Grade</th>
+                            <th class="border border-gray-300 py-3 px-4 text-left font-semibold">Instructor</th>
+                            <th class="border border-gray-300 py-3 px-4 text-left font-semibold">Remark</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 border border-gray-200">

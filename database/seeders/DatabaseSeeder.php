@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
         Role::create(["id" => 3, "title" => "Registrar"]);
         Role::create(["id" => 4, "title" => "Admin"]);
 
-        Program::create(["id" => 1, "title" => "BSCS", "description" => "Bachelor of Science in Computer Science"]);
-        Program::create(["id" => 2, "title" => "BSIT", "description" => "Bachelor of Science in Information Technology"]);
+        Program::create(["id" => 1, "title" => "BSCS", "description" => "Bachelor of Science in Computer Science", 'department' => 'DCS']);
+        Program::create(["id" => 2, "title" => "BSIT", "description" => "Bachelor of Science in Information Technology", 'department' => 'DCS']);
 
         User::create([
             "id" => "1",
