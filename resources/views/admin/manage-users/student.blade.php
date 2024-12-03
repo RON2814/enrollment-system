@@ -73,26 +73,37 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr class="hover:bg-gray-100 transition-colors duration-200">
-              <td class="py-4 px-4 text-sm truncate max-w-xs">123456</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">Apayong</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">John</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">Aaron</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">123-456-7890</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">123 Main St.</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">Computer Science</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">Regular</td>
-              <td class="py-4 px-4 text-sm">
-                <button
-                  onclick="openUpdateStudentModal('123456', 'Apayong', 'John', 'Aaron', '123-456-7890', '123 Main St.', 'Computer Science', 'Regular')"
-                  class="text-blue-500 hover:text-blue-700">
-                  <i class="fas fa-edit"></i> <!-- Update icon -->
-                </button>
-                <button class="ml-4 text-red-500 hover:text-red-700">
-                  <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                </button>
-              </td>
-            </tr>
+            @foreach ($students as $student)
+              <tr class="hover:bg-gray-100 transition-colors duration-200">
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->student_number }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->last_name }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->first_name }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->middle_name }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->contact_number }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->address }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program->title }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->classification }}</td>
+                <td class="py-4 px-4 text-sm">
+                  <button
+                    onclick="openUpdateStudentModal(
+                      {{ $student->student_number }}, 
+                      {{ $student->last_name }}, 
+                      {{ $student->first_name }}, 
+                      {{ $student->middle_name }}, 
+                      {{ $student->contact_number }}, 
+                      {{ $student->address_id }}, 
+                      {{ $student->program_id }}, 
+                      {{ $student->classification }}
+                    )"
+                    class="text-blue-500 hover:text-blue-700">
+                    <i class="fas fa-edit"></i> <!-- Update icon -->
+                  </button>
+                  <button class="ml-4 text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                  </button>
+                </td>
+              </tr>
+            @endforeach
           </tbody>
         </table>
       </div>

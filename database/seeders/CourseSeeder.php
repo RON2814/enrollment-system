@@ -32,7 +32,7 @@ class CourseSeeder extends Seeder
             ['course_code' => 'GNED 12', 'course_title' => 'Dalumat Ng/Sa Filipino', 'credit_unit_lecture' => 3, 'credit_unit_laboratory' => 0, 'contact_hours_lecture' => 3, 'contact_hours_laboratory' => 0, 'pre_requisite' => "GNED 11",],
             ['course_code' => 'DCIT 23', 'course_title' => 'Computer Programming II', 'credit_unit_lecture' => 1, 'credit_unit_laboratory' => 2, 'contact_hours_lecture' => 1, 'contact_hours_laboratory' => 6, 'pre_requisite' => "DCIT 22",],
             ['course_code' => 'ITEC 50', 'course_title' => 'Web Systems and Technologies', 'credit_unit_lecture' => 2, 'credit_unit_laboratory' => 1, 'contact_hours_lecture' => 2, 'contact_hours_laboratory' => 3, 'pre_requisite' => "DCIT 21",],
-            ['course_code' => 'FIIT 2', 'course_title' => 'Fitness Exercises', 'credit_unit_lecture' => 2, 'credit_unit_laboratory' => 0, 'contact_hours_lecture' => 3, 'contact_hours_laboratory' => 0, 'pre_requisite' => "FITT 1",],
+            ['course_code' => 'FITT 2', 'course_title' => 'Fitness Exercises', 'credit_unit_lecture' => 2, 'credit_unit_laboratory' => 0, 'contact_hours_lecture' => 3, 'contact_hours_laboratory' => 0, 'pre_requisite' => "FITT 1",],
             ['course_code' => 'NSTP 2', 'course_title' => 'National Service Training Program 2', 'credit_unit_lecture' => 3, 'credit_unit_laboratory' => 0, 'contact_hours_lecture' => 3, 'contact_hours_laboratory' => 0, 'pre_requisite' => "NSTP 1",],
 
             // 1sd sem (2nd year) 

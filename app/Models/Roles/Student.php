@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Roles;
 
+use App\Models\Address;
+use App\Models\Program;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +28,7 @@ class Student extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'student_number');
+        return $this->belongsTo(User::class, 'student_number', "id");
     }
 
 

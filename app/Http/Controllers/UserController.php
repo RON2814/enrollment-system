@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\Program;
+use App\Models\Roles\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -19,7 +22,8 @@ class UserController extends Controller
 
     public function manageStudent()
     {
-        return view('admin.manage-users.student');
+        $students = Student::with("program", "address")->get();
+        return view('admin.manage-users.student', compact('students'));
     }
 
     public function manageRegistrar()
