@@ -95,7 +95,7 @@
                         <tr class="bg-[#0A6847] text-white">
                             <th class="p-2">Start Time</th>
                             <th class="p-2">End Time</th>
-                            <th class="p-2">Day</th>                  
+                            <th class="p-2">Day</th>
                             <th class="p-2">Course Code</th>
                             <th class="p-2">Instructor</th>
                             <th class="p-2">Room</th>
@@ -116,7 +116,7 @@
                                 <input type="day" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Day">
                             </td>
-                            
+
                             <td class="p-2 border">
                                 <input type="course_code" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Code">
@@ -151,7 +151,7 @@
                                 <input type="day" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Day">
                             </td>
-                            
+
                             <td class="p-2 border">
                                 <input type="course_code" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Code">
@@ -186,7 +186,7 @@
                                 <input type="day" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Day">
                             </td>
-                            
+
                             <td class="p-2 border">
                                 <input type="course_code" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Code">
@@ -221,7 +221,7 @@
                                 <input type="day" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Day">
                             </td>
-                            
+
                             <td class="p-2 border">
                                 <input type="course_code" class="w-full p-1 border border-gray-300"
                                     placeholder="Course Code">
@@ -245,8 +245,8 @@
                         </tr>
 
 
-                        
-                        
+
+
                     </tbody>
                 </table>
             </div>

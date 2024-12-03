@@ -19,47 +19,58 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        Role::create(["id" => 1, "title" => "Student"]);
-        Role::create(["id" => 2, "title" => "Department"]);
-        Role::create(["id" => 3, "title" => "Registrar"]);
-        Role::create(["id" => 4, "title" => "Admin"]);
-
-        Program::create(["id" => 1, "title" => "BSCS", "description" => "Bachelor of Science in Computer Science", 'department' => 'DCS']);
-        Program::create(["id" => 2, "title" => "BSIT", "description" => "Bachelor of Science in Information Technology", 'department' => 'DCS']);
-
-        User::create([
-            "id" => "1",
+        // Use updateOrInsert to avoid duplicates
+        Role::updateOrInsert(['id' => 1], ['title' => 'Student']);
+        Role::updateOrInsert(['id' => 2], ['title' => 'Department']);
+        Role::updateOrInsert(['id' => 3], ['title' => 'Registrar']);
+        Role::updateOrInsert(['id' => 4], ['title' => 'Admin']);
+    
+        Program::updateOrInsert(['id' => 1], [
+            "title" => "BSCS",
+            "description" => "Bachelor of Science in Computer Science",
+            'department' => 'DCS',
+        ]);
+        Program::updateOrInsert(['id' => 2], [
+            "title" => "BSIT",
+            "description" => "Bachelor of Science in Information Technology",
+            'department' => 'DCS',
+        ]);
+    
+        // Ensure no duplicates for users
+        User::updateOrInsert(['id' => "1"], [
             "name" => "Test User Student",
             "email" => "student@email.com",
             "password" => bcrypt("password"),
             "role_id" => 1,
         ]);
-
-        User::create([
-            "id" => "2",
-            'name' => 'Test User Department',
-            'email' => 'department@email.com',
-            'password' => bcrypt('password'),
-            'role_id' => 2,
+    
+        User::updateOrInsert(['id' => "2"], [
+            "name" => "Test User Department",
+            "email" => "department@email.com",
+            "password" => bcrypt("password"),
+            "role_id" => 2,
         ]);
-
-        User::create([
-            "id" => "3",
-            'name' => 'Test User Registrar',
-            'email' => "registrar@email.com",
+    
+        User::updateOrInsert(['id' => "3"], [
+            "name" => "Test User Registrar",
+            "email" => "registrar@email.com",
             "password" => bcrypt("password"),
             "role_id" => 3,
         ]);
-
-        User::create([
-            "id" => "4",
-            'name' => 'Test User Admin',
-            'email' => "admin@email.com",
+    
+        User::updateOrInsert(['id' => "4"], [
+            "name" => "Test User Admin",
+            "email" => "admin@email.com",
             "password" => bcrypt("password"),
             "role_id" => 4,
         ]);
+    
+        $this->call([
+            CourseSeeder::class,
+            StudentSeeder::class,
+            InstructorSeeder::class,
+        ]);
 
     }
+    
 }

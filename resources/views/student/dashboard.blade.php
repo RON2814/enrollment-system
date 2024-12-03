@@ -36,13 +36,11 @@
 
     <!-- main-content -->
     <div class="main-content p-4 bg-[#ebe9e9]">
-        <div class="flex space-x-5 mt-2">
-            <div class="card-container bg-white p-8 rounded-xl shadow w-2/3">
-                <div class="haha border-solid font-semibold"> HASJDHJASHDJHSAJDHAS</div>
-            </div>
+        <div class="bg-white p-8 rounded-lg shadow mt-4">
+            {{-- edit here  --}}
+            
 
-            <div class=" card-container bg-white p-8 rounded-xl shadow-md w-1/2">
-            </div>
+        </div>
         </div>
 
     </div>

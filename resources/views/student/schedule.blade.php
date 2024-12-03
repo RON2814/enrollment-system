@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-
+    {{-- main content  --}}
     <div class="main-content p-4 bg-[#ebe9e9]">
         <div class="overflow-x-auto bg-white p-6 rounded-lg shadow mt-2">
             <h2 class="font-bold ">Sample Schedule - no fetch</h2>
@@ -150,6 +150,15 @@
                 </tr>
                 <tr>
                   <td class="border border-gray-200 text-center p-2 bg-gray-100">5pm - 6pm</td>
+                  <td class="border border-gray-200"></td>
+                  <td class="border border-gray-200"></td>
+                  <td class="border border-gray-200"></td>
+                  <td class="border border-gray-200"></td>
+                  <td class="border border-gray-200"></td>
+                  <td class="border border-gray-200"></td>
+                </tr>
+                <tr>
+                  <td class="border border-gray-200 text-center p-2 bg-gray-100">6pm - 7pm</td>
                   <td class="border border-gray-200"></td>
                   <td class="border border-gray-200"></td>
                   <td class="border border-gray-200"></td>

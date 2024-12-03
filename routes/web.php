@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\StudentController;
 
 
 // Welcome Page
@@ -30,9 +31,8 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
     })->name('dashboard');
 
     // Student Information Route
-    Route::get('/student-information', function () {
-        return view('student.student-information');
-    })->name('student-information');
+    Route::get('/student-information', [StudentController::class, 'studentInformation'])->name('student-information');
+
 
     // Enrolled Subjects Route
     Route::get('/enrolled-sub', function () {

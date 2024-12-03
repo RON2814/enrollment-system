@@ -18,9 +18,9 @@ return new class extends Migration {
             $table->string("extension_name")->nullable();
             $table->string("contact_number");
             $table->date("birthday"); 
-            $table->enum("sex", ["male", "female", "other"]); 
+            $table->enum("sex", ["Male", "Female", "Other"]); 
             $table->foreignId("program_id")->constrained("programs");
-            $table->enum("classification", ["regular", "irregular", "transferee", "returnee"]);
+            $table->enum("classification", ["Regular", "Irregular", "Transferee", "Returnee"]);
             $table->foreignId("address_id")->constrained("addresses")->onDelete("cascade");
             $table->timestamps();
 

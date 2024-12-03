@@ -95,7 +95,7 @@
                             </th>
                             <th class="py-2 px-3 text-left font-medium max-w-[100px]">
                                 Pre-requisites</th>
-                            <th class="p-2 text-left">Action</th>
+                            {{-- <th class="p-2 text-left">Action</th> --}}
                         </tr>
                     </thead>
                     <tbody class="text-gray-700" id="course-table-body">
@@ -111,13 +111,13 @@
                                     {{ $course->contact_hours_lecture }}</td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
                                     {{ $course->contact_hours_laboratory }}</td>
-                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[100px] break-words font-medium">
+                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[100px] break-words font-medium ">
                                     {{ $course->pre_requisite ?: '...' }}</td>
-                                <td class="p-2 text-center">
+                                {{-- <td class="p-2 text-center">
                                     <button class="text-blue-500 hover:text-blue-700">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                </td>
+                                </td> --}}
                             </tr>
                         @empty
                             <tr>
