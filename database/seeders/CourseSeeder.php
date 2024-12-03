@@ -164,7 +164,7 @@ class CourseSeeder extends Seeder
                 'pre_requisite' => "DCIT 21",
             ],
             [
-                'course_code' => 'FIIT 2',
+                'course_code' => 'FITT 2',
                 'course_title' => 'Fitness Exercises',
                 'credit_unit_lecture' => 2,
                 'credit_unit_laboratory' => 0,
