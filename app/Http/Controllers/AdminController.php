@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Address;
-use App\Models\Program;
 use App\Models\Roles\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     // Admin Dashboard
     public function dashboard()
@@ -20,13 +18,25 @@ class UserController extends Controller
 
     public function manageStudent()
     {
-        $students = Student::with('program', 'address', 'user')->get();
-        
-        $programs = Program::all();
-    
-        return view('admin.manage-users.student', compact('students', 'programs'));
+        $students = Student::with("program", "address", "user")->get();
+
+        return view('admin.manage-users.student', compact('students'));
     }
     
+
+    public function filterStudents(Request $request)
+    {
+        $programId = $request->input('program_id');
+        $query = Student::with('program', 'address', 'user');
+
+        if ($programId && $programId != 'all') {
+            $query->where('program_id', $programId);
+        }
+
+        $students = $query->get();
+
+        return response()->json($students);
+    }
 
     public function manageRegistrar()
     {

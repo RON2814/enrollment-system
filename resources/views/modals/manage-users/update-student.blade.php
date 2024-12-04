@@ -5,36 +5,36 @@
     class="bg-white p-8 rounded-xl w-full max-w-2xl shadow-lg transform transition-transform duration-300 ease-in-out scale-95 hover:scale-100">
     <h3 class="text-2xl font-semibold mb-6 text-gray-800">Update Student Information</h3>
     <form id="updateForm">
-      <input type="hidden" id="studentId">
+      <input type="hidden" id="updateStudentId">
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="mb-4">
           <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-          <input type="text" id="lastName"
+          <input type="text" id="updateLastName"
             class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
             required />
         </div>
         <div class="mb-4">
           <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
-          <input type="text" id="firstName"
+          <input type="text" id="updateFirstName"
             class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
             required />
         </div>
         <div class="mb-4">
           <label for="middleName" class="block text-sm font-medium text-gray-700">Middle Name</label>
-          <input type="text" id="middleName"
+          <input type="text" id="updateMiddleName"
             class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
             required />
         </div>
         <div class="mb-4">
           <label for="contactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
-          <input type="text" id="contactNumber"
+          <input type="text" id="updateContactNumber"
             class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
             required />
         </div>
         <div class="mb-4">
           <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-          <input type="text" id="address"
+          <input type="text" id="updateAddress"
             class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
             required />
         </div>
@@ -42,25 +42,25 @@
         <!-- Dropdown for Program -->
         <div class="mb-4">
           <label for="program" class="block text-sm font-medium text-gray-700">Program</label>
-          <select id="program"
+          <select id="updateProgram"
             class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
             required>
             <option value="">Select Program</option>
-            <option value="CS">Computer Science</option>
-            <option value="IT">Information Technology</option>
+            <option value="1">Computer Science</option>
+            <option value="2">Information Technology</option>
           </select>
         </div>
 
         <div class="mb-4">
           <label for="classification" class="block text-sm font-medium text-gray-700">Classification</label>
-          <select id="classification"
+          <select id="updateClassification"
             class="px-4 py-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-200 ease-in-out"
             required>
             <option value="">Select Classification</option>
-            <option value="Regular">Regular</option>
-            <option value="Irregular">Irregular</option>
-            <option value="Transferee">Transferee</option>
-            <option value="Returnee">Returnee</option>
+            <option value="regular">Regular</option>
+            <option value="irregular">Irregular</option>
+            <option value="transferee">Transferee</option>
+            <option value="returnee">Returnee</option>
           </select>
         </div>
       </div>
@@ -81,14 +81,14 @@
   function openUpdateStudentModal(studentId, lastName, firstName, middleName, contactNumber, address, program,
     classification) {
     document.getElementById('updateModal').classList.remove('hidden');
-    document.getElementById('studentId').value = studentId;
-    document.getElementById('lastName').value = lastName || '';
-    document.getElementById('firstName').value = firstName || '';
-    document.getElementById('middleName').value = middleName || '';
-    document.getElementById('contactNumber').value = contactNumber || '';
-    document.getElementById('address').value = address || '';
-    document.getElementById('program').value = program || '';
-    document.getElementById('classification').value = classification || '';
+    document.getElementById('updateStudentId').value = studentId;
+    document.getElementById('updateLastName').value = lastName || '';
+    document.getElementById('updateFirstName').value = firstName || '';
+    document.getElementById('updateMiddleName').value = middleName || '';
+    document.getElementById('updateContactNumber').value = contactNumber || '';
+    document.getElementById('updateAddress').value = address || '';
+    document.getElementById('updateProgram').value = program || '';
+    document.getElementById('updateClassification').value = classification || '';
   }
 
 
@@ -100,14 +100,14 @@
   document.getElementById('updateForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const updatedData = {
-      studentId: document.getElementById('studentId').value,
-      lastName: document.getElementById('lastName').value,
-      firstName: document.getElementById('firstName').value,
-      middleName: document.getElementById('middleName').value,
-      contactNumber: document.getElementById('contactNumber').value,
-      address: document.getElementById('address').value,
-      program: document.getElementById('program').value,
-      classification: document.getElementById('classification').value
+      studentId: document.getElementById('updateStudentId').value,
+      lastName: document.getElementById('updateLastName').value,
+      firstName: document.getElementById('updateFirstName').value,
+      middleName: document.getElementById('updateMiddleName').value,
+      contactNumber: document.getElementById('updateContactNumber').value,
+      address: document.getElementById('updateAddress').value,
+      program: document.getElementById('updateProgram').value,
+      classification: document.getElementById('updateClassification').value
     };
 
 
