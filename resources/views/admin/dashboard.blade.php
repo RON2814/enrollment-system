@@ -103,8 +103,10 @@
                                 <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->name }}</td>
                                 <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->email }}</td>
                                 <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->role->title }}</td>
-                                <td class="py-4 px-6 text-sm truncate max-w-xs">{{ $user->created_at->format('Y-m-d') }}
+                                <td class="py-4 px-6 text-sm truncate max-w-xs">
+                                    {{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}
                                 </td>
+                               
 
                             </tr>
                         @endforeach

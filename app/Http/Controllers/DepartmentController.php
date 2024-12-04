@@ -19,4 +19,6 @@ class DepartmentController extends Controller
     {
         return view('department.schedule'); 
     }
+
+
 }

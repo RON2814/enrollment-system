@@ -12,16 +12,21 @@ class UserController extends Controller
 {
     // Admin Dashboard
     public function dashboard()
-    {        $users = User::all();
+    {
+        $users = User::all();
 
         return view('admin.dashboard', compact('users'));
     }
 
     public function manageStudent()
     {
-        $students = Student::with("program", "address")->get();
-        return view('admin.manage-users.student', compact('students'));
+        $students = Student::with('program', 'address', 'user')->get();
+        
+        $programs = Program::all();
+    
+        return view('admin.manage-users.student', compact('students', 'programs'));
     }
+    
 
     public function manageRegistrar()
     {

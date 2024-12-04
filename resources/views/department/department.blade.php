@@ -39,7 +39,7 @@
                             <th class="border border-gray-200 py-3 px-4 text-left font-medium">Program</th>
                             <th class="border border-gray-200 py-3 px-4 text-left font-medium">Program Description</th>
                             <th class="border border-gray-200 py-3 px-4 text-left font-medium">Major</th>
-                            <th class="border border-gray-200 py-3 px-4 text-left font-medium">Department</th>
+                            {{-- <th class="border border-gray-200 py-3 px-4 text-left font-medium">Department</th> --}}
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 border border-gray-200">
@@ -48,7 +48,7 @@
                                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $program->title }}</td>
                                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $program->description }}</td>
                                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $program->major ?: '...' }}</td>
-                                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $program->department }}</td>
+                                {{-- <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $program->department }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>

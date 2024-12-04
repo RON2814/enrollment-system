@@ -24,41 +24,41 @@ Route::fallback(function () {
 });
 
 // Student Authentication / Routes
-Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name("student.")->group(function () {
-    // STUDENT Dashboard
-    Route::get('/dashboard', function () {
-        return view('student.dashboard');
-    })->name('dashboard');
+Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])
+    ->name('student.')
+    ->group(function () {
+        // STUDENT Dashboard
+        Route::get('/dashboard', function () {
+            return view('student.dashboard');
+        })->name('dashboard');
 
-    // Student Information Route
-    Route::get('/student-information', [StudentController::class, 'studentInformation'])->name('student-information');
+        // Student Information Route (Handled by Controller)
+        Route::get('/student-information', [StudentController::class, 'studentInformation'])
+            ->name('student-information');
 
+        // Enrolled Subjects Route
+        Route::get('/enrolled-sub', function () {
+            return view('student.enrolled-sub');
+        })->name('enrolled-sub');
 
-    // Enrolled Subjects Route
-    Route::get('/enrolled-sub', function () {
-        return view('student.enrolled-sub');
-    })->name('enrolled-sub');
+        // Class Schedule Route
+        Route::get('/schedule', function () {
+            return view('student.schedule');
+        })->name('schedule');
 
-    // Class Schedule Route
-    Route::get('/schedule', function () {
-        return view('student.schedule');
-    })->name('schedule');
+        // Student Information Route (Handled by Controller)
+        Route::get('/grades', [StudentController::class, 'studentInformation'])
+            ->name('student-grades');
 
-    // Student Grades Route
-    Route::get('/grades', function () {
-        return view('student.student-grades');
-    })->name('student-grades');
+        // Student Checklist Routes
+        Route::get('/student-checklist', function () {
+            return view('student.checklist.student-checklist');
+        })->name('student-checklist');
 
-    // Student Checklist Routes
-    Route::get('/student-checklist', function () {
-        return view('student.checklist.student-checklist');
-    })->name('student-checklist');
-
-    // Enrollment Module Route
-    Route::get('/enrollment', function () {
-        return view('student.enrollment');
-    })->name('enrollment');
-});
+        // Enrollment Module Route (Handled by Controller)
+        Route::get('/enrollment', [StudentController::class, 'studentInformation'])
+            ->name('enrollment');
+    });
 
 
 // DEPARTMENT ROUTES
@@ -105,7 +105,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::get('/manage-users/student', [UserController::class, 'manageStudent'])->name('manageUsers.student');
+        Route::get('/admin/manage-users/student', [UserController::class, 'manageStudent'])->name('manageUsers.student');
         Route::get('/manage-users/registrar', [UserController::class, 'manageRegistrar'])->name('manageUsers.registrar');
         Route::get('/manage-users/department', [UserController::class, 'manageDepartment'])->name('manageUsers.department');
         Route::get('/manage-users/admin', [UserController::class, 'manageAdmin'])->name('manageUsers.admin');

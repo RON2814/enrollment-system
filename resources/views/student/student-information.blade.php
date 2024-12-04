@@ -44,7 +44,7 @@
                 <div>
                     <label class="block text-xs font-medium text-gray-600 mb-1">Student Name</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ strtoupper($student->last_name) }}, {{ strtoupper($student->first_name) }} {{ strtoupper($student->middle_name) }}
+                        {{ strtoupper($student->last_name ?? '') }}, {{ strtoupper($student->first_name ?? '') }} {{ strtoupper($student->middle_name ?? '') }}
                     </div>
                 </div>
                 <div>
@@ -55,36 +55,39 @@
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Semester</label>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Section</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{-- {{ $student->semester }} --}} First Semester
+                        {{-- {{ $student->semester }}-{{ $student->year }} --}} 3-2
                     </div>
                 </div>
+
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Program</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->program_name }}  <!-- Corrected to program_name -->
+                        {{ strtoupper($student->program_name ?? '') }}  <!-- Corrected to program_name -->
                     </div>
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Major</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->major ?? 'N/A' }}
+                        {{ strtoupper($student->major ?? 'N/A') }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Year Level</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{-- {{ $student->year }}  --}} F
+                        {{-- {{ $student->year }}  --}} Third Year
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Section</label>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Semester</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{-- {{ $student->semester }}-{{ $student->year }} --}} ..
+                        {{-- {{ $student->semester }} --}} First Semester
                     </div>
                 </div>
+                
                 
             </div>
         </div>
@@ -98,49 +101,50 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="house_number">House Number</label>
                     <div id="house_number" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->house_number }} <!-- Display House Number -->
+                        {{ strtoupper($student->house_number ?? '') }} <!-- Display House Number -->
                     </div>
                 </div>
                 <!-- Street -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="street">Street</label>
                     <div id="street" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->street }} <!-- Display Street -->
+                        {{strtoupper($student->street ?? '') }} <!-- Display Street -->
                     </div>
                 </div>
                 <!-- Barangay -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="barangay">Barangay</label>
                     <div id="barangay" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->barangay }} <!-- Display Barangay -->
+                        {{ strtoupper($student->barangay ?? '') }} <!-- Display Barangay -->
                     </div>
                 </div>
                 <!-- Municipality -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="municipality">Municipality</label>
                     <div id="municipality" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->city }} <!-- Display Municipality -->
+                        {{ strtoupper($student->city ?? '') }} <!-- Display Municipality -->
                     </div>
                 </div>
                 <!-- Province -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="province">Province</label>
                     <div id="province" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->province }} <!-- Display Province -->
+                        {{ strtoupper($student->province ?? '') }} <!-- Display Province -->
                     </div>
                 </div>
                 <!-- Date of Birth -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="date_of_birth">Date of Birth</label>
                     <div id="date_of_birth" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ \Carbon\Carbon::parse($student->birthday)->format('F d, Y') }} <!-- Format Date of Birth -->
+                        {{ strtoupper(\Carbon\Carbon::parse($student->birthday ?? '')->format('F d, Y')) }}
                     </div>
+                    
                 </div>
                 <!-- Sex -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="sex">Sex</label>
                     <div id="sex" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->sex }} <!-- Display Sex -->
+                        {{strtoupper( $student->sex ?? '') }} <!-- Display Sex -->
                     </div>
                 </div>
                 <!-- Civil Status -->

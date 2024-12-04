@@ -47,17 +47,20 @@
                     </thead>
                     <tbody class="text-gray-700 border border-gray-200">
                         <tr class="hover:bg-gray-100 transition-colors duration-200">
-                            <td class="py-4 px-4 text-sm truncate max-w-xs">2022-11888</td>
-                            <td class="py-4 px-4 text-sm truncate max-w-xs">Guinday, Raina Isabel M.</td>
-                            <td class="py-4 px-4 text-sm truncate max-w-xs">2024-2025</td>
-                            <td class="py-4 px-4 text-sm truncate max-w-xs">BACHELOR OF SCIENCE IN COMPUTER SCIENCE</td>
-                            <td class="py-4 px-4 text-sm truncate max-w-xs">Third Year</td>
-                            <td class="py-4 px-4 text-sm truncate max-w-xs">First Semester</td>
-                            <td class="py-4 px-4 text-sm truncate max-w-xs">3-2</td>
+                            <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->student_number }}</td>
+                            <td class="py-4 px-4 text-sm truncate max-w-xs">
+                                {{  strtoupper($student->last_name) }}, {{ strtoupper($student->first_name) }} {{ strtoupper($student->middle_name) }}
+                            </td>
+                            <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->school_year ?? '' }}</td>
+                            <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program_name }}</td>
+                            <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->year_level ?? '' }}</td>
+                            <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->semester ?? '' }}</td>
+                            <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->section ?? '' }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            
         </div>
 
         <div class="bg-white p-8 rounded-lg shadow mt-4">
@@ -89,7 +92,7 @@
                 </div>
                 
             </div>
-
+            {{-- grades management  --}}
             <div class="overflow-x-auto rounded-lg mt-4">
                 <table class="min-w-full table-auto border-collapse border-spacing-0">
                     <thead class="bg-[#0A6847] text-white text-xs">

@@ -3,7 +3,7 @@
     {{-- header  --}}
     <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3">
         <div class="header-title pl-3 font-semibold  text-[#206A5D]">
-            <h2>Enrollment bes</h2>
+            <h2>Enrollment Module</h2>
         </div>
 
         <div class="user-info flex items-center gap-2">
@@ -41,13 +41,13 @@
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="student_number">Student
                         Number</label>
                     <div id="student_number" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        202211773
+                        {{ $student->student_number }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-600 mb-1" for="student_name">Student Name</label>
                     <div id="student_name" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        GUINDAY, RAINA ISABEL M.
+                        {{ strtoupper($student->last_name ?? '') }}, {{ strtoupper($student->first_name ?? '') }} {{ strtoupper($student->middle_name ?? '') }}
                     </div>
                 </div>
                 <div>
@@ -56,35 +56,38 @@
                         2023-2024
                     </div>
                 </div>
+
                 <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1" for="semester">Semester</label>
-                    <div id="semester" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        First Semester
+                    <label class="block text-sm font-medium text-gray-600 mb-1" for="section">Section</label>
+                    <div id="section" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
+                        3-2
                     </div>
                 </div>
+
+               
 
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="program_name">Program</label>
                     <div id="program_name" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        BS - Computer Science
+                        {{ strtoupper($student->program_name ?? '') }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="major">Major</label>
                     <div id="major" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
-                        N/A
+                        {{ strtoupper($student->major ?? 'N/A') }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="year_level">Year Level</label>
                     <div id="year_level" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
-                        First Year
+                        Third Year
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1" for="section">Section</label>
-                    <div id="section" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
-                        3-2
+                    <label class="block text-sm font-medium text-gray-600 mb-1" for="section">Semester</label>
+                    <div id="semester" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
+                        First Semester
                     </div>
                 </div>
 
