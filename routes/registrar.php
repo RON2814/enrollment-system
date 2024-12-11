@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrarController;
 use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
   ->prefix('registrar')

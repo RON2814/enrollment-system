@@ -1,6 +1,9 @@
 <?php
 
+
+use App\Http\Controllers\StudentController;
 use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Support\Facades\Route;
 
 // Student Authentication / Routes
 Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name("student.")->group(function () {
@@ -10,9 +13,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
   })->name('dashboard');
 
   // Student Information Route
-  Route::get('/student-information', function () {
-    return view('student.student-information');
-  })->name('student-information');
+  Route::get('/student-information', [StudentController::class, "studentInformation"])->name('student-information');
 
   // Enrolled Subjects Route
   Route::get('/enrolled-sub', function () {
@@ -25,9 +26,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
   })->name('schedule');
 
   // Student Grades Route
-  Route::get('/grades', function () {
-    return view('student.student-grades');
-  })->name('student-grades');
+  Route::get('/grades',[StudentController::class, "studentInformation"])->name('student-grades');
 
   // Student Checklist Routes
   Route::get('/student-checklist', function () {
@@ -35,7 +34,5 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
   })->name('student-checklist');
 
   // Enrollment Module Route
-  Route::get('/enrollment', function () {
-    return view('student.enrollment');
-  })->name('enrollment');
+  Route::get('/enrollment', [StudentController::class, "studentInformation"])->name('enrollment');
 });

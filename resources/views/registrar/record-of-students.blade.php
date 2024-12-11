@@ -34,7 +34,7 @@
 
     <div class="bg-white mt-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
       <div class="flex items-center justify-between mb-5">
-        <h3 class="text-2xl font-semibold text-gray-900">Student Table</h3>
+        <h3 class="text-2xl font-semibold text-gray-900">Record of Students</h3>
 
         <!-- Search and Filter Section -->
         <div class="flex space-x-4">
@@ -51,10 +51,10 @@
           </select>
 
           <!-- Add New Student Button -->
-          <button onclick="openAddStudentModal()"
+          {{-- <button onclick="openAddStudentModal()"
             class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
             Add New Student
-          </button>
+          </button> --}}
         </div>
       </div>
 
@@ -62,14 +62,15 @@
         <table class="min-w-full table-auto border-separate border-spacing-0">
           <thead class="bg-[#0A6847] text-white text-sm">
             <tr>
-              <th class="py-3 px-4 text-left font-medium">Student #</th>
-              <th class="py-3 px-4 text-left font-medium">Last Name</th>
-              <th class="py-3 px-4 text-left font-medium">First Name</th>
-              <th class="py-3 px-4 text-left font-medium">Middle Name</th>
-              <th class="py-3 px-4 text-left font-medium">Contact Number</th>
-              <th class="py-3 px-4 text-left font-medium">Address</th>
+              <th class="py-3 px-4 text-left font-medium">Student Number</th>
+              <th class="py-3 px-4 text-left font-medium">Student Name</th>
               <th class="py-3 px-4 text-left font-medium">Program</th>
-              <th class="py-3 px-4 text-left font-medium">Classification</th>
+              <th class="py-3 px-4 text-left font-medium">Email</th>
+              {{-- <th class="py-3 px-4 text-left font-medium">Address</th> --}}
+              <th class="py-3 px-4 text-left font-medium">Year Level</th>
+              <th class="py-3 px-4 text-left font-medium">Section</th>
+              {{-- <th class="py-3 px-4 text-left font-medium">Address</th> --}}
+              <th class="py-3 px-4 text-left font-medium text-center">Classification</th>
               <th class="py-3 px-4 text-left font-medium">Action</th>
             </tr>
           </thead>
@@ -77,17 +78,20 @@
             @foreach ($students as $student)
               <tr class="hover:bg-gray-100 transition-colors duration-200">
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->student_number }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->last_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->first_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->middle_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->contact_number }}</td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">
+                  {{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}
+                </td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program->title }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{ Student email}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{Year Level }</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{Section }</td>
+
+                {{-- <td class="py-4 px-4 text-sm truncate max-w-xs">
                   {{ $student->address->house_number || '' }} {{ $student->address->street || '' }}
                   {{ $student->address->barangay || '' }} {{ $student->address->city || '' }}
                   {{ $student->address->province || '' }} {{ $student->address->zip_code || '' }}
-                </td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program->title }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->classification }}</td>
+                </td> --}}
+                <td class="py-4 px-4 text-sm truncate max-w-xs text-center">{{ $student->classification }}</td>
                 <td class="py-4 px-4 text-sm">
                   <button
                     onclick="openUpdateStudentModal(
@@ -101,16 +105,17 @@
                       '{{ $student->classification }}'
                     )"
                     class="text-blue-500 hover:text-blue-700">
-                    <i class="fas fa-edit"></i> <!-- Update icon -->
+                    View Record
                   </button>
-                  <button class="ml-4 text-red-500 hover:text-red-700">
-                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                  </button>
+                  {{-- <button class="ml-4 text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash-alt"></i> 
+                  </button> --}}
                 </td>
               </tr>
             @endforeach
           </tbody>
         </table>
+        
       </div>
     </div>
   </div>

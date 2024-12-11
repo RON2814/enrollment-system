@@ -1,72 +1,71 @@
 <x-app-layout>
-    {{-- header --}}
-    <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3 ">
-        <div class="header-title">
-            <h2 class="pl-3 font-semibold  text-[#206A5D]">Student User Management</h2>
-        </div>
-
-        <div class="user-info flex items-center gap-2">
-            <div class="dropdown relative inline-block">
-                <button
-                    class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer"
-                    onclick="toggleDropdown()">
-                    <span id="username">{{ Auth::user()->name }}</span>
-                    <i class="fas fa-chevron-down ml-2"></i>
-                </button>
-
-                <div
-                    class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
-                    <a href="{{ route('profile.edit') }}"
-                        class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
-                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                        @csrf
-                        <button type="submit"
-                            class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log
-                            Out</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+  {{-- header --}}
+  <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3 ">
+    <div class="header-title">
+      <h2 class="pl-3 font-semibold  text-[#206A5D]">Student User Management</h2>
     </div>
 
-    {{-- main-content --}}
-    <div class="main-content p-4 py-0 bg-[#ebe9e9]">
+    <div class="user-info flex items-center gap-2">
+      <div class="dropdown relative inline-block">
+        <button
+          class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer"
+          onclick="toggleDropdown()">
+          <span id="username">{{ Auth::user()->name }}</span>
+          <i class="fas fa-chevron-down ml-2"></i>
+        </button>
 
-        <div class="bg-white mt-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
-            <div class="flex items-center justify-between mb-5">
-                <h3 class="text-2xl font-semibold text-gray-900">Student Table</h3>
+        <div
+          class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
+          <a href="{{ route('profile.edit') }}"
+            class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
+          <form method="POST" action="{{ route('logout') }}" id="logout-form">
+            @csrf
+            <button type="submit"
+              class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log
+              Out</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- main-content --}}
+  <div class="main-content p-4 py-0 bg-[#ebe9e9]">
+
+    <div class="bg-white mt-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-2xl font-semibold text-gray-900">Enrollment List</h3>
 
         <!-- Search and Filter Section -->
         <div class="flex space-x-4">
           <!-- Search Bar -->
-          {{-- <input type="text" placeholder="Search..."
-            class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" /> --}}
+          <input type="text" placeholder="Search..."
+            class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
           <!-- Filter Dropdown -->
           <select id="programFilter"
             class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <option value="all" selected disabled class="text-gray-600">Filter by Program</option>
-            <option value="">All</option>
+            <option value="" selected class="text-gray-600">Filter by Program</option>
+            <option value="all">All</option>
             <option value="1">Computer Science</option>
             <option value="2">Information Technology</option>
           </select>
 
-                    <!-- Add New Student Button -->
-                    <button onclick="openAddStudentModal()"
-                        class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Add New Student
-                    </button>
-                </div>
-            </div>
+          <!-- Add New Student Button -->
+          <button onclick="openAddStudentModal()"
+            class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Add New Student
+          </button>
+        </div>
+      </div>
 
       <div class="overflow-x-auto rounded-lg">
         <table class="min-w-full table-auto border-separate border-spacing-0">
           <thead class="bg-[#0A6847] text-white text-sm">
             <tr>
               <th class="py-3 px-4 text-left font-medium">Student #</th>
-              <th class="py-3 px-4 text-left font-medium">Last Name</th>
-              <th class="py-3 px-4 text-left font-medium">First Name</th>
-              <th class="py-3 px-4 text-left font-medium">Middle Name</th>
-              <th class="py-3 px-4 text-left font-medium">Email</th>
+              <th class="py-3 px-4 text-left font-medium">Student Name</th>
+              <th class="py-3 px-4 text-left font-medium">Contact Number</th>
+              <th class="py-3 px-4 text-left font-medium">Address</th>
               <th class="py-3 px-4 text-left font-medium">Program</th>
               <th class="py-3 px-4 text-left font-medium">Classification</th>
               <th class="py-3 px-4 text-left font-medium">Action</th>
@@ -76,10 +75,15 @@
             @foreach ($students as $student)
               <tr class="hover:bg-gray-100 transition-colors duration-200">
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->student_number }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->last_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->first_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->middle_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->user->email }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">
+                  {{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}
+                </td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->contact_number }}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">
+                  {{ $student->address->house_number || '' }} {{ $student->address->street || '' }}
+                  {{ $student->address->barangay || '' }} {{ $student->address->city || '' }}
+                  {{ $student->address->province || '' }} {{ $student->address->zip_code || '' }}
+                </td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program->title }}</td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->classification }}</td>
                 <td class="py-4 px-4 text-sm">
@@ -95,23 +99,24 @@
                       '{{ $student->classification }}'
                     )"
                     class="text-blue-500 hover:text-blue-700">
-                    <i class="fas fa-edit"></i> <!-- Update icon -->
+                    View Record
                   </button>
-                  <button class="ml-4 text-red-500 hover:text-red-700">
-                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                  </button>
+                  {{-- <button class="ml-4 text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash-alt"></i> 
+                  </button> --}}
                 </td>
               </tr>
             @endforeach
           </tbody>
         </table>
+        
       </div>
     </div>
   </div>
 
-    <!-- Include modals -->
-    @include('modals.manage-users.add-student')
-    @include('modals.manage-users.update-student')
+  <!-- Include modals -->
+  @include('modals.manage-users.add-student')
+  @include('modals.manage-users.update-student')
 
   <script>
     // Function to toggle dropdown visibility
@@ -137,7 +142,8 @@
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.last_name}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.first_name}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.middle_name || ""}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.user.email || ""}</td>
+              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.contact_number || ""}</td>
+              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.address}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.program.title}</td>
               <td class="py-4 px-4 text-sm truncate max-w-xs">${student.classification}</td>
               <td class="py-4 px-4 text-sm">

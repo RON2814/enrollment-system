@@ -1,13 +1,17 @@
 <aside
-  class="sidebar fixed top-0 left-0 bottom-0 w-1/6 h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+  class="sidebar fixed top-0 left-0 bottom-0 w-[15%] h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
   <!-- Sidebar Header -->
   <div class="sidebar-header mb-6">
-    <div class="logo h-[80px] p-4 flex items-center gap-4">
+    <div class="logo p-4 flex items-center gap-4">
       <!-- Logo Image -->
-      <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="CvSU-B Logo" class="h-10 w-10 object-contain">
+      <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="CvSU-B Logo"
+          class="h-10 w-10 object-contain">
       <!-- Title -->
-      <h2 class="text-xl font-medium opacity-80">CvSU-B</h2>
-    </div>
+      <div>
+          <h2 class="text-base font-medium opacity-80">CvSU-B</h2>
+          {{-- <h2 class="text-sm font-medium opacity-80">Bacoor Campus</h2> --}}
+      </div>
+  </div>
     <!-- Close Button for Mobile -->
     <button
       id="closeSidebar"

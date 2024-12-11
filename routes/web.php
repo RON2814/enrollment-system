@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Auth;
 // Welcome Page
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('student.dashboard');
+        return redirect()->route('dashboard');
     }
-    return view('welcome');
+    return redirect()->route('login');
 })->name("index");
 
 Route::fallback(function () {

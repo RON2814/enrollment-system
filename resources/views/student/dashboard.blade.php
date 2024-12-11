@@ -8,7 +8,7 @@
     <div class="user-info flex items-center gap-2">
       <div class="dropdown relative inline-block">
         <button
-          class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer"
+          class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded- lg flex items-center cursor-pointer"
           onclick="toggleDropdown()">
           <span id="username">{{ Auth::user()->name }}</span>
           <i class="fas fa-chevron-down ml-2"></i>

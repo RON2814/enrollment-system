@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManageUsers\StudentController;
 use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Support\Facades\Route;
 
 // Admin Manage Users Routes
 Route::middleware(['auth', 'verified', RoleMiddleware::class . ':admin'])

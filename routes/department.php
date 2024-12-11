@@ -3,6 +3,7 @@
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Support\Facades\Route;
 
 // DEPARTMENT ROUTES
 Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])

@@ -39,5 +39,6 @@ class InstructorSeeder extends Seeder
         );
         
         
+        
     }
 }

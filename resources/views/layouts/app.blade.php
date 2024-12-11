@@ -19,6 +19,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <style>
@@ -31,7 +33,7 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
         <!-- Sidebar -->
-        <aside class="w-1/6 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
+        <aside class="w-[15%] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
             {{-- @include('layouts.navigation') --}}
             @if (auth()->check())
                 <p>User is authenticated</p>
