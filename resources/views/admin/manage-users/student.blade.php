@@ -1,21 +1,16 @@
 <x-app-layout>
-    {{-- main-content --}}
-    <div class="main-content p-4 py-0 bg-[#ebe9e9]">
+  {{-- main-content --}}
+  <div class="main-content p-4 py-0 bg-[#ebe9e9]">
 
-        <div class="bg-white mt-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
-            <div class="flex items-center justify-between mb-5">
-                <h3 class="text-2xl font-semibold text-gray-900">Student Table</h3>
+    <div class="bg-white mt-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-2xl font-semibold text-gray-900">Student Table</h3>
 
         <!-- Search and Filter Section -->
         <div class="flex space-x-4">
           <!-- Search Bar -->
-<<<<<<< HEAD
-          {{-- <input type="text" placeholder="Search..."
-            class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" /> --}}
-=======
           <input type="text" id="searchBar" placeholder="Search students..."
             class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
->>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
           <!-- Filter Dropdown -->
           <select id="programFilter"
             class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -25,13 +20,13 @@
             <option value="2">Information Technology</option>
           </select>
 
-                    <!-- Add New Student Button -->
-                    <button onclick="openAddStudentModal()"
-                        class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Add New Student
-                    </button>
-                </div>
-            </div>
+          <!-- Add New Student Button -->
+          <button onclick="openAddStudentModal()"
+            class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Add New Student
+          </button>
+        </div>
+      </div>
 
       <div class="overflow-x-auto rounded-lg">
         <table class="min-w-full table-auto border-separate border-spacing-0">
@@ -76,9 +71,9 @@
     </div>
   </div>
 
-    <!-- Include modals -->
-    @include('modals.manage-users.add-student')
-    @include('modals.manage-users.update-student')
+  <!-- Include modals -->
+  @include('modals.manage-users.add-student')
+  @include('modals.manage-users.update-student')
 
   <script>
     // Debounce function to limit the rate of AJAX calls

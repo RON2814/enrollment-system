@@ -25,7 +25,20 @@ class AdminController extends Controller
 
         return view('admin.manage-users.student', compact('students'));
     }
-    
+
+    public function filterStudents(Request $request)
+    {
+        $programId = $request->input('program_id');
+        $query = Student::with('program', 'address', 'user');
+
+        if ($programId && $programId != 'all') {
+            $query->where('program_id', $programId);
+        }
+
+        $students = $query->get();
+
+        return response()->json($students);
+    }
 
     public function manageRegistrar()
     {

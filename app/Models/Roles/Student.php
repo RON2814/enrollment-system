@@ -6,7 +6,6 @@ use App\Models\Address;
 use App\Models\Checklist\Checklist;
 use App\Models\Program;
 use App\Models\User;
-use App\Models\Checklist\Checklist;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,8 +39,6 @@ class Student extends Model
     {
         return $this->belongsTo(Address::class);
     }
-
-<<<<<<< HEAD
     public function program()
     {
         return $this->belongsTo(Program::class);
@@ -51,12 +48,4 @@ class Student extends Model
     {
         return $this->hasMany(Checklist::class, 'student_number', 'student_number');
     }
-    
-    
-=======
-    public function checklists()
-    {
-        return $this->hasMany(Checklist::class, 'student_number', 'student_number');
-    }
->>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
 }

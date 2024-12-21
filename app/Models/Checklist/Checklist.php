@@ -4,7 +4,6 @@ namespace App\Models\Checklist;
 
 use App\Models\Roles\Student;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Roles\Student;
 
 class Checklist extends Model
 {

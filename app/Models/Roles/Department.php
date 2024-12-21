@@ -5,11 +5,6 @@ namespace App\Models\Roles;
 use App\Models\Program;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
-use App\Models\Address;
-=======
->>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
-use App\Models\User;
 
 class Department extends Model
 {
