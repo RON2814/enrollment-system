@@ -24,9 +24,4 @@ class Course extends Model
         'contact_hours_laboratory',
         'pre_requisite',
     ];
-
-    public function program()
-    {
-        return $this->belongsTo(Program::class);
-    }
 }

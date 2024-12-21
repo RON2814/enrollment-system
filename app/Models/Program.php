@@ -11,15 +11,15 @@ class Program extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+    ];
+
     public $timestamps = false;
 
     public function students()
     {
         return $this->hasMany(Student::class);
-    }
-
-    public function courses()
-    {
-        return $this->hasMany(Course::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Roles;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,24 +10,21 @@ class Registrar extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'registrar_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     protected $fillable = [
-        'user_id',
+        'registrar_id',
         'last_name',
         'first_name',
         'middle_name',
-        'email',
+        'extension_name',
         'contact_number',
-        'address_id',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
-
-
-    public function address()
-    {
-        return $this->belongsTo(Address::class, 'address_id');
+        return $this->belongsTo(User::class, 'registrar_id', 'id');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Models\Checklist;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Roles\Student;
+use Illuminate\Database\Eloquent\Model;
 
 class Checklist extends Model
 {
