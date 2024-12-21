@@ -9,13 +9,18 @@
         <!-- Search and Filter Section -->
         <div class="flex space-x-4">
           <!-- Search Bar -->
+<<<<<<< HEAD
           {{-- <input type="text" placeholder="Search..."
             class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" /> --}}
+=======
+          <input type="text" id="searchBar" placeholder="Search students..."
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+>>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
           <!-- Filter Dropdown -->
           <select id="programFilter"
             class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             <option value="all" selected disabled class="text-gray-600">Filter by Program</option>
-            <option value="">All</option>
+            <option value="all">All</option>
             <option value="1">Computer Science</option>
             <option value="2">Information Technology</option>
           </select>
@@ -43,38 +48,30 @@
             </tr>
           </thead>
           <tbody id="studentTableBody" class="text-gray-700">
+            {{-- Student rows will be inserted here JS will do the job :) --}}
             @foreach ($students as $student)
-              <tr class="hover:bg-gray-100 transition-colors duration-200">
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->student_number }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->last_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->first_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->middle_name }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->user->email }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program->title }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->classification }}</td>
+              <tr>
+                <td class="py-4 px-4 text-sm">{{ $student->student_number }}</td>
+                <td class="py-4 px-4 text-sm">{{ $student->last_name }}</td>
+                <td class="py-4 px-4 text-sm">{{ $student->first_name }}</td>
+                <td class="py-4 px-4 text-sm">{{ $student->middle_name || '' }}</td>
+                <td class="py-4 px-4 text-sm">{{ $student->user?->email }}</td>
+                <td class="py-4 px-4 text-sm">{{ $student->program->title }}</td>
+                <td class="py-4 px-4 text-sm">{{ $student->classification }}</td>
                 <td class="py-4 px-4 text-sm">
-                  <button
-                    onclick="openUpdateStudentModal(
-                      '{{ $student->student_number }}', 
-                      '{{ $student->last_name }}', 
-                      '{{ $student->first_name }}', 
-                      '{{ $student->middle_name }}', 
-                      '{{ $student->contact_number }}', 
-                      '{{ $student->address_id }}', 
-                      '{{ $student->program->title }}', 
-                      '{{ $student->classification }}'
-                    )"
+                  <button onclick='openUpdateStudentModal({{ $student }})'
                     class="text-blue-500 hover:text-blue-700">
-                    <i class="fas fa-edit"></i> <!-- Update icon -->
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button class="ml-4 text-red-500 hover:text-red-700">
-                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                  <button onclick="deleteStudent(`{{ $student->student_number }}`)"
+                    class="ml-4 text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash-alt"></i>
                   </button>
-                </td>
               </tr>
             @endforeach
           </tbody>
         </table>
+        {{ $students->links() }}
       </div>
     </div>
   </div>
@@ -84,56 +81,170 @@
     @include('modals.manage-users.update-student')
 
   <script>
-    // Function to toggle dropdown visibility
+    // Debounce function to limit the rate of AJAX calls
+    function debounce(func, delay) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    // Function to fetch and display students based on search and filter
+    function fetchStudents() {
+      const searchQuery = document.getElementById('searchBar').value.trim();
+      const programId = document.getElementById('programFilter').value;
+
+      let url = `{{ route('admin.manageUsers.search-student') }}?query=${encodeURIComponent(searchQuery)}`;
+
+      if (programId && programId !== 'all') {
+        url += `&program_id=${encodeURIComponent(programId)}`;
+      }
+
+      fetch(url, {
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const contentType = response.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            throw new TypeError("Expected JSON, got " + contentType);
+          }
+
+          return response.json();
+        })
+        .then(data => {
+          const tbody = document.getElementById('studentTableBody');
+          tbody.innerHTML = ''; // Clear existing table rows
+
+          if (data.length === 0) {
+            tbody.innerHTML = `
+            <tr>
+              <td colspan="9" class="py-4 px-4 text-center text-sm text-gray-500">No students found.</td>
+            </tr>
+          `;
+            return;
+          }
+
+          data.forEach(student => {
+            const row = document.createElement('tr');
+            row.classList.add('hover:bg-gray-100');
+
+            const email = student.user?.email || '';
+            const programTitle = student.program?.title || '';
+
+            row.innerHTML = `
+            <td class="py-4 px-4 text-sm">${student.student_number}</td>
+            <td class="py-4 px-4 text-sm">${student.last_name}</td>
+            <td class="py-4 px-4 text-sm">${student.first_name}</td>
+            <td class="py-4 px-4 text-sm">${student.middle_name || ''}</td>
+            <td class="py-4 px-4 text-sm">${email}</td>
+            <td class="py-4 px-4 text-sm">${programTitle}</td>
+            <td class="py-4 px-4 text-sm">${student.classification}</td>
+            <td class="py-4 px-4 text-sm">
+              <button
+                onclick='openUpdateStudentModal(${JSON.stringify(student).replace(/'/g, "\\'")})'
+                class="text-blue-500 hover:text-blue-700">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button onclick="deleteStudent('${student.student_number}')"
+                class="ml-4 text-red-500 hover:text-red-700">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching students:', error);
+          alert('An error occurred while fetching students.');
+        });
+    }
+
+    // Event listeners for search and filter
+    document.getElementById('searchBar').addEventListener('input', debounce(fetchStudents, 300));
+    document.getElementById('programFilter').addEventListener('change', fetchStudents);
+
     function toggleDropdown() {
       const dropdownContent = document.querySelector('.dropdown-content');
       dropdownContent.classList.toggle('hidden');
     }
 
-    // Function to filter students by program using AJAX
-    document.getElementById('programFilter').addEventListener('change', function() {
-      const selectedProgram = this.value;
-      fetch(`{{ route('admin.manageUsers.student.filter') }}?program_id=${selectedProgram}`)
-        .then(response => response.json())
-        .then(data => {
-          const tbody = document.getElementById('studentTableBody');
-          tbody.innerHTML = '';
+    function deleteStudent(studentNumber) {
+      Swal.fire({
+        title: 'Are you sure?',
+        html: `<span style="user-select: none;">Type "${studentNumber}" to confirm deletion.</span>`,
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        confirmButtonColor: '#d33',
+        showLoaderOnConfirm: true,
+        preConfirm: (input) => {
+          if (input !== studentNumber) {
+            Swal.showValidationMessage(`Input does not match "${studentNumber}".`);
+            return false;
+          }
+          return true;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`{{ url('/admin/manage-users/student/destroy') }}/${studentNumber}`, {
+              method: 'DELETE',
+              headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+              },
+            })
+            .then(response => {
+              if (!response.ok) {
+                if (response.status === 404) {
+                  throw new Error('Student not found.');
+                }
+                throw new Error('Network response was not ok');
+              }
 
-          data.forEach(student => {
-            const row = document.createElement('tr');
-            row.classList.add('hover:bg-gray-100', 'transition-colors', 'duration-200');
-            row.innerHTML = `
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.student_number}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.last_name}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.first_name}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.middle_name || ""}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.user.email || ""}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.program.title}</td>
-              <td class="py-4 px-4 text-sm truncate max-w-xs">${student.classification}</td>
-              <td class="py-4 px-4 text-sm">
-                <button
-                  onclick="openUpdateStudentModal(
-                    '${student.student_number}', 
-                    '${student.last_name}', 
-                    '${student.first_name}', 
-                    '${student.middle_name || ""}', 
-                    '${student.contact_number || ""}', 
-                    '${student.address_id}', 
-                    '${student.program.title}', 
-                    '${student.classification}'
-                  )"
-                  class="text-blue-500 hover:text-blue-700">
-                  <i class="fas fa-edit"></i> <!-- Update icon -->
-                </button>
-                <button class="ml-4 text-red-500 hover:text-red-700">
-                  <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                </button>
-              </td>
-            `;
-            tbody.appendChild(row);
-          });
-        })
-        .catch(error => console.error('Error:', error));
-    });
+              const contentType = response.headers.get('content-type');
+              if (!contentType || !contentType.includes('application/json')) {
+                throw new TypeError("Expected JSON, got " + contentType);
+              }
+
+              return response.json();
+            })
+            .then(data => {
+              if (data.success) {
+                // Remove the student's row from the table
+                const row = document.querySelector(`button[onclick="deleteStudent('${studentNumber}')"]`).closest(
+                  'tr');
+                row.remove();
+                Swal.fire('Deleted!', data.message, 'success');
+              } else {
+                Swal.fire('Error!', 'Failed to delete student.', 'error');
+              }
+            })
+            .catch(error => {
+              console.error('Error deleting student:', error);
+              Swal.fire('Error!', error.message || 'An error occurred while deleting the student.', 'error');
+            });
+        }
+      });
+    }
+
+    function toggleDropdown() {
+      const dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.classList.toggle('hidden');
+    }
   </script>
 </x-app-layout>

@@ -2,6 +2,7 @@
 
 namespace App\Models\Checklist;
 
+use App\Models\Roles\Student;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Roles\Student;
 
@@ -21,6 +22,7 @@ class Checklist extends Model
 
     public function student()
     {
+<<<<<<< HEAD
         return $this->belongsTo(Student::class, 'student_number', 'student_number');
     }
 
@@ -35,6 +37,16 @@ class Checklist extends Model
     /**
      * Relationship with the Instructor model.
      */
+=======
+        return $this->belongsTo(Student::class, 'student_number');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_code');
+    }
+
+>>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
     public function instructor()
     {
         return $this->belongsTo(Instructor::class, 'instructor_id');

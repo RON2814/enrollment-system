@@ -2,8 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\Program;
 use App\Models\Role;
+use App\Models\Roles\Admin;
+use App\Models\Roles\Department;
+use App\Models\Roles\Registrar;
+use App\Models\Roles\Student;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,6 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+<<<<<<< HEAD
         // User::factory(10)->create();
 
         Role::create(["id" => 1, "title" => "Student"]);
@@ -28,6 +34,29 @@ class DatabaseSeeder extends Seeder
         // Ensure no duplicates for users
         User::updateOrInsert(['id' => "1"], [
             "name" => "Test User Student",
+=======
+        Role::insert([
+            ["id" => 1, "title" => "Student"],
+            ["id" => 2, "title" => "Department"],
+            ["id" => 3, "title" => "Registrar"],
+            ["id" => 4, "title" => "Admin"],
+        ]);
+
+        Program::insert([
+            ["id" => 1, "title" => "BSCS", "description" => "Bachelor of Science in Computer Science",],
+            ["id" => 2, "title" => "BSIT", "description" => "Bachelor of Science in Information Technology",],
+        ]);
+        $this->call(CourseSeeder::class);
+
+        // Create initial users with specific roles
+
+        // Create additional users using factories
+        //$this->createUsersWithRoles();
+
+        $studentUser = User::create([
+            "id" => "202211662",
+            "name" => "Apayong, John Aaron",
+>>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
             "email" => "student@email.com",
             "password" => bcrypt("password"),
             "role_id" => 1,
@@ -35,6 +64,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+<<<<<<< HEAD
         User::updateOrInsert(['id' => "2"], [
             "name" => "Test User Department",
             "email" => "department@email.com",
@@ -47,27 +77,106 @@ class DatabaseSeeder extends Seeder
         User::updateOrInsert(['id' => "3"], [
             "name" => "Test User Registrar",
             "email" => "registrar@email.com",
+=======
+        $address = Address::create([
+            "house_number" => "1234",
+            "street" => "1234 Street",
+            "barangay" => "Barangay",
+            "city" => "City",
+            "province" => "Province",
+            "zip_code" => "1234",
+        ]);
+
+        Student::create([
+            "student_number" => $studentUser->id,
+            "last_name" => "Apayong",
+            "first_name" => "John Aaron",
+            "middle_name" => "Oliva",
+            "contact_number" => "09123456789",
+            "program_id" => 1,
+            "address_id" => $address->id,
+        ]);
+
+        $deptUser = User::create([
+            "id" => "2",
+            'name' => 'Test User Department',
+            'email' => 'department@email.com',
+            'password' => bcrypt('password'),
+            'role_id' => 2,
+        ]);
+
+        Department::create([
+            "department_id" => $deptUser->id,
+            "last_name" => "Department",
+            "first_name" => "User",
+            "middle_name" => "Test",
+            "contact_number" => "09123456789",
+            "program_id" => 1,
+        ]);
+
+        $registrarUser = User::create([
+            "id" => "3",
+            'name' => 'Test User Registrar',
+            'email' => "registrar@email.com",
+>>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
             "password" => bcrypt("password"),
             "role_id" => 3,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+<<<<<<< HEAD
         User::updateOrInsert(['id' => "4"], [
             "name" => "Test User Admin",
             "email" => "admin@email.com",
+=======
+        Registrar::create([
+            "registrar_id" => $registrarUser->id,
+            "last_name" => "Registrar",
+            "first_name" => "User",
+            "middle_name" => "Test",
+            "contact_number" => "09123456789",
+        ]);
+
+        $admin = User::create([
+            "id" => "4",
+            'name' => 'Test User Admin',
+            'email' => "admin@email.com",
+>>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
             "password" => bcrypt("password"),
             "role_id" => 4,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+<<<<<<< HEAD
         $this->call([
             CourseSeeder::class,
             InstructorSeeder::class,
             StudentSeeder::class,
             ChecklistSeeder::class,
 
+=======
+        Admin::create([
+            "admin_id" => $admin->id,
+            "last_name" => "Admin",
+            "first_name" => "User",
+            "middle_name" => "Test",
+            "contact_number" => "09123456789",
+>>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
         ]);
     }
+
+    // private function createUsersWithRoles()
+    // {
+    //     // Create Students
+    //     Student::factory()->count(20)->create();
+
+    //     // Create Admins
+    //     User::factory()->count(3)->create(['role_id' => 4]);
+    //     // Create Registrars
+    //     User::factory()->count(5)->create(['role_id' => 3]);
+    //     // Create Departments
+    //     User::factory()->count(8)->create(['role_id' => 2]);
+    // }
 }
