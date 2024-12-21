@@ -3,6 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Roles\Admin;
+use App\Models\Roles\Department;
+use App\Models\Roles\Registrar;
+use App\Models\Roles\Student;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -57,7 +61,23 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class); // Adjust if your role relationship is different
     }
 
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'student_number', 'id');
+    }
 
+    public function department()
+    {
+        return $this->hasOne(Department::class, 'department_id', 'id');
+    }
 
+    public function registrar()
+    {
+        return $this->hasOne(Registrar::class, 'registrar_id', 'id');
+    }
 
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'admin_id', 'id');
+    }
 }

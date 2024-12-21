@@ -9,7 +9,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('student.dashboard');
     }
-    return view('welcome');
+    return redirect()->route('login');
 })->name("index");
 
 Route::fallback(function () {

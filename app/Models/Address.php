@@ -20,6 +20,6 @@ class Address extends Model
 
     public function students()
     {
-        return $this->hasMany(Student::class, 'address_id');
+        return $this->hasOne(Student::class, 'address_id');
     }
 }

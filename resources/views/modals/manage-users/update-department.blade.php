@@ -1,19 +1,18 @@
-<!-- Update Registrar/Department Modal -->
-<div id="updateRegistrarModal"
-  class="hidden flex fixed inset-0 bg-gray-800 bg-opacity-75 justify-center items-center z-50">
+<!-- Update Adviser/Department Modal -->
+<div id="updateAdviserModal" class="hidden flex fixed inset-0 bg-gray-800 bg-opacity-75 justify-center items-center z-50">
   <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-4xl max-h-[80vh] overflow-y-auto">
-    <h3 class="text-2xl font-semibold mb-6 text-gray-800">Update Registrar</h3>
-    <form id="updateRegistrarForm" action="" method="POST">
+    <h3 class="text-2xl font-semibold mb-6 text-gray-800">Update Adviser</h3>
+    <form id="updateAdviserForm" action="" method="POST">
       @csrf
       @method('PATCH')
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div>
           <label for="updateDepartmentId" class="text-sm font-medium text-gray-700">Department ID <span
               class="text-red-400">*</span></label>
-          <input required type="text" id="updateDepartmentId" name="registrar_id" value="{{ old('asd') }}"
+          <input required type="text" id="updateDepartmentId" name="department_id" value="{{ old('department_id') }}"
             disabled
-            class="mt-1 px-4 py-2 border @error('registrar_id') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-          <x-input-error :messages="$errors->get('registrar_id')" class="mt-2" id="updateError-registrar_id" />
+            class="mt-1 px-4 py-2 border @error('department_id') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('department_id')" class="mt-2" id="updateError-department_id" />
         </div>
 
         <div>
@@ -74,11 +73,26 @@
             class="mt-1 px-4 py-2 border @error('contact_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
           <x-input-error :messages="$errors->get('contact_number')" class="mt-2" id="updateError-contact_number" />
         </div>
+
+        <!-- Program Dropdown -->
+        <div class="col-start-1">
+          <label for="updateProgram" class="text-sm font-medium text-gray-700">Program <span
+              class="text-red-400">*</span></label>
+          <select required id="updateProgram" name="program_id"
+            class="mt-1 px-4 py-2 border @error('program_id') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="" disabled selected>Select Program</option>
+            <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BS Computer Science</option>
+            <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS Information Technology</option>
+          </select>
+          <x-input-error :messages="$errors->get('program_id')" class="mt-2" id="updateError-program_id" />
+        </div>
+
+
       </div>
 
       <!-- Modal Actions -->
       <div class="flex justify-end space-x-4 mt-6">
-        <button type="button" onclick="closeUpdateRegistrarModal()" id="updateCancel"
+        <button type="button" onclick="closeUpdateAdviserModal()" id="updateCancel"
           class="px-6 py-2 bg-gray-300 text-gray-700 font-semibold rounded-lg shadow-sm hover:bg-gray-400 transition">
           Cancel
         </button>
@@ -91,16 +105,16 @@
 </div>
 
 <script>
-  // Open update modal with registrar data
-  function openUpdateRegistrarModal(registrar) {
-    if (typeof registrar === 'string') {
-      registrar = JSON.parse(registrar);
+  // Open update modal with adviser/department data
+  function openUpdateAdviserModal(dept) {
+    if (typeof dept === 'string') {
+      dept = JSON.parse(dept);
     }
 
-    console.log('Full registrar object:', registrar);
+    console.log('Full department object:', dept);
 
     // Show modal
-    const modal = document.getElementById('updateRegistrarModal');
+    const modal = document.getElementById('updateAdviserModal');
     if (modal) modal.classList.remove('hidden');
 
     // Helper function to safely set element value
@@ -110,33 +124,36 @@
     };
 
     // Set form action
-    const form = document.getElementById('updateRegistrarForm');
-    if (form) form.action = `/admin/manage-users/registrar/update/${registrar.registrar_id}`;
+    const form = document.getElementById('updateAdviserForm');
+    if (form) form.action = `/admin/manage-users/department/update/${dept.department_id}`;
 
     // Set basic info
-    setElementValue('updateDepartmentId', registrar.registrar_id);
-    setElementValue('updateLastName', registrar.last_name);
-    setElementValue('updateFirstName', registrar.first_name);
-    setElementValue('updateMiddleName', registrar.middle_name);
-    setElementValue('updateExtensionName', registrar.extension_name);
-    setElementValue('updateEmail', registrar.user?.email);
-    setElementValue('updateContactNumber', registrar.contact_number);
+    setElementValue('updateDepartmentId', dept.department_id);
+    setElementValue('updateLastName', dept.last_name);
+    setElementValue('updateFirstName', dept.first_name);
+    setElementValue('updateMiddleName', dept.middle_name);
+    setElementValue('updateExtensionName', dept.extension_name);
+    setElementValue('updateEmail', dept.user?.email);
+    setElementValue('updateContactNumber', dept.contact_number);
+
+    // Set dropdowns
+    setElementValue('updateProgram', dept.program_id);
   }
 
   // Close modal
-  function closeUpdateRegistrarModal() {
-    document.getElementById('updateRegistrarModal').classList.add('hidden');
+  function closeUpdateAdviserModal() {
+    document.getElementById('updateAdviserModal').classList.add('hidden');
     clearInputFields();
   }
 
-  document.getElementById('updateRegistrarForm').addEventListener('submit', function(e) {
+  document.getElementById('updateAdviserForm').addEventListener('submit', function(e) {
     e.preventDefault();
     this.submit();
     closeUpdateStudentModal();
   });
 
   function clearInputFields() {
-    const form = document.getElementById('updateRegistrarForm');
+    const form = document.getElementById('updateAdviserForm');
     form.reset();
     document.querySelectorAll('input, select').forEach(element => {
       element.value = '';
@@ -175,7 +192,7 @@
   });
 
   @if ($errors->any())
-    openUpdateRegistrarModal();
+    openUpdateAdviserModal();
   @endif
 
   // Remove error class on input change

@@ -2,30 +2,35 @@
 
 namespace App\Models\Roles;
 
+use App\Models\Program;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Department extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'department_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected $fillable = [
-        'user_id',
+        'department_id',
         'last_name',
         'first_name',
         'middle_name',
+        'extension_name',
         'contact_number',
-        'address_id',
+        'program_id',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'department_id', 'id');
     }
 
-
-    public function address()
+    public function program()
     {
-        return $this->belongsTo(Address::class, 'address_id');
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 }

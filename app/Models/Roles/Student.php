@@ -3,6 +3,7 @@
 namespace App\Models\Roles;
 
 use App\Models\Address;
+use App\Models\Checklist\Checklist;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'student_number';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected $fillable = [
         'student_number',
@@ -39,5 +43,10 @@ class Student extends Model
     public function address()
     {
         return $this->belongsTo(Address::class, 'address_id', 'id');
+    }
+
+    public function checklists()
+    {
+        return $this->hasMany(Checklist::class, 'student_number', 'student_number');
     }
 }

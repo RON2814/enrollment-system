@@ -2,6 +2,7 @@
 
 namespace App\Models\Checklist;
 
+use App\Models\Roles\Student;
 use Illuminate\Database\Eloquent\Model;
 
 class Checklist extends Model
@@ -17,4 +18,19 @@ class Checklist extends Model
         "year",
         "semester",
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_number');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_code');
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo(Instructor::class, 'instructor_id');
+    }
 }

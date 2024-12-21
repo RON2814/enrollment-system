@@ -9,45 +9,163 @@ use App\Models\Roles\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class ManageStudentController extends Controller
 {
-  public function update(Request $request, $studentNumber)
+  // public function filter(Request $request)
+  // {
+  //   $programId = $request->input('program_id');
+  //   $query = Student::with('program', 'address', 'user');
+
+  //   if ($programId && $programId != 'all') {
+  //     $query->where('program_id', $programId);
+  //   }
+
+  //   $students = $query->paginate(10);
+
+  //   return response()->json($students);
+  // }
+
+  public function search(Request $request)
   {
+    $query = $request->input('query');
+    $programId = $request->input('program_id');
+
+    // Validate inputs
     $request->validate([
+      'query' => 'nullable|string|max:255',
+      'program_id' => 'nullable|integer|exists:programs,id',
+    ]);
+
+    // Fetch students with relationships
+    $students = Student::with(['program', 'user', 'address'])
+      ->when($query, function ($q) use ($query) {
+        $q->where(function ($subQuery) use ($query) {
+          $subQuery->where('student_number', 'LIKE', "%{$query}%")
+            ->orWhere('first_name', 'LIKE', "%{$query}%")
+            ->orWhere('last_name', 'LIKE', "%{$query}%");
+        });
+      })
+      ->when($programId, function ($q) use ($programId) {
+        $q->where('program_id', $programId);
+      })->latest()->get();
+
+    return response()->json($students);
+  }
+
+  public function destroy($student_number)
+  {
+    $student = User::where("id", $student_number)->firstOrFail();
+    if (!$student) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Student not found.'
+      ], 404);
+    }
+
+    // Delete the student
+    $student->delete();
+    return response()->json([
+      'success' => true,
+      'message' => 'Student deleted successfully.'
+    ]);
+  }
+
+  public function update(Request $request, $student_number)
+  {
+    $student = Student::where("student_number", $student_number)->firstOrFail();
+    $request->validate([
+      "student_number" => ["string", "max:15"],
+      "password" => ["nullable", "string", "min:8"],
       "last_name" => ["required", "string", "max:50"],
       "first_name" => ["required", "string", "max:50"],
       "middle_name" => ["required", "string", "max:50"],
       "extension_name" => ["nullable", "string", "max:10"],
-      "contact_number" => ["required", "string", "max:15"],
+      "contact_number" => ["nullable", "regex:/^(09|\+639)\d{9}$/"],
+      "email" => ["nullable", "email", "max:50"],
       "program_id" => ["required", "exists:programs,id"],
       "classification" => ["required", "in:regular,irregular,transferee,returnee"],
+
+      "street" => ["nullable", "string", "max:50"],
+      "barangay" => ["nullable", "string", "max:50"],
+      "city" => ["nullable", "string", "max:50"],
+      "province" => ["nullable", "string", "max:50"],
+      "zip_code" => ["nullable", "string", "max:10"],
+    ], [
+      'contact_number.regex' => 'The contact number must be a valid Philippine phone number, starting with either +63 or 0.',
     ]);
+
+    $student->update([
+      "last_name" => $request->last_name,
+      "first_name" => $request->first_name,
+      "middle_name" => $request->middle_name,
+      "extension_name" => $request->extension_name,
+      "contact_number" => $request->contact_number,
+      "program_id" => $request->program_id,
+      "classification" => $request->classification,
+    ]);
+
+    $address = $student->address;
+    $address->update([
+      "street" => $request->street,
+      "barangay" => $request->barangay,
+      "city" => $request->city,
+      "province" => $request->province,
+      "zip_code" => $request->zip_code,
+    ]);
+
+    $user = $student->user;
+    $user->update([
+      "name" => $request->first_name . ' ' . $request->last_name,
+      "email" => $request->email,
+    ]);
+
+    if ($request->password) {
+      $user->update([
+        "password" => bcrypt($request->password),
+      ]);
+    }
+
+    if (auth()->user()->role_id == 3) {
+      return redirect()->route('registrar.dashboard')->with('success', 'Student updated successfully.');
+    }
+    return redirect()->route('admin.manageUsers.student')->with('success', 'Student updated successfully.');
   }
 
   public function store(Request $request)
   {
     $request->validate([
-      "student_number" => ["required", "string", "max:10"],
+      "student_number" => ["required", "string", "max:15", "unique:students,student_number", "unique:users,id"],
       "password" => ["required", "string", "min:8"],
       "last_name" => ["required", "string", "max:50"],
       "first_name" => ["required", "string", "max:50"],
       "middle_name" => ["required", "string", "max:50"],
-      "extension_name" => ["nullable", "string", "max:10"],
+      "extension_name" => ["nullable", "string", "max:50"],
+      "contact_number" => ["nullable", "regex:/^(09|\+639)\d{9}$/"],
+      "email" => ["nullable", "email", "max:50", "unique:users,email"],
       "program_id" => ["required", "exists:programs,id"],
       "classification" => ["required", "in:regular,irregular,transferee,returnee"],
+
+      "street" => ["nullable", "string", "max:50"],
+      "barangay" => ["nullable", "string", "max:50"],
+      "city" => ["nullable", "string", "max:50"],
+      "province" => ["nullable", "string", "max:50"],
+      "zip_code" => ["nullable", "string", "max:10"],
+    ], [
+      'contact_number.regex' => 'The contact number must be a valid Philippine phone number, starting with either +63 or 0.',
     ]);
 
     $address = Address::create([
-      "street" => null,
-      "barangay" => null,
-      "city" => null,
-      "province" => null,
-      "zip_code" => null,
+      "street" => $request->street,
+      "barangay" => $request->barangay,
+      "city" => $request->city,
+      "province" => $request->province,
+      "zip_code" => $request->zip_code,
     ]);
 
     User::create([
       "id" => $request->student_number,
-      "name" => $request->last_name . ", " . $request->first_name . " " . $request->middle_name,
+      "name" => "{$request->last_name}, {$request->first_name} {$request->middle_name}",
+      "email" => $request->email,
       "password" => bcrypt($request->password),
       "role_id" => 1, // Student role
     ]);
