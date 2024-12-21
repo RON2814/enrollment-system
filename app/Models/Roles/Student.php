@@ -37,11 +37,11 @@ class Student extends Model
 
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class, 'address_id', 'id');
     }
     public function program()
     {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
     public function checklist()

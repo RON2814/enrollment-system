@@ -1,5 +1,5 @@
 <x-app-layout>
- 
+
 
   {{-- main-content --}}
   <div class="main-content p-4 py-0 bg-[#ebe9e9]">
@@ -54,7 +54,7 @@
                   {{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}
                 </td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->program->title }}</td>
-                <td class="py-4 px-4 text-sm truncate max-w-xs">{ Student email}</td>
+                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $student->user?->email }}</td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{Year Level }</td>
                 <td class="py-4 px-4 text-sm truncate max-w-xs">{Section }</td>
 
@@ -77,7 +77,7 @@
             @endforeach
           </tbody>
         </table>
-        
+
       </div>
     </div>
   </div>

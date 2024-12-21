@@ -9,11 +9,11 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.bunny.net">
-  <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+  {{-- <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> --}}
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <!-- Ionicons -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
@@ -111,136 +111,89 @@
             @include('student.student-navbar')
           @break
 
-          =======
-          <!-- Fonts -->
-          <link rel="preconnect" href="https://fonts.bunny.net">
-          <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+          @case(2)
+            <!-- Department -->
+            @include('department.department-navbar')
+          @break
 
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-          <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-          <!-- Ionicons -->
-          <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-          <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+          @case(3)
+            <!-- Registrar -->
+            @include('registrar.registrar-navbar')
+          @break
 
-          <!-- Scripts -->
-          @vite(['resources/css/app.css', 'resources/js/app.js'])
-          </head>
+          @case(4)
+            <!-- Admin -->
+            @include('admin.admin-navbar')
+          @break
 
-          <style>
-            body .main {
-              background: #ebe9e9;
+          @default
+            <p>Role not recognized: {{ auth()->user()->role->id }}</p>
+        @endswitch
+      @else
+        <p>User not authenticated</p>
+      @endif
+    </aside>
 
-            }
-          </style>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3">
+        <!-- Burger Icon for Mobile -->
+        <div class="burger-icon" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </div>
 
-          <body class="font-sans antialiased">
-            <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
-              <!-- Sidebar -->
-              <aside class="w-1/6 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
-                {{-- @include('layouts.navigation') --}}
-                @if (auth()->check())
-                  <p>User is authenticated</p>
-                  <p>User Role: {{ auth()->user()->role->title }}</p>
-                  @switch(auth()->user()->role->id)
-                    @case(1)
-                      <!-- Student -->
-                      @include('student.student-navbar')
-                    @break
+        <div class="header-title pl-3 font-semibold text-[#206A5D]">
+          <h2>{{ $pageTitle ?? 'Welcome, ' . Auth::user()->name }}</h2>
+        </div>
 
-                    @case(2)
-                      <!-- Department -->
-                      @include('department.department-navbar')
-                    @break
+        <div class="user-info flex items-center gap-2">
+          <div class="dropdown relative inline-block">
+            <button
+              class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer"
+              onclick="toggleDropdown()">
+              <span id="username">{{ Auth::user()->name }}</span>
+              <i class="fas fa-chevron-down ml-2"></i>
+            </button>
 
-                    @case(3)
-                      <!-- Registrar -->
-                      @include('registrar.registrar-navbar')
-                    @break
-
-                    @case(4)
-                      <!-- Admin -->
-                      @include('admin.admin-navbar')
-                    @break
-
-                    @default
-                      <p>Role not recognized: {{ auth()->user()->role->id }}</p>
-                  @endswitch
-                @else
-                  <p>User not authenticated</p>
-                @endif
-              </aside>
-
-              <<<<<<< HEAD <!-- Main Content -->
-                <div class="main-content">
-                  <!-- Header -->
-                  <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3">
-                    <!-- Burger Icon for Mobile -->
-                    <div class="burger-icon" onclick="toggleSidebar()">
-                      <i class="fas fa-bars"></i>
-                    </div>
-
-                    <div class="header-title pl-3 font-semibold text-[#206A5D]">
-                      <h2>{{ $pageTitle ?? 'Welcome, ' . Auth::user()->name }}</h2>
-                    </div>
-
-                    <div class="user-info flex items-center gap-2">
-                      <div class="dropdown relative inline-block">
-                        <button
-                          class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer"
-                          onclick="toggleDropdown()">
-                          <span id="username">{{ Auth::user()->name }}</span>
-                          <i class="fas fa-chevron-down ml-2"></i>
-                        </button>
-
-                        <div
-                          class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
-                          <a href="{{ route('profile.edit') }}"
-                            class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
-                          <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                            @csrf
-                            <button type="submit"
-                              class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log
-                              Out</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Page Content -->
-                  <main>
-                    {{ $slot }}
-                  </main>
-                </div>
+            <div
+              class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
+              <a href="{{ route('profile.edit') }}"
+                class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
+              <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                @csrf
+                <button type="submit"
+                  class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log
+                  Out</button>
+              </form>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <script>
-              // Toggle sidebar visibility on mobile
-              function toggleSidebar() {
-                const sidebar = document.querySelector('.sidebar');
-                sidebar.classList.toggle('active');
-
-                // Optional: Add class for animating burger icon
-                const burgerIcon = document.querySelector('.burger-icon');
-                burgerIcon.classList.toggle('open');
-              }
-
-              function toggleDropdown() {
-                const dropdownContent = document.querySelector('.dropdown-content');
-                dropdownContent.classList.toggle('hidden');
-              }
-            </script>
-            =======
-            <!-- Main Content -->
-            <div class="flex-1 bg-gray-100 dark:bg-gray-900 main">
-              <!-- Page Content -->
-              <main>
-                {{ $slot }}
-              </main>
-            </div>
+      <!-- Page Content -->
+      <main>
+        {{ $slot }}
+      </main>
     </div>
-    >>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and
-    enhance migrations with new fields)
-  </body>
+  </div>
 
-  </html>
+  <script>
+    // Toggle sidebar visibility on mobile
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('active');
+
+      // Optional: Add class for animating burger icon
+      const burgerIcon = document.querySelector('.burger-icon');
+      burgerIcon.classList.toggle('open');
+    }
+
+    function toggleDropdown() {
+      const dropdownContent = document.querySelector('.dropdown-content');
+      dropdownContent.classList.toggle('hidden');
+    }
+  </script>
+</body>
+
+</html>
