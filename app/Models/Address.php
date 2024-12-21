@@ -20,10 +20,6 @@ class Address extends Model
 
     public function students()
     {
-<<<<<<< HEAD
-        return $this->hasMany(Student::class);
-=======
         return $this->hasOne(Student::class, 'address_id');
->>>>>>> 1cf045b (feat: add student filtering functionality in registrar routes, update models for relationships, and enhance migrations with new fields)
     }
 }
