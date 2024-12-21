@@ -1,38 +1,9 @@
 <x-app-layout>
-    {{-- header --}}
-    <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-2">
-        <div class="header-title pl-3 font-semibold text-[#206A5D]">
-            <h2>Courses</h2>
-        </div>
-
-        <div class="user-info flex items-center gap-2">
-            <div class="dropdown relative inline-block">
-                <button
-                    class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-3 text-sm font-medium rounded-lg flex items-center cursor-pointer"
-                    onclick="toggleDropdown()">
-                    <span id="username">{{ Auth::user()->name }}</span>
-                    <i class="fas fa-chevron-down ml-2"></i>
-                </button>
-
-                <div
-                    class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
-                    <a href="{{ route('profile.edit') }}"
-                        class="block py-2 px-3 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
-                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                        @csrf
-                        <button type="submit"
-                            class="w-full py-2 px-3 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log
-                            Out</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     {{-- main content --}}
-    <div class="main-content p-4 bg-[#ebe9e9]">
-        <div class="bg-white p-8 rounded-lg shadow mt-2">
-            <div class="flex items-center justify-between mb-5">
+    <div class="main-content p-16 py-2 bg-[#ebe9e9]">
+        <div class="bg-white p-12 py-8 rounded-lg shadow-2xl mt-2">
+            <div class="flex items-center justify-between mb-3">
                 <h3 class="text-2xl font-semibold text-gray-900">List of Courses</h3>
                 <!-- Search and Filter Section -->
                 <div class="flex space-x-4">
@@ -57,35 +28,17 @@
                         Add New Course
                     </button> --}}
 
-                    <!-- Entries Filter Dropdown  -->
-                    <div class="relative mt-1">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-6 6a1 1 0 01-.707.293H9.707a1 1 0 01-.707-.293l-6-6A1 1 0 013 6V4z" />
-                            </svg>
-                        </div>
-                        <select id="entries-filter"
-                            class="block text-sm text-gray-900 border border-gray-300 rounded-lg w-32 pl-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 px-1 font-semibold"
-                            onchange="filterEntries()">
-                            <option value="10" disabled selected>Entries </option>
-                            <option value="10">10 </option>
-                            <option value="20">20 </option>
-                            <option value="50">50 </option>
-                            <option value="100">100 </option>
-                        </select>
-                    </div>
+
 
                 </div>
             </div>
-            <div class="border-b border-gray-300 mt-0 py-0"></div>
+            <div class="border-b border-gray-300 mt-0 py-0 "></div>
             <div class="overflow-x-auto mt-2 rounded-md">
                 <table class="min-w-full table-auto border-collapse border-spacing-0 table-fixed">
                     <thead class="bg-[#0A6847] text-white text-xs">
                         <tr>
                             <th class="py-2 px-3 text-left font-medium">Course Code</th>
-                            <th class="py-2 px-3 text-left font-medium">Course Title</th>
+                            <th class="py-2 px-3 text-left font-medium text-sm">Course Title</th>
                             <th class="py-2 px-3 text-left font-medium">Credit Units Lecture</th>
                             <th class="py-2 px-3 text-left font-medium">Credit Units Laboratory
                             </th>
@@ -100,9 +53,11 @@
                     </thead>
                     <tbody class="text-gray-700" id="course-table-body">
                         @forelse($courses as $course)
-                            <tr class="hover:bg-gray-200 transition-colors duration-200">
-                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_code }}</td>
-                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_title }}</td>
+                            <tr class="hover:bg-gray-200 transition-colors duration-200 ">
+                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium ">{{ $course->course_code }}
+                                </td>
+                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_title }}
+                                </td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
                                     {{ $course->credit_unit_lecture }}</td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
@@ -111,7 +66,7 @@
                                     {{ $course->contact_hours_lecture }}</td>
                                 <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
                                     {{ $course->contact_hours_laboratory }}</td>
-                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[100px] break-words font-medium ">
+                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[120px] break-words font-medium ">
                                     {{ $course->pre_requisite ?: '...' }}</td>
                                 {{-- <td class="p-2 text-center">
                                     <button class="text-blue-500 hover:text-blue-700">
@@ -127,6 +82,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mt-4 border-b border-gray-300"></div>
+            <div class="mt-4 ">
+                {{ $courses->links('pagination::tailwind') }}
+            </div>
         </div>
     </div>
 
@@ -138,8 +97,8 @@
 
             Array.from(rows).forEach(row => {
                 const cells = row.getElementsByTagName('td');
-                const courseTitle = cells[1]?.textContent || ''; 
-                const courseCode = cells[0]?.textContent || ''; 
+                const courseTitle = cells[1]?.textContent || '';
+                const courseCode = cells[0]?.textContent || '';
 
                 if (courseTitle.toLowerCase().includes(searchInput) || courseCode.toLowerCase().includes(
                         searchInput)) {
@@ -149,21 +108,6 @@
                 }
             });
         }
-
-        function filterEntries() {
-            const entriesPerPage = document.getElementById('entries-filter').value;
-            const table = document.getElementById('course-table-body');
-            const rows = table.getElementsByTagName('tr');
-
-            Array.from(rows).forEach(row => row.style.display = 'none');
-
-            for (let i = 0; i < entriesPerPage; i++) {
-                if (rows[i]) {
-                    rows[i].style.display = '';
-                }
-            }
-        }
-
 
 
         // Toggle dropdown menu visibility

@@ -15,7 +15,7 @@ class Program extends Model
 
     public function students()
     {
-        return $this->hasMany(Student::class, 'program_id');
+        return $this->hasMany(Student::class);
     }
 
     public function courses()

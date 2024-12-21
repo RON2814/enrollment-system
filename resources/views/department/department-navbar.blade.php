@@ -4,7 +4,8 @@
     <div class="sidebar-header mb-6">
         <div class="logo p-4 flex items-center gap-4">
             <!-- Logo Image -->
-            <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="CvSU-B Logo" class="h-10 w-10 object-contain">
+            <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="CvSU-B Logo"
+                class="h-10 w-10 object-contain">
             <!-- Title -->
             <div>
                 <h2 class="text-base font-medium opacity-80">CvSU-B</h2>
@@ -13,7 +14,7 @@
         </div>
         <hr class="border-t-2 border-[#2c8c6d] mb-6">
     </div>
-    
+
 
     <!-- Sidebar Navigation Menu -->
     <ul class="menu relative list-none p-0">
@@ -27,25 +28,18 @@
             </a>
         </li>
 
+
         <!-- Department -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
-                @if (request()->routeIs('department.department')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
-            <a href="{{ route('department.department') }}" class="text-white no-underline flex items-center gap-3">
+                @if (request()->routeIs('department.instructor')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
+            <a href="{{ route('department.instructor') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Department</span>
+                <span class="text-xs opacity-80">Instructor List</span>
             </a>
         </li>
 
-        <!-- Student Checklist -->
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
-                @if (request()->routeIs('department.studentChecklist')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
-            <a href="{{ route('department.studentChecklist') }}" class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Student Checklist</span>
-            </a>
-        </li>
+
 
         <!-- Courses -->
         <li
@@ -53,9 +47,20 @@
                 @if (request()->routeIs('department.courses')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
             <a href="{{ route('department.courses') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Courses</span>
+                <span class="text-xs opacity-80">Course List</span>
             </a>
         </li>
+
+          <!-- Student List -->
+          <li
+          class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
+           @if (request()->routeIs('department.student-Evaluation')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
+          <a href="{{ route('department.student-Evaluation') }}"
+              class="text-white no-underline flex items-center gap-3">
+              <i class="fas fa-user text-xs opacity-75 mr-2"></i>
+              <span class="text-xs opacity-80">Student List</span>
+          </a>
+      </li>
 
         <!-- Schedule -->
         {{-- <li

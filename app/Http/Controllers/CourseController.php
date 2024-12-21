@@ -8,8 +8,7 @@ class CourseController extends Controller
 {
     public function showCourses()
     {
-        // Fetch all courses from the database
-        $courses = Course::all();
+        $courses = Course::paginate(30);
 
         return view('department.courses', compact('courses'));
     }

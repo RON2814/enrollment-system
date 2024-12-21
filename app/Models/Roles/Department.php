@@ -4,6 +4,8 @@ namespace App\Models\Roles;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Address;
+use App\Models\User;
 
 class Department extends Model
 {

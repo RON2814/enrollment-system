@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\InstructorController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -17,16 +17,22 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
     })->name('dashboard');
 
     // Student Checklist
-    Route::get('/student-checklist', function () {
-      return view('department.studentChecklist');
-    })->name('studentChecklist');
+    Route::get('/student-Evaluation', function () {
+      return view('department.student-Evaluation');
+    })->name('student-Evaluation');
 
     // Courses (Controller Method)
     Route::get('/courses', [CourseController::class, 'showCourses'])->name('courses');
 
-    // Department - Programs and Instructors
-    Route::get('/department', [DepartmentController::class, 'department'])->name('department');
+    // Instructors
+    Route::get('/instructor', [InstructorController::class, 'showInstructor'])->name('instructor');
+
+    // Add instructor
+    Route::post('/instructor', [InstructorController::class, 'addInstructor'])->name('instructor.add-instructor');
+
+    //update instructor
+    Route::patch('instructor/update-instructor/{id}', [InstructorController::class, 'updateInstructor'])->name('instructor.update-instructor');
 
     // Schedule (Controller method)
-    Route::get('/schedule', [DepartmentController::class, 'schedule'])->name('schedule');
+    Route::get('/schedule', [InstructorController::class, 'schedule'])->name('schedule');
   });

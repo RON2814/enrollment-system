@@ -21,9 +21,9 @@ return new class extends Migration {
             $table->timestamps();
 
             // Foreign keys
-            $table->foreign("student_number")->references("student_number")->on("students");
-            $table->foreign("course_code")->references("course_code")->on("courses");
-            $table->foreign("instructor_id")->references("id")->on("instructors");
+            $table->foreign('student_number')->references('student_number')->on('students')->onDelete('cascade');
+            $table->foreign('course_code')->references('course_code')->on('courses');
+            $table->foreign('instructor_id')->references('id')->on('instructors')->nullable();
         });
     }
 
@@ -32,7 +32,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        
+
         Schema::dropIfExists('checklists');
     }
 };

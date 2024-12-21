@@ -5,6 +5,7 @@ namespace App\Models\Roles;
 use App\Models\Address;
 use App\Models\Program;
 use App\Models\User;
+use App\Models\Checklist\Checklist;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,13 +32,20 @@ class Student extends Model
         return $this->belongsTo(User::class, 'student_number', 'id');
     }
 
-    public function program()
-    {
-        return $this->belongsTo(Program::class, 'program_id', 'id');
-    }
-
     public function address()
     {
-        return $this->belongsTo(Address::class, 'address_id', 'id');
+        return $this->belongsTo(Address::class);
     }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+
+    public function checklist()
+    {
+        return $this->hasMany(Checklist::class, 'student_number', 'student_number');
+    }
+    
+    
 }
