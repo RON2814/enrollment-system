@@ -42,7 +42,10 @@ class ManageStudentController extends Controller
         $q->where(function ($subQuery) use ($query) {
           $subQuery->where('student_number', 'LIKE', "%{$query}%")
             ->orWhere('first_name', 'LIKE', "%{$query}%")
-            ->orWhere('last_name', 'LIKE', "%{$query}%");
+            ->orWhere('last_name', 'LIKE', "%{$query}%")
+            ->orWhereHas('user', function ($q2) use ($query) {
+              $q2->where('email', 'LIKE', "%{$query}%");
+            });
         });
       })
       ->when($programId, function ($q) use ($programId) {
@@ -249,7 +252,7 @@ class ManageStudentController extends Controller
       ['course_code' => 'GNED 10', 'year' => "Fourth Year", 'semester' => "Second Semester"],
       ['course_code' => 'COSC 110', 'year' => "Fourth Year", 'semester' => "Second Semester"],
       ['course_code' => 'COSC 200B', 'year' => "Fourth Year", 'semester' => "Second Semester"],
-      
+
     ] : [ // Program ID 2 is BSIT
       ['course_code' => 'GNED 02', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'GNED 05', 'year' => "First Year", 'semester' => "First Semester"],

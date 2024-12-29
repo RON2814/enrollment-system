@@ -49,7 +49,7 @@
                 <td class="py-4 px-4 text-sm">{{ $student->student_number }}</td>
                 <td class="py-4 px-4 text-sm">{{ $student->last_name }}</td>
                 <td class="py-4 px-4 text-sm">{{ $student->first_name }}</td>
-                <td class="py-4 px-4 text-sm">{{ $student->middle_name || '' }}</td>
+                <td class="py-4 px-4 text-sm">{{ $student->middle_name }}</td>
                 <td class="py-4 px-4 text-sm">{{ $student->user?->email }}</td>
                 <td class="py-4 px-4 text-sm">{{ $student->program->title }}</td>
                 <td class="py-4 px-4 text-sm">{{ $student->classification }}</td>
@@ -138,7 +138,7 @@
             <td class="py-4 px-4 text-sm">${student.student_number}</td>
             <td class="py-4 px-4 text-sm">${student.last_name}</td>
             <td class="py-4 px-4 text-sm">${student.first_name}</td>
-            <td class="py-4 px-4 text-sm">${student.middle_name || ''}</td>
+            <td class="py-4 px-4 text-sm">${student.middle_name}</td>
             <td class="py-4 px-4 text-sm">${email}</td>
             <td class="py-4 px-4 text-sm">${programTitle}</td>
             <td class="py-4 px-4 text-sm">${student.classification}</td>
@@ -166,11 +166,6 @@
     // Event listeners for search and filter
     document.getElementById('searchBar').addEventListener('input', debounce(fetchStudents, 300));
     document.getElementById('programFilter').addEventListener('change', fetchStudents);
-
-    function toggleDropdown() {
-      const dropdownContent = document.querySelector('.dropdown-content');
-      dropdownContent.classList.toggle('hidden');
-    }
 
     function deleteStudent(studentNumber) {
       Swal.fire({
