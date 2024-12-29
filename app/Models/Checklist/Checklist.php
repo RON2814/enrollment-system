@@ -24,17 +24,11 @@ class Checklist extends Model
         return $this->belongsTo(Student::class, 'student_number', 'student_number');
     }
 
-    /**
-     * Relationship with the Course model.
-     */
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_code', 'course_code');
     }
 
-    /**
-     * Relationship with the Instructor model.
-     */
     public function instructor()
     {
         return $this->belongsTo(Instructor::class, 'instructor_id');

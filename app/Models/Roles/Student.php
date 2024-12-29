@@ -4,6 +4,7 @@ namespace App\Models\Roles;
 
 use App\Models\Address;
 use App\Models\Checklist\Checklist;
+use App\Models\Checklist\Enrollment;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,5 +48,15 @@ class Student extends Model
     public function checklist()
     {
         return $this->hasMany(Checklist::class, 'student_number', 'student_number');
+    }
+
+    public function enrollment()
+    {
+        return $this->hasMany(Enrollment::class, 'student_number', 'student_number');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->last_name}, {$this->first_name} {$this->middle_name}";
     }
 }

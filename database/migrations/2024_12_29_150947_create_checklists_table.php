@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->unsignedBigInteger("instructor_id")->nullable();
             $table->enum("year", ["First Year", "Second Year", "Third Year", "Fourth Year"]);
             $table->enum("semester", ["First Semester", "Second Semester", "Midyear"]);
+            $table->foreignId("enrollment_id")->constrained("enrollments");
             $table->timestamps();
 
             // Foreign keys
