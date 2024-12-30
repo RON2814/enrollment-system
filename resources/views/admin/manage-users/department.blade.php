@@ -1,6 +1,6 @@
 <x-app-layout>
   {{-- main content  --}}
-  <div class="main-content p-4 py-0 bg-[#ebe9e9]">
+  <div class="main-content p-16 py-0 bg-[#ebe9e9]">
     <div class="bg-white mt-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
       <div class="flex items-center justify-between mb-5">
         <h3 class="text-2xl font-semibold text-gray-900">Department - Registration Advisers</h3>

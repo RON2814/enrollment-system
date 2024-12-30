@@ -30,17 +30,18 @@
         <!-- Student Information -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out
-            @if (request()->routeIs('  ')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
-            <a href="#" class="text-white no-underline flex items-center gap-3">
+            @if (request()->routeIs('registrar.enrollment-list')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
+            <a href="{{ route('registrar.enrollment-list') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
                 <span class="text-xs opacity-80">Enrollment List</span>
             </a>
         </li>
 
+
         <!-- Enrolled Subjects -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out
-            @if (request()->routeIs(' ')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
+            @if (request()->routeIs('registrar.record-of-students')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
             <a href="{{ route('registrar.record-of-students') }}"
                 class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
@@ -59,13 +60,13 @@
     </li> --}}
 
         <!-- Student Grades -->
-        <li
+        {{-- <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out
             @if (request()->routeIs(' ')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
             <a href="#" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
                 <span class="text-xs opacity-80">COR</span>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </aside>
