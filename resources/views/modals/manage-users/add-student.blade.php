@@ -104,7 +104,7 @@
         </div>
 
         {{-- registrar add student --}}
-        @if (auth()->user()->role_id === 3)
+        {{-- @if (auth()->user()->role_id === 3) --}}
           <div class="col-start-1">
             <label for="houseNumber" class="text-sm font-medium text-gray-700">House Number</label>
             <input type="text" id="houseNumber" name="house_number" value="{{ old('house_number') }}"
@@ -146,7 +146,7 @@
               class="mt-1 px-4 py-2 border @error('zip_code') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             <x-input-error :messages="$errors->get('zip_code')" class="mt-2" id="error-zip_code" />
           </div>
-        @endif
+        {{-- @endif --}}
       </div>
 
       <!-- Modal Actions -->

@@ -1,6 +1,6 @@
 <x-app-layout>
   <!-- main-content -->
-  <div class="main-content p-4 py-0 bg-[#ebe9e9]">
+  <div class="main-content p-12 py-0 bg-[#ebe9e9]">
 
     <div class="card-container bg-white p-8 rounded-xl mt-4 shadow-md">
       <div class="card-wrapper grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
