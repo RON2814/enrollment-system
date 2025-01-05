@@ -321,7 +321,6 @@ class ManageStudentController extends Controller
       Checklist::create([
         'student_number' => $request->student_number,
         'course_code' => $item['course_code'],
-        'instructor_id' => null,
         'year' => $item['year'],
         'semester' => $item['semester'],
       ]);
