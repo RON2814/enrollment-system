@@ -19,9 +19,12 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     Route::get("/enrollment-list/search", [ManageStudentController::class, 'search'])->name("enrollment-list.search");
 
 
-    // Student's Record
-    Route::get("/record-of-students", [RegistrarController::class, 'recordOfStudents'])->name("record-of-students");
-    Route::get("/record-of-students/search", [ManageStudentController::class, 'search'])->name("record-of-students.search");
+    // Enrolled Students
+    Route::get("/enrolled-students", [RegistrarController::class, 'enrolledStudents'])->name("enrolled-students");
+
+    // Record of Students
+    Route::get("/students-record", [RegistrarController::class, 'recordStudents'])->name("registrar.students-record");
 
 
+  
   });

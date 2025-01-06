@@ -48,6 +48,7 @@ class Student extends Model
     public function checklist()
     {
         return $this->hasMany(Checklist::class, 'student_number', 'student_number');
+        
     }
 
     public function enrollment()

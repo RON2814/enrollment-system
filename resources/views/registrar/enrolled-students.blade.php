@@ -3,29 +3,58 @@
     {{-- main-content --}}
     <div class="main-content p-10 py-0 bg-[#ebe9e9]">
 
-        <div class="bg-white mt-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8">
-            <div class="flex items-center justify-between mb-5">
-                <h3 class="text-2xl font-semibold text-gray-900">Student Table</h3>
+        <div class="p-4 rounded-lg shadow mt-3 flex items-center justify-between bg-white">
+            <h3 class="text-base font-medium text-black-700">Filter By:</h3>
+
+            <div class="flex space-x-6">
+                <select id="yearLevelFilter"
+                    class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
+                    <option value="all" selected disabled class="text-gray-600">Year Level</option>
+                    <option value="all">All</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+
+                <select id="sectionFilter"
+                    class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
+                    <option value="all" selected disabled class="text-gray-600">Section</option>
+                    <option value="all">All</option>
+                    <option value="A">Section A</option>
+                    <option value="B">Section B</option>
+                </select>
+
+                <select id="programFilter"
+                    class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
+                    <option value="all" selected disabled class="text-gray-600">Filter by Program</option>
+                    <option value="all">All</option>
+                    <option value="1">Computer Science</option>
+                    <option value="2">Information Technology</option>
+                </select>
+
+
+            </div>
+        </div>
+
+
+        <div class="bg-white mt-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8 py-5">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-2xl font-semibold text-gray-900 border-b borderpgray-300">Enrolled Students</h3>
 
                 <!-- Search and Filter Section -->
                 <div class="flex space-x-4">
                     <!-- Search Bar -->
                     <input type="text" id="searchBar" placeholder="Search students..."
-                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <!-- Filter Dropdown -->
-                    <select id="programFilter"
-                        class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option value="all" selected disabled class="text-gray-600">Filter by Program</option>
-                        <option value="all">All</option>
-                        <option value="1">Computer Science</option>
-                        <option value="2">Information Technology</option>
-                    </select>
+                    class="px-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                
 
-                    <!-- Add New Student Button -->
-                    <button onclick="openAddStudentModal()"
-                        class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        + Add New Student
+                    <button onclick=""
+                        class="px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700">
+                        Print All COG
                     </button>
+
+
                 </div>
             </div>
 
@@ -48,25 +77,22 @@
                         {{-- Student rows will be inserted here JS will do the job :) --}}
                         @foreach ($students as $student)
                             <tr>
-                                <td class="py-4 px-4 text-sm">{{ $student->student_number }}</td>
-                                <td class="py-4 px-4 text-sm">
+                                <td class="py-3 px-4 text-sm">{{ $student->student_number }}</td>
+                                <td class="py-3 px-4 text-sm">
                                     {{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}
                                 </td>
-                                <td class="py-4 px-4 text-sm">{{ $student->program->title }}</td>
-                                <td class="py-4 px-4 text-sm"></td>
-                                <td class="py-4 px-4 text-sm"></td>
-                                <td class="py-4 px-4 text-sm"></td>
-                                <td class="py-4 px-4 text-sm">{{ $student->classification }}</td>
-                                <td class="py-4 px-4 text-sm">{Enrolled}</td>
-                                <td class="py-4 px-4 text-sm">
+                                <td class="py-3 px-4 text-sm">{{ $student->program->title }}</td>
+                                <td class="py-3 px-4 text-sm">{yearlevel}</td>
+                                <td class="py-3 px-4 text-sm">{semester}</td>
+                                <td class="py-3 px-4 text-sm">{section}</td>
+                                <td class="py-3 px-4 text-sm">{{ $student->classification }}</td>
+                                <td class="py-3 px-4 text-sm">{Enrolled}</td>
+                                <td class="py-3 px-4 text-sm">
                                     <button onclick='openUpdateStudentModal({{ $student }})'
-                                        class="text-blue-500 hover:text-blue-700"> View
-                                        {{-- <i class="fas fa-edit"></i> --}}
+                                        class="bg-blue-500 text-white px-2 py-2 rounded-lg"> View
+
                                     </button>
-                                    {{-- <button onclick="deleteStudent(`{{ $student->student_number }}`)"
-                                        class="ml-4 text-red-500 hover:text-red-700">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button> --}}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

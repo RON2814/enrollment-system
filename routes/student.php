@@ -9,7 +9,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
     // STUDENT Dashboard
     Route::get('/dashboard', function () {
         return view('student.dashboard');
-    })->name('dashboard');
+    })->name('dashboard');    
 
     // Student Information Route
     Route::get('/student-information', [StudentController::class, 'studentInformation'])->name('student-information');

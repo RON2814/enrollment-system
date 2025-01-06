@@ -317,15 +317,17 @@ class ManageStudentController extends Controller
       ['course_code' => 'ITEC 199', 'year' => "Fourth Year", 'semester' => "Second Semester"],
     ];
 
-    foreach ($checklistItems as $item) {
-      Checklist::create([
-        'student_number' => $request->student_number,
-        'course_code' => $item['course_code'],
-        'year' => $item['year'],
-        'semester' => $item['semester'],
-      ]);
-    }
+      foreach ($checklistItems as $item) {
+        Checklist::create([
+          'student_number' => $request->student_number,
+          'course_code' => $item['course_code'],
+          'year' => $item['year'],
+          'semester' => $item['semester'],
+        ]);
+      }
 
     return redirect()->route('admin.manageUsers.student')->with('success', 'Student added successfully.');
   }
+
+  
 }
