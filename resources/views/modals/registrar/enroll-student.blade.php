@@ -10,6 +10,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
+
+
+        {{-- Page 1  --}}
         <div id="page1Content" class="page-content">
             <h3 class="text-xl font-semibold mb-6 text-gray-800 border-b border-gray-300">STUDENT ENROLLMENT </h3>
 
@@ -18,6 +21,7 @@
                 <span>Student Personal Information:</span>
                 <span class="text-xs text-red-500">Update information if required</span>
             </h2>
+
             <form id="enrollmentForm" method="POST" action="">
                 @csrf
                 @method('PATCH')
@@ -198,24 +202,33 @@
                                 </tr>
                             </thead>
                             <tbody id="courses-tbody">
-                                @foreach ($student->Checklist as $item)
-                                    <tr class="align-middle">
-                                        <td class="px-2 py-2 text-sm border-b">{{ $item->course_code }}</td>
-                                        <td class="px-2 py-2 text-sm border-b">{{ $item->course_title }}</td>
-                                        <td class="px-2 py-2 text-sm border-b">{{ $item->course_title }}</td>
-                                        <td class="px-2 py-2 text-sm border-b">{{ $item->course_title }}</td>
-                                        <td class="px-2 py-2 text-sm border-b">{{ $item->instructor_id }}</td>
-                                        <td class="px-2 py-2 text-sm border-b">
-                                            <button onclick="addCourse(this)"
-                                                class="p-2 bg-blue-500 hover:bg-blue-700">
-                                                <i class="fas fa-plus text-white"></i> <!-- Add icon -->
-                                            </button>
-                                            <button onclick="dropCourse(this)"
-                                                class="p-2 bg-red-500 hover:bg-red-700">
-                                                <i class="fas fa-minus text-white"></i> <!-- Drop icon -->
-                                            </button>
-                                        </td>
-                                    </tr>
+                                @foreach ($students as $student)
+                                    @foreach ($student->checklist as $item)
+                                        <tr class="align-middle">
+                                            <td class="px-2 py-2 text-sm border-b">{{ $item->course_code }}</td>
+                                            <td class="px-2 py-2 text-sm border-b">{{ $item->course->course_title }}
+                                            </td>
+                                            <td class="px-2 py-2 text-sm border-b">
+                                                {{ $item->course->credit_unit_lecture + $item->course->credit_unit_laboratory }}
+                                            </td>
+                                            <td class="px-2 py-2 text-sm border-b">
+                                                {{ $item->course->credit_hours_lecture + $item->course->credit_hours_laboratory }}
+                                            </td>
+                                            <td class="px-2 py-2 text-sm border-b">
+                                                {{ $item->instructor_id ?? 'N/A' }}
+                                            </td>
+                                            <td class="px-2 py-2 text-sm border-b">
+                                                <button onclick="addCourse(this)"
+                                                    class="p-2 bg-blue-500 hover:bg-blue-700">
+                                                    <i class="fas fa-plus text-white"></i> <!-- Add icon -->
+                                                </button>
+                                                <button onclick="dropCourse(this)"
+                                                    class="p-2 bg-red-500 hover:bg-red-700">
+                                                    <i class="fas fa-minus text-white"></i> <!-- Drop icon -->
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @endforeach
                             </tbody>
 
@@ -225,188 +238,62 @@
                 </div>
             </div>
 
+            {{-- Billing Information  --}}
+            @include('modals.registrar.partials.billing', ['student' => $student])
 
-            <h3 class="text-base font-semibold mt-12 mb-4 border-b border-gray-300">Billing Information:</h3>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Left Column -->
-                <div>
-                    <!-- Laboratory Fees Section -->
-                    <div class="bg-white p-4 mb-4 rounded-lg shadow-md text-sm border border-gray-300">
-                        <!-- Smaller padding and text size -->
-                        <h2 class="text-base font-semibold text-gray-700 mb-3 border-b border-gray-300 bg-gray-200">
-                            Laboratory Fees
-                        </h2>
-                        <!-- Smaller heading -->
-                        <div class="space-y-2">
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">ComLab:</span>
-                                <span>₱800.00</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Other Fees Section -->
-                    <div class="bg-white p-4 mb-4 rounded-lg shadow-md text-sm border border-gray-300">
-                        <h2 class="text-base font-semibold text-gray-700 mb-3 border-b border-gray-300 bg-gray-200">
-                            Other Fees</h2>
-                        <div class="space-y-2">
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">NSTP:</span>
-                                <span>...</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Reg. Fee:</span>
-                                <span>₱55.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">ID:</span>
-                                <span>...</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Late Reg.:</span>
-                                <span>...</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Insurance:</span>
-                                <span>₱25.00</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Total Summary Section (unchanged) -->
-                    <div class="bg-white p-4 mb-4 rounded-lg shadow-md text-sm border border-gray-300">
-                        <h2 class="text-base font-semibold text-gray-700 mb-4 border-b border-gray-300 bg-gray-200">
-                            Total Summary</h2>
-                        <div class="space-y-3">
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="font-semibold text-gray-600">Total Units:</span>
-                                <span>{total units}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="font-semibold text-gray-600">Total Hours:</span>
-                                <span>{total hours}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="font-semibold text-gray-600">Total Amount:</span>
-                                <span>₱8,290.00</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Action Buttons -->
+            <div class="flex justify-between items-center mt-12 border-t border-gray-300 pt-2">
+                <!-- Text on the left -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="verifyCheckbox" class="form-checkbox h-4 w-4 text-indigo-600">
+                    <label for="verifyCheckbox" class="text-gray-700">I confirm that the student's information is
+                        accurate
+                        and complete.</label>
                 </div>
 
-                <!-- Right Column -->
-                <div>
-                    <!-- Assessment Section -->
-                    <div class="bg-white p-4 mb-4 rounded-lg shadow-md text-sm border border-gray-300">
-                        <h2 class="text-base font-semibold text-gray-700 mb-3 border-b border-gray-300 bg-gray-200">
-                            Assessment</h2>
-                        <div class="space-y-2">
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Tuition Fee:</span>
-                                <span>₱3,200.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">SFDF:</span>
-                                <span>₱1,500.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">SRF:</span>
-                                <span>₱2,025.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Misc.:</span>
-                                <span>₱435.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Athletics:</span>
-                                <span>₱100.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">SCUAA:</span>
-                                <span>₱100.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Library Fee:</span>
-                                <span>₱50.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Lab Fees:</span>
-                                <span>₱800.00</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="font-medium text-gray-600">Other Fees:</span>
-                                <span>₱80.00</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Payment Section -->
-                    <div class="bg-white p-4 mb-4 rounded-lg shadow-md text-sm border border-gray-300">
-                        <h2 class="text-base font-semibold text-gray-700 mb-4 border-b border-gray-300 bg-gray-200">
-                            Payment</h2>
-                        <div class="space-y-3">
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="font-semibold text-gray-600">Total Amount:</span>
-                                <span>₱8,290.00</span>
-                            </div>
-
-                            <!-- Received Money Section -->
-                            <div id="receivedMoneyDiv" class="flex justify-between border-b pb-2">
-                                <label for="receivedMoney" class="font-semibold text-gray-600">Received Money:</label>
-                                <input type="number" id="receivedMoney" name="receivedMoney"
-                                    class="border border-gray-300 rounded px-2 py-2 text-gray-600"
-                                    placeholder="Enter amount">
-                            </div>
-
-                            <!-- Change Section -->
-                            <div id="changeDiv" class="flex justify-between border-b pb-2">
-                                <span class="font-semibold text-gray-600">Change:</span>
-                                <span>0</span>
-                            </div>
-
-                            <div class="mt-4 bg-green-300 p-2">
-                                <label>
-                                    <input type="checkbox" class="mr-2" id="applyFreeTuition"
-                                        onclick="togglePaymentFields()">
-                                    Apply CHED FREE TUITION and Misc FEE
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Buttons on the right -->
+                <div class="flex space-x-4">
+                    <!-- Cancel Button -->
+                    <button type="button" onclick="closeUpdateStudentModal()"
+                        class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none transition duration-200 ease-in-out">
+                        Cancel
+                    </button>
+                    <!-- Update Button -->
+                    <button type="submit" onclick="showSuccessModal()"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none transition duration-200 ease-in-out">
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="flex justify-between items-center mt-12 border-t border-gray-300 pt-2">
-            <!-- Text on the left -->
-            <div class="flex items-center space-x-2">
-                <input type="checkbox" id="verifyCheckbox" class="form-checkbox h-4 w-4 text-indigo-600">
-                <label for="verifyCheckbox" class="text-gray-700">I confirm that the student's information is accurate
-                    and complete.</label>
+        {{-- Success Modal --}}
+        @include('modals.registrar.partials.success-notif')
+
+
+        {{-- Page 2 --}}
+        {{-- <div id="page2Content" class="page-content hidden">
+            <h3 class="text-xl font-semibold mb-6 text-gray-800 border-b border-gray-300">Certificate of Registration
+            </h3>
+            <div class="bg-white p-16 py-2 flex items-start">
+                @include('modals.registrar.partials.page2_COR', ['student' => $student])
+                
+
+                <!-- Download PDF Button -->
+                <div class="flex flex-col justify-between h-full gap-6">
+                    <button
+                        class="ml-6 mt-16 px-6 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        Download PDF
+                    </button>
+
+                    <button
+                        class="ml-6 mb-16 px-6 py-2 bg-gray-500 text-white font-medium rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Skip
+                    </button>
+                </div>
             </div>
-
-            <!-- Buttons on the right -->
-            <div class="flex space-x-4">
-                <!-- Cancel Button -->
-                <button type="button" onclick="closeUpdateStudentModal()"
-                    class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none transition duration-200 ease-in-out">
-                    Cancel
-                </button>
-                <!-- Update Button -->
-                <button type="submit" onclick="showPage(2)"
-                    class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none transition duration-200 ease-in-out">
-                    Submit
-                </button>
-            </div>
-        </div>
-
-        <div id="page2Content" class="page-content hidden">
-
-
-
-
-        </div>
+        </div> --}}
 
         </form>
     </div>
@@ -522,6 +409,35 @@
         } else {
             receivedMoneyDiv.style.display = 'flex';
             changeDiv.style.display = 'flex';
+        }
+    }
+
+    // Function to show the success modal
+    function showSuccessModal() {
+        document.getElementById('successModal').classList.remove('hidden');
+    }
+
+    // Function to close the success modal
+    function closeSuccessModal() {
+        document.getElementById('successModal').classList.add('hidden');
+        document.getElementById('enrollModal').classList.add('hidden');
+
+    }
+</script>
+
+<style>
+    .animate-bounce {
+        animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
         }
     }
 </script>

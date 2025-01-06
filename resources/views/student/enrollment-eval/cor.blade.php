@@ -1,7 +1,7 @@
 <x-app-layout>
   <div class="main-content p-16 py-2 bg-[#ebe9e9]">
-      <div class="overflow-x-auto bg-white p-8 rounded-lg shadow-2xl mt-2">
-          <div class="flex items-center justify-center mb-2">
+    <div class="overflow-hidden bg-white p-8 rounded-lg shadow-2xl mt-2" style="width: 210mm; height: 297mm; overflow: hidden;">
+        <div class="flex items-center justify-center mb-2">
               <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="University Logo" class="h-20 mr-4">
               <h2 class="m-0 p-0 text-center">Cavite State University</h2>
           </div>
@@ -175,7 +175,7 @@
               Old/New Student: <strong>Old Student</strong><br>
               Registration Status: <strong>REGULAR</strong><br>
               Date of Birth: <strong>November 6, 2003</strong><br>
-              Gender: <strong>FEMALE</strong><br>
+              Sex: <strong>FEMALE</strong><br>
               Contact Number: <strong>09600000</strong><br>
               E-mail Address: <strong>rai@gmail.com</strong><br>
               <p>Student's Signature: __________________________</p>
