@@ -31,7 +31,13 @@ class DatabaseSeeder extends Seeder
             ["id" => 1, "title" => "BSCS", "description" => "Bachelor of Science in Computer Science",],
             ["id" => 2, "title" => "BSIT", "description" => "Bachelor of Science in Information Technology",],
         ]);
-        $this->call(CourseSeeder::class);
+        $this->call([
+            CourseSeeder::class,
+            StudentSeeder::class,
+            InstructorSeeder::class,
+            // ChecklistSeeder::class,
+        ]);
+        
 
         // Create initial users with specific roles
 

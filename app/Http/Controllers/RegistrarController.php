@@ -18,15 +18,16 @@ class RegistrarController extends Controller
         return view("registrar.enrollment-list", compact("students"));
     }
 
-    public function enrollmentLists()
-    {
-        $students = Student::with("program", "address", "user")->get();
-        return view("registrar.enrollment-list", compact("students"));
-    }
-
     public function enrolledStudents()
     {
         $students = Student::with("program", "address", "user")->get();
         return view("registrar.enrolled-students", compact("students"));
     }
+
+    public function recordStudents()
+    {
+        $students = Student::with("program", "address", "user")->get();
+        return view("registrar.students-record", compact("students"));
+    }
+    
 }
