@@ -114,7 +114,7 @@ class ManageAdminController extends Controller
             'name' => "{$request->last_name}, {$request->first_name} {$request->middle_name}",
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role_id' => 3, // Admin role
+            'role_id' => 4, // Admin role
         ]);
 
         Admin::create([

@@ -165,10 +165,6 @@ class StudentController extends Controller
                 return !is_null($checklist->grade) && !is_null($checklist->instructor);
             });
 
-        if ($checklistWithGrades->isEmpty()) {
-            return view('student.enrollment', compact('student', 'checklistWithGrades'));
-        }
-
         // Get the highest year level and semester
         $highestYearLevel = $checklistWithGrades->max('year');
         $highestSemester = $checklistWithGrades
@@ -191,6 +187,10 @@ class StudentController extends Controller
             $evaluationStatus = 'PROCEED';
         }
 
+        if ($checklistWithGrades->isEmpty()) {
+            return view('student.enrollment', ['student' => $student, 'checklistWithGrades' => $checklistWithGrades, 'filteredChecklist' => $filteredChecklist, 'evaluationStatus' => $evaluationStatus]);
+        }
+
         // Pass the evaluation status to the view
         return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
     }
@@ -201,11 +201,11 @@ class StudentController extends Controller
         $student = Student::with(['checklist.course', 'checklist.instructor', 'program'])
             ->where('student_number', Auth::user()->id)
             ->first();
-    
+
         if (!$student) {
             abort(404, 'Student not found.');
         }
-    
+
         // Define mappings for year and semester
         $yearMapping = [
             'First Year' => 1,
@@ -213,17 +213,17 @@ class StudentController extends Controller
             'Third Year' => 3,
             'Fourth Year' => 4,
         ];
-    
+
         $semesterMapping = [
             'First Semester' => 1,
             'Second Semester' => 2,
             'Midyear' => 3,
         ];
-    
+
         // Get the highest year level and semester (as integers)
-        $highestYearLevel = $yearMapping[$student->checklist->max('year')] ?? 1; 
-        $highestSemester = $semesterMapping[$student->checklist->where('year', $highestYearLevel)->max('semester')] ?? 1;
-    
+        $highestYearLevel = $yearMapping[$student->checklist->max('year') ?? 'First Year'] ?? 1;
+        $highestSemester = $semesterMapping[$student->checklist->where('year', $highestYearLevel)->max('semester') ?? 'First Semester'] ?? 1;
+
         // Determine the next year level and semester
         if ($highestSemester == 2) {
             // If the student is in the Second Semester, move to the next year and First Semester
@@ -238,19 +238,19 @@ class StudentController extends Controller
             $nextYearLevel = $highestYearLevel + 1;
             $nextSemester = 1;
         }
-    
+
         // Map back to string values for the next semester and year level
         $nextYearLevelString = array_search($nextYearLevel, $yearMapping);
         $nextSemesterString = array_search($nextSemester, $semesterMapping);
-    
+
         // Filter checklist for courses in the next year level and semester
         $nextCourses = $student->checklist->filter(function ($checklist) use ($nextYearLevelString, $nextSemesterString) {
             return $checklist->year == $nextYearLevelString && $checklist->semester == $nextSemesterString;
         });
-    
+
         return view('student.enrollment-eval.evaluated-courses', compact('student', 'nextCourses', 'nextYearLevelString', 'nextSemesterString'));
     }
-    
+
 
     /**
      * Show the COR
