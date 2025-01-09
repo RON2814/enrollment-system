@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Roles\Student;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class RegistrarController extends Controller
@@ -14,11 +15,19 @@ class RegistrarController extends Controller
 
     public function enrollmentLists()
     {
-        // Filter students and their checklist for first year and first semester
-        $students = Student::with(['program', 'address', 'user', 'checklist' => function ($query) {
-            $query->where('year', 'First Year') // Filter by first year
-                ->where('semester', 'First Semester'); // Filter by first semester
-        }])->get();
+        // Retrieve students with related models and filter their checklists
+        $students = Student::with([
+            'program',
+            'address',
+            'user',
+            'checklist' => function ($query) {
+                $query->where('year', 'First Year') // Filter by first year
+                    ->where('semester', 'First Semester'); // Filter by first semester
+            }
+        ])->get();
+
+        
+     
 
         return view("registrar.enrollment-list", compact("students"));
     }

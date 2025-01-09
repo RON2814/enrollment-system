@@ -21,7 +21,7 @@ class AdminController extends Controller
 
     public function manageStudent()
     {
-        $students = Student::with("program", "address", "user")->latest()->paginate(5);
+        $students = Student::with("program", "address", "user")->latest()->paginate(15);
 
         return view('admin.manage-users.student', compact('students'));
     }

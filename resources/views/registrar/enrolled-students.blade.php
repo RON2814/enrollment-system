@@ -264,9 +264,6 @@
             });
         }
 
-        function toggleDropdown() {
-            const dropdownContent = document.querySelector('.dropdown-content');
-            dropdownContent.classList.toggle('hidden');
-        }
+        
     </script>
 </x-app-layout>

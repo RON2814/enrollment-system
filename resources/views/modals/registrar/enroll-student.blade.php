@@ -195,8 +195,7 @@
                                         Credits</th>
                                     <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">Total
                                         Credits Hours</th>
-                                    <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">
-                                        Instructor</th>
+
                                     <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">Action
                                     </th>
                                 </tr>
@@ -208,23 +207,20 @@
                                             <td class="px-2 py-2 text-sm border-b">{{ $item->course_code }}</td>
                                             <td class="px-2 py-2 text-sm border-b">{{ $item->course->course_title }}
                                             </td>
-                                            <td class="px-2 py-2 text-sm border-b">
+                                            <td class="px-2 py-2 text-sm border-b text-center">
                                                 {{ $item->course->credit_unit_lecture + $item->course->credit_unit_laboratory }}
                                             </td>
-                                            <td class="px-2 py-2 text-sm border-b">
-                                                {{ $item->course->credit_hours_lecture + $item->course->credit_hours_laboratory }}
-                                            </td>
-                                            <td class="px-2 py-2 text-sm border-b">
-                                                {{ $item->instructor_id ?? 'N/A' }}
+                                            <td class="px-2 py-2 text-sm border-b text-center">
+                                                {{ $item->course->contact_hours_lecture + $item->course->contact_hours_laboratory }}
                                             </td>
                                             <td class="px-2 py-2 text-sm border-b">
                                                 <button onclick="addCourse(this)"
                                                     class="p-2 bg-blue-500 hover:bg-blue-700">
-                                                    <i class="fas fa-plus text-white"></i> <!-- Add icon -->
+                                                    <i class="fas fa-plus text-white"></i>
                                                 </button>
                                                 <button onclick="dropCourse(this)"
                                                     class="p-2 bg-red-500 hover:bg-red-700">
-                                                    <i class="fas fa-minus text-white"></i> <!-- Drop icon -->
+                                                    <i class="fas fa-minus text-white"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -429,6 +425,7 @@
     .animate-bounce {
         animation: bounce 1s infinite;
     }
+
     @keyframes bounce {
 
         0%,
@@ -440,4 +437,5 @@
             transform: translateY(-10px);
         }
     }
-</script>
+
+    </script>

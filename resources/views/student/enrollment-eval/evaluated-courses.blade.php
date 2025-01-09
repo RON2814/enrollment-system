@@ -70,7 +70,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1" for="semester">Semester</label>
                         <div id="semester" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
-                            {{ $nextSemesterString }} <!-- Display the semester -->
+                            {{ $nextSemesterString }} 
                         </div>
                     </div>
 

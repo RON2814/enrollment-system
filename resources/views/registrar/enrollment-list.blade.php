@@ -20,7 +20,7 @@
                     class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
                     <option value="all" selected disabled class="text-gray-600">Section</option>
                     <option value="all">All</option>
-                  
+
                 </select>
 
                 <select id="programFilter"
@@ -264,9 +264,6 @@
             });
         }
 
-        function toggleDropdown() {
-            const dropdownContent = document.querySelector('.dropdown-content');
-            dropdownContent.classList.toggle('hidden');
-        }
+      
     </script>
 </x-app-layout>
