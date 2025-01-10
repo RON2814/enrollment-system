@@ -1,12 +1,15 @@
 <!-- Add Student Modal -->
-<div id="addStudentModal" class="hidden flex fixed inset-0 bg-gray-800 bg-opacity-75 justify-center items-center z-50">
+<div id="addStudentModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 transition-opacity duration-300 ease-in-out">
   <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-4xl max-h-[80vh] overflow-y-auto">
-    <h3 class="text-2xl font-semibold mb-6 text-gray-800">Add New Student</h3>
+    
+    <h3 class="text-2xl font-semibold mb-6 text-gray-800 border-b border-gray-300">Add New Student</h3>
+    
     <form id="addStudentForm"
       action="{{ auth()->user()->role_id === 4 ? route('admin.manageUsers.store-student') : route('registrar.enrollment-lists.store') }}"
       method="POST">
       @csrf
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        
         <div>
           <label for="studentNumber" class="text-sm font-medium text-gray-700">Student Number <span
               class="text-red-400">*</span></label>

@@ -20,7 +20,13 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     Route::get("/enrollment-lists", [RegistrarController::class, 'enrollmentLists'])->name("enrollment-lists");
     Route::post("/enrollment-lists/store", [ManageStudentController::class, 'store'])->name("enrollment-lists.store");
     Route::patch("/enrollment-lists/update/{student_id}", [ManageStudentController::class, 'update'])->name("enrollment-lists.update");
+    Route::delete('/enrollment-lists/destroy/{student_number}', [ManageStudentController::class, 'destroy'])
+    ->name('/enrollment-lists');
 
     Route::get("enrolled-students", [RegistrarController::class, 'enrolledStudents'])->name("enrolled-students");
+
+    Route::get("cor", [RegistrarController::class, 'cor'])->name("cor");
+
+
     Route::get("students-record", [RegistrarController::class, 'recordStudents'])->name("students-record");
   });

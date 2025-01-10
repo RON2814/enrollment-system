@@ -15,28 +15,28 @@ class RegistrarController extends Controller
 
     public function enrollmentLists()
     {
-        // Retrieve students with related models and filter their checklists
-        $students = Student::with([
-            'program',
-            'address',
-            'user',
-            'checklist' => function ($query) {
-                $query->where('year', 'First Year') // Filter by first year
-                    ->where('semester', 'First Semester'); // Filter by first semester
-            }
-        ])->get();
-
-        
-     
-
+        $students = Student::with(['program', 'address', 'user', 'checklist' => function($query) {
+            $query->where('year', 'First Year')
+                  ->where('semester', 'First Semester');
+        }])
+        ->latest()
+        ->paginate(7);
+    
         return view("registrar.enrollment-list", compact("students"));
     }
+    
 
 
     public function enrolledStudents()
     {
         $students = Student::with("program", "address", "user")->get();
         return view("registrar.enrolled-students", compact("students"));
+    }
+
+    public function cor()
+    {
+        $students = Student::with("program", "address", "user")->get();
+        return view("registrar.cor", compact("students"));
     }
 
     public function recordStudents()

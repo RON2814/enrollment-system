@@ -188,6 +188,7 @@ class ManageStudentController extends Controller
       "classification" => $request->classification,
       "address_id" => $address->id,
     ]);
+    
 
     // Create checklist for the new student
     $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [

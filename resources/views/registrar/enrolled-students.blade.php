@@ -46,13 +46,13 @@
                 <div class="flex space-x-4">
                     <!-- Search Bar -->
                     <input type="text" id="searchBar" placeholder="Search students..."
-                    class="px-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                
+                        class="px-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
 
-                    <button onclick=""
+
+                    {{-- <button onclick=""
                         class="px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700">
                         Print All COG
-                    </button>
+                    </button> --}}
 
 
                 </div>
@@ -86,12 +86,17 @@
                                 <td class="py-3 px-4 text-sm">{semester}</td>
                                 <td class="py-3 px-4 text-sm">{section}</td>
                                 <td class="py-3 px-4 text-sm">{{ $student->classification }}</td>
-                                <td class="py-3 px-4 text-sm">{Enrolled}</td>
                                 <td class="py-3 px-4 text-sm">
-                                    <button onclick='openUpdateStudentModal({{ $student }})'
-                                        class="bg-blue-500 text-white px-2 py-2 rounded-lg"> View
-
-                                    </button>
+                                    <span class="text-blue-700">Enrolled</span>
+                                </td>
+                                <td class="py-3 px-4 text-sm flex space-x-2">
+                                    <a href="{{ route('registrar.cor', ['student_id' => $student->id]) }}"
+                                        class="bg-blue-500 text-white px-2 py-2 rounded-lg text-center">
+                                        View
+                                    </a>
+                                    <a href="" class="bg-red-500 text-white px-2 py-2 rounded-lg text-center">
+                                        Print
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -103,7 +108,6 @@
 
     <!-- Include modals -->
     @include('modals.manage-users.add-student')
-    @include('modals.manage-users.update-student')
 
     <script>
         // Debounce function to limit the rate of AJAX calls
@@ -264,6 +268,9 @@
             });
         }
 
-        
+        function toggleDropdown() {
+            const dropdownContent = document.querySelector('.dropdown-content');
+            dropdownContent.classList.toggle('hidden');
+        }
     </script>
 </x-app-layout>
