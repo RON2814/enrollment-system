@@ -2,7 +2,9 @@
 <div id="addStudentModal" class="hidden flex fixed inset-0 bg-gray-800 bg-opacity-75 justify-center items-center z-50">
   <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-4xl max-h-[80vh] overflow-y-auto">
     <h3 class="text-2xl font-semibold mb-6 text-gray-800">Add New Student</h3>
-    <form id="addStudentForm" action="{{ route('admin.manageUsers.store-student') }}" method="POST">
+    <form id="addStudentForm"
+      action="{{ auth()->user()->role_id === 4 ? route('admin.manageUsers.store-student') : route('registrar.enrollment-lists.store') }}"
+      method="POST">
       @csrf
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div>
@@ -105,47 +107,47 @@
 
         {{-- registrar add student --}}
         {{-- @if (auth()->user()->role_id === 3) --}}
-          <div class="col-start-1">
-            <label for="houseNumber" class="text-sm font-medium text-gray-700">House Number</label>
-            <input type="text" id="houseNumber" name="house_number" value="{{ old('house_number') }}"
-              class="mt-1 px-4 py-2 border @error('house_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('house_number')" class="mt-2" id="error-house_number" />
-          </div>
+        <div class="col-start-1">
+          <label for="houseNumber" class="text-sm font-medium text-gray-700">House Number</label>
+          <input type="text" id="houseNumber" name="house_number" value="{{ old('house_number') }}"
+            class="mt-1 px-4 py-2 border @error('house_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('house_number')" class="mt-2" id="error-house_number" />
+        </div>
 
-          <div>
-            <label for="street" class="text-sm font-medium text-gray-700">Street</label>
-            <input type="text" id="street" name="street" value="{{ old('street') }}"
-              class="mt-1 px-4 py-2 border @error('street') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('street')" class="mt-2" id="error-street" />
-          </div>
+        <div>
+          <label for="street" class="text-sm font-medium text-gray-700">Street</label>
+          <input type="text" id="street" name="street" value="{{ old('street') }}"
+            class="mt-1 px-4 py-2 border @error('street') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('street')" class="mt-2" id="error-street" />
+        </div>
 
-          <div>
-            <label for="barangay" class="text-sm font-medium text-gray-700">Barangay</label>
-            <input type="text" id="barangay" name="barangay" value="{{ old('barangay') }}"
-              class="mt-1 px-4 py-2 border @error('barangay') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('barangay')" class="mt-2" id="error-barangay" />
-          </div>
+        <div>
+          <label for="barangay" class="text-sm font-medium text-gray-700">Barangay</label>
+          <input type="text" id="barangay" name="barangay" value="{{ old('barangay') }}"
+            class="mt-1 px-4 py-2 border @error('barangay') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('barangay')" class="mt-2" id="error-barangay" />
+        </div>
 
-          <div>
-            <label for="city" class="text-sm font-medium text-gray-700">City</label>
-            <input type="text" id="city" name="city" value="{{ old('city') }}"
-              class="mt-1 px-4 py-2 border @error('city') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('city')" class="mt-2" id="error-city" />
-          </div>
+        <div>
+          <label for="city" class="text-sm font-medium text-gray-700">City</label>
+          <input type="text" id="city" name="city" value="{{ old('city') }}"
+            class="mt-1 px-4 py-2 border @error('city') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('city')" class="mt-2" id="error-city" />
+        </div>
 
-          <div>
-            <label for="province" class="text-sm font-medium text-gray-700">Province</label>
-            <input type="text" id="province" name="province" value="{{ old('province') }}"
-              class="mt-1 px-4 py-2 border @error('province') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('province')" class="mt-2" id="error-province" />
-          </div>
+        <div>
+          <label for="province" class="text-sm font-medium text-gray-700">Province</label>
+          <input type="text" id="province" name="province" value="{{ old('province') }}"
+            class="mt-1 px-4 py-2 border @error('province') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('province')" class="mt-2" id="error-province" />
+        </div>
 
-          <div>
-            <label for="zipcode" class="text-sm font-medium text-gray-700">Zip code</label>
-            <input type="text" id="zipcode" name="zip_code" value="{{ old('zip_code') }}"
-              class="mt-1 px-4 py-2 border @error('zip_code') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('zip_code')" class="mt-2" id="error-zip_code" />
-          </div>
+        <div>
+          <label for="zipcode" class="text-sm font-medium text-gray-700">Zip code</label>
+          <input type="text" id="zipcode" name="zip_code" value="{{ old('zip_code') }}"
+            class="mt-1 px-4 py-2 border @error('zip_code') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('zip_code')" class="mt-2" id="error-zip_code" />
+        </div>
         {{-- @endif --}}
       </div>
 

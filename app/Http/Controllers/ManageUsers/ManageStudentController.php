@@ -88,6 +88,7 @@ class ManageStudentController extends Controller
       "program_id" => ["required", "exists:programs,id"],
       "classification" => ["required", "in:regular,irregular,transferee,returnee"],
 
+      "house_number" => ["nullable", "string", "max:50"],
       "street" => ["nullable", "string", "max:50"],
       "barangay" => ["nullable", "string", "max:50"],
       "city" => ["nullable", "string", "max:50"],
@@ -109,6 +110,7 @@ class ManageStudentController extends Controller
 
     $address = $student->address;
     $address->update([
+      "house_number" => $request->house_number,
       "street" => $request->street,
       "barangay" => $request->barangay,
       "city" => $request->city,
@@ -129,7 +131,7 @@ class ManageStudentController extends Controller
     }
 
     if (auth()->user()->role_id == 3) {
-      return redirect()->route('registrar.dashboard')->with('success', 'Student updated successfully.');
+      return redirect()->route('registrar.enrollment-lists')->with('success', 'Student updated successfully.');
     }
     return redirect()->route('admin.manageUsers.student')->with('success', 'Student updated successfully.');
   }
@@ -148,6 +150,7 @@ class ManageStudentController extends Controller
       "program_id" => ["required", "exists:programs,id"],
       "classification" => ["required", "in:regular,irregular,transferee,returnee"],
 
+      "house_number" => ["nullable", "string", "max:50"],
       "street" => ["nullable", "string", "max:50"],
       "barangay" => ["nullable", "string", "max:50"],
       "city" => ["nullable", "string", "max:50"],
@@ -158,6 +161,7 @@ class ManageStudentController extends Controller
     ]);
 
     $address = Address::create([
+      "house_number" => $request->house_number,
       "street" => $request->street,
       "barangay" => $request->barangay,
       "city" => $request->city,
@@ -317,17 +321,21 @@ class ManageStudentController extends Controller
       ['course_code' => 'ITEC 199', 'year' => "Fourth Year", 'semester' => "Second Semester"],
     ];
 
-      foreach ($checklistItems as $item) {
-        Checklist::create([
-          'student_number' => $request->student_number,
-          'course_code' => $item['course_code'],
-          'year' => $item['year'],
-          'semester' => $item['semester'],
-        ]);
-      }
+    foreach ($checklistItems as $item) {
+      Checklist::create([
+        'student_number' => $request->student_number,
+        'course_code' => $item['course_code'],
+        'year' => $item['year'],
+        'semester' => $item['semester'],
+      ]);
+    }
+
+    if (auth()->user()->role_id == 3) {
+      return redirect()->route('registrar.enrollment-lists')->with('success', 'Student added successfully.');
+    }
 
     return redirect()->route('admin.manageUsers.student')->with('success', 'Student added successfully.');
   }
 
-  
+
 }
