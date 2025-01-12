@@ -32,7 +32,7 @@
 
    run both command in different terminal:
    ```
-   php artisan migrate
+   php artisan serve
    npm run dev
    ```
    Now, you can access the application at `http://localhost:8000`.
