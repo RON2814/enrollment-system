@@ -192,16 +192,16 @@
                     Credits</th>
                   <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">Total
                     Credits Hours</th>
-                  
+
                   <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">Action
                   </th>
                 </tr>
               </thead>
               <tbody id="courses-tbody">
-                {{-- <td colspan="5">
-                  <strong>{{ $student->student_number }} - {{ $student->user->name }}</strong>
-              </td> --}}
                 @foreach ($students as $student)
+                  <td colspan="5">
+                    <strong>{{ $student->student_number }} - {{ $student->user->name }}</strong>
+                  </td>
                   @foreach ($student->checklist as $item)
                     <tr class="align-middle">
                       <td class="px-2 py-2 text-sm border-b">{{ $item->course_code }}</td>
@@ -215,10 +215,10 @@
                       </td>
                       <td class="px-2 py-2 text-sm border-b">
                         <button onclick="addCourse(this)" class="p-2 bg-blue-500 hover:bg-blue-700">
-                          <i class="fas fa-plus text-white"></i> 
+                          <i class="fas fa-plus text-white"></i>
                         </button>
                         <button onclick="deleteCourse(this)" class="p-2 bg-red-500 hover:bg-red-700">
-                          <i class="fas fa-minus text-white"></i> 
+                          <i class="fas fa-minus text-white"></i>
                         </button>
                       </td>
                     </tr>
@@ -418,34 +418,35 @@
 
   }
 
-    // Add course to the selected list
-    function addCourse(button) {
-        const row = button.closest('tr');
-        const courseCode = row.querySelector('td:nth-child(1)').innerText;
-        const courseTitle = row.querySelector('td:nth-child(2)').innerText;
+  // Add course to the selected list
+  function addCourse(button) {
+    const row = button.closest('tr');
+    const courseCode = row.querySelector('td:nth-child(1)').innerText;
+    const courseTitle = row.querySelector('td:nth-child(2)').innerText;
 
-        // Example: Add course to the list (could also be an array or a backend update)
-        alert('Course added: ' + courseCode + ' - ' + courseTitle);
+    // Example: Add course to the list (could also be an array or a backend update)
+    alert('Course added: ' + courseCode + ' - ' + courseTitle);
 
-        // You can implement an actual logic to save this to an array, backend, or modify the DOM here.
+    // You can implement an actual logic to save this to an array, backend, or modify the DOM here.
+  }
+
+  // Delete course from the list
+  function deleteCourse(button) {
+    const row = button.closest('tr');
+    const courseCode = row.querySelector('td:nth-child(1)').innerText;
+    const courseTitle = row.querySelector('td:nth-child(2)').innerText;
+
+    // Example: Alert before deleting
+    const confirmDelete = confirm('Are you sure you want to delete the course: ' + courseCode + ' - ' + courseTitle +
+      '?');
+
+    if (confirmDelete) {
+      row.remove(); // Removes the row from the table
+      alert('Course deleted: ' + courseCode + ' - ' + courseTitle);
+
+      // You can implement actual deletion logic here to remove it from an array or database
     }
-
-    // Delete course from the list
-    function deleteCourse(button) {
-        const row = button.closest('tr');
-        const courseCode = row.querySelector('td:nth-child(1)').innerText;
-        const courseTitle = row.querySelector('td:nth-child(2)').innerText;
-
-        // Example: Alert before deleting
-        const confirmDelete = confirm('Are you sure you want to delete the course: ' + courseCode + ' - ' + courseTitle + '?');
-
-        if (confirmDelete) {
-            row.remove(); // Removes the row from the table
-            alert('Course deleted: ' + courseCode + ' - ' + courseTitle);
-
-            // You can implement actual deletion logic here to remove it from an array or database
-        }
-    }
+  }
 </script>
 
 <style>
