@@ -62,20 +62,31 @@
         </div>
 
         <div>
+          <label for="updateSex" class="text-sm font-medium text-gray-700">Sex</label>
+          <select required id="updateSex" name="sex"
+            class="mt-1 px-4 py-2 border @error('sex') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="" disabled selected>Select Option</option>
+            <option value="male" {{ old('sex') == 1 ? 'selected' : '' }}>male</option>
+            <option value="female" {{ old('sex') == 2 ? 'selected' : '' }}>female</option>
+          </select>
+          <x-input-error :messages="$errors->get('sex')" class="mt-2" id="error-sex" />
+        </div>
+
+        <div>
           <label for="updateEmail" class="text-sm font-medium text-gray-700">Email</label>
           <input type="text" id="updateEmail" name="email" value="{{ old('email') }}"
             class="mt-1 px-4 py-2 border @error('email') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
           <x-input-error :messages="$errors->get('email')" class="mt-2" id="error-email" />
         </div>
 
-        @if (auth()->user()->role_id === 3)
-          <div>
-            <label for="updateContactNumber" class="text-sm font-medium text-gray-700">Contact Number</label>
-            <input type="text" id="updateContactNumber" name="contact_number" value="{{ old('contact_number') }}"
-              class="mt-1 px-4 py-2 border @error('contact_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('contact_number')" class="mt-2" id="error-contact_number" />
-          </div>
-        @endif
+        {{-- @if (auth()->user()->role_id === 3) --}}
+        <div>
+          <label for="updateContactNumber" class="text-sm font-medium text-gray-700">Contact Number</label>
+          <input type="text" id="updateContactNumber" name="contact_number" value="{{ old('contact_number') }}"
+            class="mt-1 px-4 py-2 border @error('contact_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('contact_number')" class="mt-2" id="error-contact_number" />
+        </div>
+        {{-- @endif --}}
 
         <!-- Program Dropdown -->
         <div class="col-start-1">
@@ -88,6 +99,13 @@
             <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS Information Technology</option>
           </select>
           <x-input-error :messages="$errors->get('program_id')" class="mt-2" id="error-program_id" />
+        </div>
+
+        <div>
+          <label for="updateBirthday" class="block text-sm font-medium text-gray-600 mb-1">Birth Date</label>
+          <input id="updateBirthday" type="date" name="birthday" value="{{ old('birthday') }}"
+            class="mt-1 px-4 py-2 border @error('email') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+          <x-input-error :messages="$errors->get('birthday')" class="mt-2" id="error-birthday" />
         </div>
 
         <!-- Classification Dropdown -->
@@ -106,49 +124,49 @@
         </div>
 
         {{-- registrar add student --}}
-        @if (auth()->user()->role_id === 3)
-          <div class="col-start-1">
-            <label for="updateHouseNumber" class="text-sm font-medium text-gray-700">House Number</label>
-            <input type="text" id="updateHouseNumber" name="house_number" value="{{ old('house_number') }}"
-              class="mt-1 px-4 py-2 border @error('house_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('house_number')" class="mt-2" id="error-house_number" />
-          </div>
+        {{-- @if (auth()->user()->role_id === 3) --}}
+        <div>
+          <label for="updateHouseNumber" class="text-sm font-medium text-gray-700">House Number</label>
+          <input type="text" id="updateHouseNumber" name="house_number" value="{{ old('house_number') }}"
+            class="mt-1 px-4 py-2 border @error('house_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('house_number')" class="mt-2" id="error-house_number" />
+        </div>
 
-          <div>
-            <label for="updateStreet" class="text-sm font-medium text-gray-700">Street</label>
-            <input type="text" id="updateStreet" name="street" value="{{ old('street') }}"
-              class="mt-1 px-4 py-2 border @error('street') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('street')" class="mt-2" id="error-street" />
-          </div>
+        <div>
+          <label for="updateStreet" class="text-sm font-medium text-gray-700">Street</label>
+          <input type="text" id="updateStreet" name="street" value="{{ old('street') }}"
+            class="mt-1 px-4 py-2 border @error('street') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('street')" class="mt-2" id="error-street" />
+        </div>
 
-          <div>
-            <label for="updateBarangay" class="text-sm font-medium text-gray-700">Barangay</label>
-            <input type="text" id="updateBarangay" name="barangay" value="{{ old('barangay') }}"
-              class="mt-1 px-4 py-2 border @error('barangay') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('barangay')" class="mt-2" id="error-barangay" />
-          </div>
+        <div>
+          <label for="updateBarangay" class="text-sm font-medium text-gray-700">Barangay</label>
+          <input type="text" id="updateBarangay" name="barangay" value="{{ old('barangay') }}"
+            class="mt-1 px-4 py-2 border @error('barangay') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('barangay')" class="mt-2" id="error-barangay" />
+        </div>
 
-          <div>
-            <label for="updateCity" class="text-sm font-medium text-gray-700">City</label>
-            <input type="text" id="updateCity" name="city" value="{{ old('city') }}"
-              class="mt-1 px-4 py-2 border @error('city') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('city')" class="mt-2" id="error-city" />
-          </div>
+        <div>
+          <label for="updateCity" class="text-sm font-medium text-gray-700">City</label>
+          <input type="text" id="updateCity" name="city" value="{{ old('city') }}"
+            class="mt-1 px-4 py-2 border @error('city') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('city')" class="mt-2" id="error-city" />
+        </div>
 
-          <div>
-            <label for="updateProvince" class="text-sm font-medium text-gray-700">Province</label>
-            <input type="text" id="updateProvince" name="province" value="{{ old('province') }}"
-              class="mt-1 px-4 py-2 border @error('province') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('province')" class="mt-2" id="error-province" />
-          </div>
+        <div>
+          <label for="updateProvince" class="text-sm font-medium text-gray-700">Province</label>
+          <input type="text" id="updateProvince" name="province" value="{{ old('province') }}"
+            class="mt-1 px-4 py-2 border @error('province') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('province')" class="mt-2" id="error-province" />
+        </div>
 
-          <div>
-            <label for="updateZipcode" class="text-sm font-medium text-gray-700">Zip code</label>
-            <input type="text" id="updateZipcode" name="zip_code" value="{{ old('zip_code') }}"
-              class="mt-1 px-4 py-2 border @error('zip_code') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('zip_code')" class="mt-2" id="error-zip_code" />
-          </div>
-        @endif
+        <div>
+          <label for="updateZipcode" class="text-sm font-medium text-gray-700">Zip code</label>
+          <input type="text" id="updateZipcode" name="zip_code" value="{{ old('zip_code') }}"
+            class="mt-1 px-4 py-2 border @error('zip_code') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <x-input-error :messages="$errors->get('zip_code')" class="mt-2" id="error-zip_code" />
+        </div>
+        {{-- @endif --}}
       </div>
 
       <!-- Action buttons -->
@@ -193,9 +211,9 @@
     setElementValue('updateEmail', student.user?.email);
     setElementValue('updateContactNumber', student.contact_number);
 
+    setElementValue('updateSex', student.sex);
+
     // Set dropdowns
-    console.log('Setting program_id:', student.program_id);
-    console.log('Setting classification:', student.classification);
     setElementValue('updateProgram', student.program_id);
     setElementValue('updateClassification', student.classification);
 

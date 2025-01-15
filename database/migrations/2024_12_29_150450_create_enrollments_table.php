@@ -14,7 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string("student_number");
             $table->foreignId("section_id")->constrained("sections");
-            $table->year("academic_year");
+            $table->enum("year_level", ["First Year", "Second Year", "Third Year", "Fourth Year"]);
+            $table->enum("semester", ["First Semester", "Second Semester", "Midyear"]);
+            $table->year("school_year_start");
+            $table->year("school_year_end");
             $table->string("course_code");
             $table->enum("status", ["enrolled", "pending", "dropped", "passed", "failed", "INC", "N/A"]);
             $table->string("registrar_encoder_id")->nullable();

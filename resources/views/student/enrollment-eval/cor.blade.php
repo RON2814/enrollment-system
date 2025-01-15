@@ -49,66 +49,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-xs">
-            <td class="border border-gray-400 p-2">GNED 09</td>
-            <td class="border border-gray-400 p-2"> Life and Works of Rizal</td>
-            <td class="border border-gray-400 p-2">3</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-          </tr>
-          <tr class="text-xs">
-            <td class="border border-gray-400 p-2">MATH 4</td>
-            <td class="border border-gray-400 p-2"> Experimental Statistics</td>
-            <td class="border border-gray-400 p-2">3</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-          </tr>
-          <tr class="text-xs">
-            <td class="border border-gray-400 p-2">COSC 90</td>
-            <td class="border border-gray-400 p-2">Design and Analysis/td>
-            <td class="border border-gray-400 p-2">3</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-          </tr>
-          <tr class="text-xs">
-            <td class="border border-gray-400 p-2">COSC 95</td>
-            <td class="border border-gray-400 p-2">Programming Languages</td>
-            <td class="border border-gray-400 p-2">3</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-          </tr>
-          <tr class="text-xs">
-            <td class="border border-gray-400 p-2">COSC 106</td>
-            <td class="border border-gray-400 p-2">CS Elective (Introduction to Game Development)</td>
-            <td class="border border-gray-400 p-2">3</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-          </tr>
-
-          <tr class="text-xs">
-            <td class="border border-gray-400 p-2">DCIT 60</td>
-            <td class="border border-gray-400 p-2">Methods of Research</td>
-            <td class="border border-gray-400 p-2">3</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-          </tr>
-
-          <tr class="text-xs">
-            <td class="border border-gray-400 p-2">ITEC 85</td>
-            <td class="border border-gray-400 p-2"> Information Assurance and Security</td>
-            <td class="border border-gray-400 p-2">3</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-            <td class="border border-gray-400 p-2">TBA</td>
-          </tr>
-
-
+          @foreach ($nextCourses as $course)
+            <tr class="text-xs">
+              <td class="border border-gray-400 p-2">{{ $course->course_code }}</td>
+              <td class="border border-gray-400 p-2">{{ $course->course->course_title }}</td>
+              <td class="border border-gray-400 p-2">
+                {{ ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0) ?: 'N/A' }}
+              </td>
+              <td class="border border-gray-400 p-2">TBA</td>
+              <td class="border border-gray-400 p-2">TBA</td>
+              <td class="border border-gray-400 p-2">TBA</td>
+            </tr>
+          @endforeach
         </tbody>
       </table>
 

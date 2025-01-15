@@ -258,13 +258,56 @@ class StudentController extends Controller
     public function showCOR()
     {
         // Fetch the student information
-        $student = Student::where('student_number', Auth::user()->id)->first();
+        $student = Student::with(['checklist.course', 'checklist.instructor', 'program'])->
+            where('student_number', Auth::user()->id)->first();
 
         if (!$student) {
             abort(404, 'Student not found.');
         }
 
+        // Define mappings for year and semester
+        $yearMapping = [
+            'First Year' => 1,
+            'Second Year' => 2,
+            'Third Year' => 3,
+            'Fourth Year' => 4,
+        ];
+
+        $semesterMapping = [
+            'First Semester' => 1,
+            'Second Semester' => 2,
+            'Midyear' => 3,
+        ];
+
+        // Get the highest year level and semester (as integers)
+        $highestYearLevel = $yearMapping[$student->checklist->max('year') ?? 'First Year'] ?? 1;
+        $highestSemester = $semesterMapping[$student->checklist->where('year', $highestYearLevel)->max('semester') ?? 'First Semester'] ?? 1;
+
+        // Determine the next year level and semester
+        if ($highestSemester == 2) {
+            // If the student is in the Second Semester, move to the next year and First Semester
+            $nextYearLevel = $highestYearLevel + 1;
+            $nextSemester = 1; // First Semester of the next year
+        } elseif ($highestSemester == 1) {
+            // If the student is in the First Semester, move to the Second Semester
+            $nextYearLevel = $highestYearLevel;
+            $nextSemester = 2;
+        } else {
+            // For Midyear, we will assume it's treated as moving to the next year and the first semester
+            $nextYearLevel = $highestYearLevel + 1;
+            $nextSemester = 1;
+        }
+
+        // Map back to string values for the next semester and year level
+        $nextYearLevelString = array_search($nextYearLevel, $yearMapping);
+        $nextSemesterString = array_search($nextSemester, $semesterMapping);
+
+        // Filter checklist for courses in the next year level and semester
+        $nextCourses = $student->checklist->filter(function ($checklist) use ($nextYearLevelString, $nextSemesterString) {
+            return $checklist->year == $nextYearLevelString && $checklist->semester == $nextSemesterString;
+        });
+
         // Pass the student data to the view
-        return view('student.enrollment-eval.cor', compact('student'));
+        return view('student.enrollment-eval.cor', compact('student', 'nextCourses', 'nextYearLevelString', 'nextSemesterString'));
     }
 }
