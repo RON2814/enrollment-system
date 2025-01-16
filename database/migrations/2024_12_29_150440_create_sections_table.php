@@ -12,15 +12,12 @@ return new class extends Migration {
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string("student_number");
             $table->foreignId("program_id")->constrained("programs");
             $table->string("section_name");
+            $table->enum("year_level", ["First Year", "Second Year", "Third Year", "Fourth Year"]);
             $table->tinyInteger("current_student_enrolled")->unsigned();
             $table->tinyInteger("max_capacity")->unsigned();
             $table->timestamps();
-
-            // Foreign keys
-            $table->foreign("student_number")->references("student_number")->on("students")->onDelete('cascade');
         });
     }
 

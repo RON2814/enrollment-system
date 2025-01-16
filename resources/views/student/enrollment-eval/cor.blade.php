@@ -17,22 +17,23 @@
             <td class="border-none p-2">Student Number:<span class="font-medium"
                 id="updatedStudentNumber">{{ old('student_number', $student->student_number) }}</span>
             </td>
-            <td class="border-none p-2">Semester: <span class="font-medium">Second Semester</span></td>
-            <td class="border-none p-2">School Year: <span class="font-medium">2023-2024</span></td>
+            <td class="border-none p-2">Semester: <span class="font-medium">{{ $nextSemesterString }}</span></td>
+            <td class="border-none p-2">School Year: <span class="font-medium">{2023-2024}</span></td>
             <td class="border-none p-2">Date: <span class="font-medium">{date}</span></td>
           </tr>
           <tr>
             <td class="border-none p-2">Name: <span
                 class="font-medium">{{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}</span>
             </td>
-            <td class="border-none p-2">Year: <span class="font-medium">Third Year</span></td>
-            <td class="border-none p-2">Program: <span class="font-medium">BSCS</span></td>
-            <td class="border-none p-2">Major: <span class="font-medium">N/A</span></td>
+            <td class="border-none p-2">Year: <span class="font-medium">{{ $nextYearLevelString }}</span></td>
+            <td class="border-none p-2">Program: <span class="font-medium">{{ $student->program->title }}</span></td>
+            <td class="border-none p-2">Major: <span class="font-medium">{{ $student->program->major ?: 'N/A' }}</span>
+            </td>
           </tr>
           <tr>
             <td class="border-none p-2">Address: <span class="font-medium">Bacoor, Cavite</span></td>
-            <td class="border-none p-2">Section: <span class="font-medium">BSCS 3-2</span></td>
-            <td class="border-none p-2">Encoder: <span class="font-medium">N/A</span></td>
+            <td class="border-none p-2">Section: <span class="font-medium">{BSCS 3-2}</span></td>
+            <td class="border-none p-2">Encoder: <span class="font-medium">{N/A}</span></td>
           </tr>
         @endisset
       </table>

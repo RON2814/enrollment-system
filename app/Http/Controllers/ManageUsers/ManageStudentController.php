@@ -210,7 +210,7 @@ class ManageStudentController extends Controller
       ['course_code' => 'DCIT 22', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'FITT 1', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'NSTP 1', 'year' => "First Year", 'semester' => "First Semester"],
-      ['course_code' => 'CVSU 101', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'CvSU 101', 'year' => "First Year", 'semester' => "First Semester"],
 
       ['course_code' => 'GNED 01', 'year' => "First Year", 'semester' => "Second Semester"],
       ['course_code' => 'GNED 03', 'year' => "First Year", 'semester' => "Second Semester"],
@@ -277,7 +277,7 @@ class ManageStudentController extends Controller
       ['course_code' => 'DCIT 22', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'FITT 1', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'NSTP 1', 'year' => "First Year", 'semester' => "First Semester"],
-      ['course_code' => 'CVSU 101', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'CvSU 101', 'year' => "First Year", 'semester' => "First Semester"],
 
       ['course_code' => 'GNED 01', 'year' => "First Year", 'semester' => "Second Semester"],
       ['course_code' => 'GNED 03', 'year' => "First Year", 'semester' => "Second Semester"],

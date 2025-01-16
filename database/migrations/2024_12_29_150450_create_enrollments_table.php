@@ -18,14 +18,12 @@ return new class extends Migration {
             $table->enum("semester", ["First Semester", "Second Semester", "Midyear"]);
             $table->year("school_year_start");
             $table->year("school_year_end");
-            $table->string("course_code");
-            $table->enum("status", ["enrolled", "pending", "dropped", "passed", "failed", "INC", "N/A"]);
+            $table->enum("status", ["enrolled", "pending", "dropped", "passed", "failed", "INC", "N/A", "completed"]);
             $table->string("registrar_encoder_id")->nullable();
             $table->timestamps();
 
             // Foreign keys
             $table->foreign("student_number")->references("student_number")->on("students")->onDelete('cascade');
-            $table->foreign("course_code")->references("course_code")->on("courses");
             $table->foreign("registrar_encoder_id")->references("registrar_id")->on("registrars");
         });
     }
