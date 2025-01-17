@@ -13,8 +13,7 @@ return new class extends Migration {
         Schema::create('checklists', function (Blueprint $table) {
             $table->string("student_number");
             $table->string("course_code");
-            $table->enum("grade", ["1.00", "1.25", "1.50", "1.75", "2.00", "2.25", "2.50", "2.75", "3.00", "4.00", "5.00", "INC", "S"])
-                ->nullable();
+            $table->enum("grade", ["1.00", "1.25", "1.50", "1.75", "2.00", "2.25", "2.50", "2.75", "3.00", "4.00", "5.00", "INC", "S", "DROPPED", "CREDITED"])->nullable();
             $table->foreignId("instructor_id")->nullable()->contraigned("instructors");
             $table->enum("year", ["First Year", "Second Year", "Third Year", "Fourth Year"]);
             $table->enum("semester", ["First Semester", "Second Semester", "Midyear"]);

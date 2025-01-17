@@ -20,6 +20,7 @@ class Checklist extends Model
         "instructor_id",
         "year",
         "semester",
+        "enrollment_id",
     ];
 
     // Override default primary key behavior

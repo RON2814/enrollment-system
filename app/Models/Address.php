@@ -11,7 +11,8 @@ class Address extends Model
     use HasFactory;
 
     protected $fillable = [
-        'address',
+        'house_number',
+        'street',
         'barangay',
         'city',
         'province',
@@ -21,5 +22,17 @@ class Address extends Model
     public function students()
     {
         return $this->hasOne(Student::class, 'address_id');
+    }
+
+    public function getFullAddress()
+    {
+        return implode(', ', [
+            $this->house_number,
+            $this->street,
+            $this->barangay,
+            $this->city,
+            $this->province,
+            $this->zip_code
+        ]);
     }
 }

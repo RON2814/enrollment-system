@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checklist\Checklist;
 use App\Models\User; // Change to App\Models\Student if using a Student model
 use App\Models\Roles\Student;
 use Illuminate\Http\Request;
@@ -163,8 +164,7 @@ class StudentController extends Controller
     public function enrollmentModule(Request $request)
     {
         // Fetch the current student
-        $student = Student::with(['checklist.course', 'checklist.instructor', 'program'])
-            ->where('student_number', Auth::user()->id)
+        $student = Student::where('student_number', Auth::user()->id)
             ->first();
 
         if (!$student) {
@@ -202,6 +202,14 @@ class StudentController extends Controller
             return view('student.enrollment', ['student' => $student, 'checklistWithGrades' => $checklistWithGrades, 'filteredChecklist' => $filteredChecklist, 'evaluationStatus' => $evaluationStatus]);
         }
 
+        // if student is already submit a evaluation return evaluated courses
+        $latestEnrollment = $student->enrollment()->latest()->first();
+
+        if ($latestEnrollment && $latestEnrollment->status === 'pending' || $latestEnrollment->status === 'enrolled') {
+            return redirect()->route('student.enrollment-eval.evaluated-courses');
+        }
+
+
         // Pass the evaluation status to the view
         return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
     }
@@ -209,8 +217,7 @@ class StudentController extends Controller
     public function evaluatedCourses(Request $request)
     {
         // Get student with related data
-        $student = Student::with(['checklist.course', 'checklist.instructor', 'program'])
-            ->where('student_number', Auth::user()->id)
+        $student = Student::where('student_number', Auth::user()->id)
             ->first();
 
         if (!$student) {
@@ -251,12 +258,33 @@ class StudentController extends Controller
             $nextSemesterString = array_search($nextSemester, $semesterMapping) ?: "First Semester";
         }
 
-        \Log::info("Next Year Level: $nextYearLevelString, Next Semester: $nextSemesterString");
-
         // Get next courses
         $nextCourses = $student->checklist->filter(function ($item) use ($nextYearLevelString, $nextSemesterString) {
             return $item->year == $nextYearLevelString && $item->semester == $nextSemesterString && $item->course;
         });
+
+        $latestEnrollment = $student->enrollment()->latest()->first();
+
+        if ($latestEnrollment && $latestEnrollment->status === 'enrolled' && $latestEnrollment->semester === $nextSemesterString && $latestEnrollment->year_level === $nextYearLevelString) {
+            return redirect()->route('student.enrollment-eval.cor');
+        } else {
+            // Create a new enrollment record
+            $enrollment = $student->enrollment()->create([
+                'year_level' => $nextYearLevelString,
+                'semester' => $nextSemesterString,
+                'school_year_start' => date('Y'),
+                'school_year_end' => date('Y') + 1,
+                'status' => 'pending',
+            ]);
+
+            foreach ($nextCourses as $course) {
+                // Use 'course_code' if 'id' doesn't exist
+                Checklist::where('course_code', $course->course_code)->update([
+                    'enrollment_id' => $enrollment->id,
+                ]);
+            }
+        }
+
 
         return view('student.enrollment-eval.evaluated-courses', compact('student', 'nextCourses', 'nextYearLevelString', 'nextSemesterString'));
     }
@@ -264,8 +292,7 @@ class StudentController extends Controller
     public function showCOR()
     {
         // Get student with related data
-        $student = Student::with(['checklist.course', 'checklist.instructor', 'program'])
-            ->where('student_number', Auth::user()->id)
+        $student = Student::where('student_number', Auth::user()->id)
             ->first();
 
         if (!$student) {
@@ -306,13 +333,27 @@ class StudentController extends Controller
             $nextSemesterString = array_search($nextSemester, $semesterMapping) ?: "First Semester";
         }
 
-        \Log::info("Next Year Level: $nextYearLevelString, Next Semester: $nextSemesterString");
-
         // Get next courses
         $nextCourses = $student->checklist->filter(function ($item) use ($nextYearLevelString, $nextSemesterString) {
             return $item->year == $nextYearLevelString && $item->semester == $nextSemesterString && $item->course;
         });
 
-        return view('student.enrollment-eval.cor', compact('student', 'nextCourses', 'nextYearLevelString', 'nextSemesterString'));
+        $student->enrollment()->latest()->first()->update([
+            'status' => 'enrolled',
+        ]);
+
+        // Calculate total units
+        $totalUnits = $nextCourses->sum(function ($course) {
+            return ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0);
+        });
+
+        // Calculate total hours
+        $totalHours = $nextCourses->sum(function ($course) {
+            return ($course->course->contact_hours_lecture ?? 0) + ($course->course->contact_hours_laboratory ?? 0);
+        });
+
+        $latestEnrollment = $student->enrollment()->latest()->first();
+
+        return view('student.enrollment-eval.cor', compact('student', 'nextCourses', 'nextYearLevelString', 'nextSemesterString', 'latestEnrollment', 'totalUnits', 'totalHours'));
     }
 }
