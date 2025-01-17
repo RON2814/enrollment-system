@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Route;
 // Student Authentication / Routes
 Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name('student.')->group(function () {
     // STUDENT Dashboard
-    Route::get('/dashboard', function () {
-        return view('student.dashboard');
-    })->name('dashboard');    
+    Route::get('/dashboard',[StudentController::class, 'index'])->name('dashboard');
 
     // Student Information Route
     Route::get('/student-information', [StudentController::class, 'studentInformation'])->name('student-information');

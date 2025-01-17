@@ -14,7 +14,7 @@
             </div>
             <i class="fa-regular fa-user text-white bg-[#8b0000] p-4 h-16 w-16 text-center rounded-full text-xl"></i>
           </div>
-          <span class="card-detail text-sm">Active enrolled students</span>
+          <span class="card-detail text-sm">Active students</span>
         </div>
 
         <!-- Card 2: No. of Registrars -->

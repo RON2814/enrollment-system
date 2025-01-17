@@ -53,20 +53,20 @@
                     </thead>
                     <tbody class="text-gray-700" id="course-table-body">
                         @forelse($courses as $course)
-                            <tr class="hover:bg-gray-200 transition-colors duration-200 ">
-                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium ">{{ $course->course_code }}
+                            <tr class="hover:bg-gray-200 transition-colors duration-200 border-b  ">
+                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium  border-b ">{{ $course->course_code }}
                                 </td>
-                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium">{{ $course->course_title }}
+                                <td class="py-4 px-3 text-sm truncate max-w-xs font-medium border-b ">{{ $course->course_title }}
                                 </td>
-                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
+                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs border-b ">
                                     {{ $course->credit_unit_lecture }}</td>
-                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
+                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs border-b ">
                                     {{ $course->credit_unit_laboratory }}</td>
-                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
+                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs border-b ">
                                     {{ $course->contact_hours_lecture }}</td>
-                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs">
+                                <td class="text-center py-4 px-3 text-sm truncate max-w-xs border-b ">
                                     {{ $course->contact_hours_laboratory }}</td>
-                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[120px] break-words font-medium ">
+                                <td class="py-4 px-3 text-sm whitespace-normaL max-w-[120px] break-words font-medium border-b  ">
                                     {{ $course->pre_requisite ?: '...' }}</td>
                                 {{-- <td class="p-2 text-center">
                                     <button class="text-blue-500 hover:text-blue-700">

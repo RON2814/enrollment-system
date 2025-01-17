@@ -18,10 +18,6 @@ class UserFactory extends Factory
      * @var string
      */
     protected $model = User::class;
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
 
     /**
      * Define the model's default state.
@@ -30,14 +26,19 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Use faker directly for generating the name or create it through StudentFactory once
+        $firstName = $this->faker->firstName;
+        $lastName = $this->faker->lastName;
+        $middleName = $this->faker->lastName; // Reuse lastName or create a separate middleName if needed
+
         return [
-            "id" => fake()->unique()->numerify("2024#####"),
-            'name' => StudentFactory::new()->create()->last_name . ', ' . StudentFactory::new()->create()->first_name . ' ' . StudentFactory::new()->create()->middle_name,
-            'email' => fake()->unique()->safeEmail(),
+            "id" => $this->faker->unique()->numerify("2024#####"),
+            'name' => "{$lastName}, {$firstName} {$middleName}",
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
-            'role_id' => fake()->randomElement([1, 2, 3, 4]),
+            'role_id' => \App\Models\Role::firstOrCreate(['title' => 'Student'])->id,
         ];
     }
 

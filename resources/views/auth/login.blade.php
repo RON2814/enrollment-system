@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>CvSU-B Enrollment System</title>
+    <link rel="icon" type="image/png" href="{{ Vite::asset('resources/assets/cvsulogo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gradient-to-r from-green-100 to-green-200 flex items-center justify-center h-screen">
+<body class="flex items-center justify-center h-screen relative"
+    style="background-image: linear-gradient(rgba(121, 235, 121, 0.8), rgba(115, 204, 115, 0.7)), url('{{ Vite::asset('resources/assets/cvsu-bg.jpg') }}'); background-size: cover; background-position: center;">
+
     <div class="text-center w-[80vw] md:w-[55vw]">
         {{-- <div class="flex items-center justify-center mb-8">
             <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="University Logo" class="w-20 mr-4">

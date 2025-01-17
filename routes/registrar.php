@@ -3,6 +3,7 @@
 use App\Http\Controllers\ManageUsers\ManageStudentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrarController;
+use App\Http\Controllers\ChecklistController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -14,18 +15,24 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     // Dashboard
     Route::get('/dashboard', [RegistrarController::class, "dashboard"])->name('dashboard');
 
-    Route::get("/record-of-students", [RegistrarController::class, 'recordOfStudents'])->name("record-of-students");
-    Route::get("/record-of-students/search", [ManageStudentController::class, 'search'])->name("record-of-students.search");
-
     Route::get("/enrollment-lists", [RegistrarController::class, 'enrollmentLists'])->name("enrollment-lists");
+
+
     Route::post("/enrollment-lists/store", [ManageStudentController::class, 'store'])->name("enrollment-lists.store");
+
     Route::patch("/enrollment-lists/update/{student_id}", [ManageStudentController::class, 'update'])->name("enrollment-lists.update");
     Route::delete('/enrollment-lists/destroy/{student_number}', [ManageStudentController::class, 'destroy'])
-    ->name('/enrollment-lists');
+      ->name('/enrollment-lists');
 
+    // Enrolled Students
     Route::get("enrolled-students", [RegistrarController::class, 'enrolledStudents'])->name("enrolled-students");
-
+    // COR
     Route::get("cor", [RegistrarController::class, 'cor'])->name("cor");
+
+    // Registrar routes
+    Route::get('registrar/checklist/{student_number}', [RegistrarController::class, 'checklist'])->name('checklist');
+
+    Route::patch('registrar/checklist/{student_number}', [RegistrarController::class, 'updateChecklist'])->name('registrar.checklist.update');
 
 
     Route::get("students-record", [RegistrarController::class, 'recordStudents'])->name("students-record");

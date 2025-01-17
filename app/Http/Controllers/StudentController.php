@@ -62,6 +62,19 @@ class StudentController extends Controller
         return redirect('/');
     }
 
+    public function index()
+    {
+        $student = Student::with(['address', 'program', 'checklist'])
+            ->where('student_number', Auth::user()->id)
+            ->first();
+
+        if (!$student) {
+            abort(404, 'Student information not found.');
+        }
+
+        return view('student.dashboard', compact('student'));
+    }
+
     /**
      * Show student information
      */

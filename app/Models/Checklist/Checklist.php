@@ -3,12 +3,15 @@
 namespace App\Models\Checklist;
 
 use App\Models\Roles\Student;
+use App\Models\Checklist\Course;
+use App\Models\Checklist\Instructor;
 use Illuminate\Database\Eloquent\Model;
 
 class Checklist extends Model
 {
     protected $table = "checklists";
-    public $incrementing = false;
+    public $incrementing = false; // Important for non-auto-incrementing primary keys
+    public $timestamps = false; // Disable timestamps if not needed
 
     protected $fillable = [
         "student_number",
@@ -18,6 +21,17 @@ class Checklist extends Model
         "year",
         "semester",
     ];
+
+    // Override default primary key behavior
+    public function getKeyName()
+    {
+        return ['student_number', 'course_code']; // Manually define composite key
+    }
+
+    public function getKey()
+    {
+        return ['student_number' => $this->student_number, 'course_code' => $this->course_code];
+    }
 
     public function student()
     {

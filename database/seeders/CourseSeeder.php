@@ -23,7 +23,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             [
@@ -33,7 +33,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             [
@@ -43,7 +43,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             [
@@ -53,7 +53,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             [
@@ -62,8 +62,8 @@ class CourseSeeder extends Seeder
                 'credit_unit_lecture' => 2,
                 'credit_unit_laboratory' => 1,
                 'contact_hours_lecture' => 2,
-                'contact_hours_laboratory' => 3,
-                'pre_requisite' => 0,
+                'contact_hours_laboratory' => 6,
+                'pre_requisite' => null,
             ],
 
             [
@@ -72,18 +72,18 @@ class CourseSeeder extends Seeder
                 'credit_unit_lecture' => 1,
                 'credit_unit_laboratory' => 2,
                 'contact_hours_lecture' => 1,
-                'contact_hours_laboratory' => 6,
-                'pre_requisite' => 0,
+                'contact_hours_laboratory' => 3,
+                'pre_requisite' => null,
             ],
 
             [
                 'course_code' => 'FITT 1',
                 'course_title' => 'Movement Enhancement',
-                'credit_unit_lecture' => 3,
+                'credit_unit_lecture' => 2,
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             [
@@ -91,9 +91,9 @@ class CourseSeeder extends Seeder
                 'course_title' => 'National Service Training Program 1',
                 'credit_unit_lecture' => 3,
                 'credit_unit_laboratory' => 0,
-                'contact_hours_lecture' => 3,
+                'contact_hours_lecture' => 2,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             [
@@ -103,7 +103,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 1,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             // 2nd sem (First Year)
@@ -114,7 +114,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
             [
                 'course_code' => 'GNED 03',
@@ -123,7 +123,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
             [
                 'course_code' => 'GNED 06',
@@ -132,7 +132,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
 
             [
@@ -168,7 +168,7 @@ class CourseSeeder extends Seeder
                 'course_title' => 'Fitness Exercises',
                 'credit_unit_lecture' => 2,
                 'credit_unit_laboratory' => 0,
-                'contact_hours_lecture' => 3,
+                'contact_hours_lecture' => 2,
                 'contact_hours_laboratory' => 0,
                 'pre_requisite' => "FITT 1",
             ],
@@ -190,7 +190,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
             [
                 'course_code' => 'MATH 1',
@@ -273,7 +273,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
             [
                 'course_code' => 'GNED 14',
@@ -282,7 +282,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
             ['course_code' => 'MATH 2', 'course_title' => 'Calculus', 'credit_unit_lecture' => 3, 'credit_unit_laboratory' => 0, 'contact_hours_lecture' => 3, 'contact_hours_laboratory' => 0, 'pre_requisite' => "MATH 1",],
             [
@@ -421,7 +421,7 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
             //IT Checklist
             [
@@ -568,7 +568,7 @@ class CourseSeeder extends Seeder
                 'course_title' => 'Practicum (240 hours)',
                 'credit_unit_lecture' => 3,
                 'credit_unit_laboratory' => 0,
-                'contact_hours_lecture' => 3,
+                'contact_hours_lecture' => 0,
                 'contact_hours_laboratory' => 0,
                 'pre_requisite' => "incoming 4th year",
             ],
@@ -634,7 +634,7 @@ class CourseSeeder extends Seeder
                 'course_title' => 'Undergraduate Thesis I',
                 'credit_unit_lecture' => 3,
                 'credit_unit_laboratory' => 0,
-                'contact_hours_lecture' => 3,
+                'contact_hours_lecture' => 1,
                 'contact_hours_laboratory' => 0,
                 'pre_requisite' => "4th year Standing",
             ],
@@ -683,9 +683,17 @@ class CourseSeeder extends Seeder
                 'credit_unit_laboratory' => 0,
                 'contact_hours_lecture' => 3,
                 'contact_hours_laboratory' => 0,
-                'pre_requisite' => 0,
+                'pre_requisite' => null,
             ],
-            ['course_code' => 'GNED 10', 'course_title' => 'Gender and Society', 'credit_unit_lecture' => 3, 'credit_unit_laboratory' => 0, 'contact_hours_lecture' => 3, 'contact_hours_laboratory' => 0, 'pre_requisite' => 0,],
+            [
+                'course_code' => 'GNED 10',
+                'course_title' => 'Gender and Society',
+                'credit_unit_lecture' => 3,
+                'credit_unit_laboratory' => 0,
+                'contact_hours_lecture' => 3,
+                'contact_hours_laboratory' => 0,
+                'pre_requisite' => null,
+            ],
             [
                 'course_code' => 'COSC 110',
                 'course_title' => 'Numerical and Symbolic Computation',
@@ -700,7 +708,7 @@ class CourseSeeder extends Seeder
                 'course_title' => 'Undergraduate Thesis II',
                 'credit_unit_lecture' => 3,
                 'credit_unit_laboratory' => 0,
-                'contact_hours_lecture' => 3,
+                'contact_hours_lecture' => 1,
                 'contact_hours_laboratory' => 0,
                 'pre_requisite' => "COSC 200A",
             ],

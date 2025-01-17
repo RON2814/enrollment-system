@@ -39,25 +39,25 @@
                 <table class="min-w-full table-auto border-collapse border-spacing-0">
                     <thead class="bg-[#0A6847] text-white text-xs">
                         <tr>
-                            <th class="border border-gray-200 py-3 px-4 text-left font-medium">Instructor ID</th>
-                            <th class="border border-gray-200 py-3 px-4 text-left font-medium">Instructor Name</th>
-                            <th class="border border-gray-200 py-3 px-4 text-left font-medium">Email Address</th>
+                            <th class=" py-3 px-4 text-left font-medium">Instructor ID</th>
+                            <th class="py-3 px-4 text-left font-medium">Instructor Name</th>
+                            <th class="py-3 px-4 text-left font-medium">Email Address</th>
                             {{-- <th class="border border-gray-200 py-3 px-4 text-left font-medium">Status</th> --}}
-                            <th class="border border-gray-200 py-3 px-4 text-left font-medium">Action</th>
+                            <th class="py-3 px-4 text-left font-medium">Action</th>
                         </tr>
                     </thead>
                     <tbody id="instructor-table-body" class="text-gray-700 border border-gray-200">
                         @foreach ($instructors as $instructor)
                             <tr class="hover:bg-gray-100 transition-colors duration-200">
-                                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $instructor->id }}</td>
-                                <td class="py-4 px-4 text-sm truncate max-w-xs">
+                                <td class="py-4 px-4 text-sm truncate max-w-xs border-b ">{{ $instructor->id }}</td>
+                                <td class="py-4 px-4 text-sm truncate max-w-xs border-b ">
                                     {{ $instructor->last_name }}, {{ $instructor->first_name }}
                                     {{ $instructor->middle_name }}
                                 </td>
-                                <td class="py-4 px-4 text-sm truncate max-w-xs">{{ $instructor->email }}</td>
+                                <td class="py-4 px-4 text-sm truncate max-w-xs border-b ">{{ $instructor->email }}</td>
                                 {{-- <td class="py-4 px-4 text-sm truncate max-w-xs font-medium text-green-900">Active
                                 </td> --}}
-                                <td class="py-4 px-4 text-sm truncate max-w-xs font-medium text-green-900">
+                                <td class="py-4 px-4 text-sm truncate max-w-xs font-medium text-green-900 border-b ">
                                     <button class="text-blue-500 hover:text-blue-700"
                                         onclick="openEditModal({{ $instructor->id }}, 
                                         '{{ $instructor->last_name }}', 

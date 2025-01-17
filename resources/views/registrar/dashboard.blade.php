@@ -6,27 +6,27 @@
                 <div
                     class="p-4 rounded-xl shadow-lg bg-[#074799] opacity-90 text-white flex flex-col items-center flex-1 sm:min-w-[48%] md:min-w-[23%]">
                     <h3 class="mt-2 text-lg font-semibold">Total Students</h3>
-                    <p class="mt-2 text-2xl font-bold">320</p>
+                    <p class="mt-2 text-2xl font-bold">9</p>
                 </div>
 
                 <div
                     class="p-4 rounded-xl shadow-lg bg-[#FF9D23] opacity-90 text-white flex flex-col items-center flex-1 sm:min-w-[48%] md:min-w-[23%]">
                     <h3 class="mt-2 text-lg font-semibold">Pending Enrollment</h3>
-                    <p class="mt-2 text-2xl font-bold">320</p>
+                    <p class="mt-2 text-2xl font-bold">{}</p>
                 </div>
 
                 <!-- CS Students -->
                 <div
                     class="p-4 rounded-xl shadow-lg bg-[#C62E2E] opacity-90 text-white flex flex-col items-center flex-1 sm:min-w-[48%] md:min-w-[23%]">
                     <h3 class="mt-2 text-lg font-semibold">Computer Science</h3>
-                    <p class="mt-2 text-2xl font-bold">180</p>
+                    <p class="mt-2 text-2xl font-bold">5</p>
                 </div>
 
                 <!-- IT Students -->
                 <div
                     class="p-4 rounded-xl shadow-lg bg-[#118B50] opacity-90 text-white flex flex-col items-center flex-1 sm:min-w-[48%] md:min-w-[23%]">
                     <h3 class="mt-2 text-lg font-semibold">Information Technology</h3>
-                    <p class="mt-2 text-2xl font-bold">140</p>
+                    <p class="mt-2 text-2xl font-bold">4</p>
                 </div>
             </div>
         </div>

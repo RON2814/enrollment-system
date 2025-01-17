@@ -3,6 +3,7 @@
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -13,13 +14,12 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
   ->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', [DepartmentController::class, 'getStudentData'])->name('dashboard');
+    Route::get('/dashboard', [DepartmentController::class, 'dashboard'])->name('dashboard');
 
 
     // Student Checklist
-    Route::get('/student-Evaluation', function () {
-      return view('department.student-Evaluation');
-    })->name('student-Evaluation');
+    Route::get('/student-Evaluation/student/{id}', [EvaluationController::class, 'index'])->name('student-Evaluation');
+
 
     // Courses (Controller Method)
     Route::get('/courses', [CourseController::class, 'showCourses'])->name('courses');

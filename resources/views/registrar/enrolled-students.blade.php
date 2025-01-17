@@ -27,7 +27,7 @@
 
                 <select id="programFilter"
                     class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
-                    <option value="all" selected disabled class="text-gray-600">Filter by Program</option>
+                    <option value="all" selected disabled class="text-gray-600">Program</option>
                     <option value="all">All</option>
                     <option value="1">Computer Science</option>
                     <option value="2">Information Technology</option>
@@ -45,14 +45,24 @@
                 <!-- Search and Filter Section -->
                 <div class="flex space-x-4">
                     <!-- Search Bar -->
-                    <input type="text" id="searchBar" placeholder="Search students..."
-                        class="px-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-
+                    <div class="relative mt-1">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input type="text" id="searchBar"
+                            class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Search student number / name" />
+                    </div>
 
                     {{-- <button onclick=""
                         class="px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700">
                         Print All COG
                     </button> --}}
+
+                   
+
 
 
                 </div>
@@ -65,7 +75,7 @@
                             <th class="py-3 px-4 text-left font-medium">Student #</th>
                             <th class="py-3 px-4 text-left font-medium">Student Name</th>
                             <th class="py-3 px-4 text-left font-medium">Program</th>
-                            <th class="py-3 px-4 text-left font-medium">Year Level</th>
+                            <th class="py-3 px-4 text-left font-medium">Year</th>
                             <th class="py-3 px-4 text-left font-medium">Semester</th>
                             <th class="py-3 px-4 text-left font-medium">Section</th>
                             <th class="py-3 px-4 text-left font-medium">Classification</th>
@@ -77,19 +87,19 @@
                         {{-- Student rows will be inserted here JS will do the job :) --}}
                         @foreach ($students as $student)
                             <tr>
-                                <td class="py-3 px-4 text-sm">{{ $student->student_number }}</td>
-                                <td class="py-3 px-4 text-sm">
+                                <td class="py-3 px-4 text-sm border-b">{{ $student->student_number }}</td>
+                                <td class="py-3 px-4 text-sm border-b">
                                     {{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}
                                 </td>
-                                <td class="py-3 px-4 text-sm">{{ $student->program->title }}</td>
-                                <td class="py-3 px-4 text-sm">{yearlevel}</td>
-                                <td class="py-3 px-4 text-sm">{semester}</td>
-                                <td class="py-3 px-4 text-sm">{section}</td>
-                                <td class="py-3 px-4 text-sm">{{ $student->classification }}</td>
-                                <td class="py-3 px-4 text-sm">
+                                <td class="py-3 px-4 text-sm border-b">{{ $student->program->title }}</td>
+                                <td class="py-3 px-4 text-sm border-b">{yearlevel}</td>
+                                <td class="py-3 px-4 text-sm border-b">{semester}</td>
+                                <td class="py-3 px-4 text-sm border-b">{section}</td>
+                                <td class="py-3 px-4 text-sm border-b">{{ $student->classification }}</td>
+                                <td class="py-3 px-4 text-sm border-b">
                                     <span class="text-blue-700">Enrolled</span>
                                 </td>
-                                <td class="py-3 px-4 text-sm flex space-x-2">
+                                <td class="py-3 px-4 text-sm flex space-x-2 border-b">
                                     <a href="{{ route('registrar.cor', ['student_id' => $student->id]) }}"
                                         class="bg-blue-500 text-white px-2 py-2 rounded-lg text-center">
                                         View
@@ -106,8 +116,7 @@
         </div>
     </div>
 
-    <!-- Include modals -->
-    @include('modals.manage-users.add-student')
+   
 
     <script>
         // Debounce function to limit the rate of AJAX calls
