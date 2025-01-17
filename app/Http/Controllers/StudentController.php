@@ -198,17 +198,25 @@ class StudentController extends Controller
             $evaluationStatus = 'PROCEED';
         }
 
-        if ($checklistWithGrades->isEmpty()) {
-            return view('student.enrollment', ['student' => $student, 'checklistWithGrades' => $checklistWithGrades, 'filteredChecklist' => $filteredChecklist, 'evaluationStatus' => $evaluationStatus]);
-        }
-
         // if student is already submit a evaluation return evaluated courses
         $latestEnrollment = $student->enrollment()->latest()->first();
 
         if ($latestEnrollment && $latestEnrollment->status === 'pending' || $latestEnrollment->status === 'enrolled') {
             return redirect()->route('student.enrollment-eval.evaluated-courses');
+        } else {
+            // Create a new enrollment record
+            $enrollment = $student->enrollment()->create([
+                'year_level' => $highestYearLevel,
+                'semester' => $highestSemester,
+                'school_year_start' => date('Y'),
+                'school_year_end' => date('Y') + 1,
+                'status' => 'pending',
+            ]);
         }
 
+        if ($checklistWithGrades->isEmpty()) {
+            return view('student.enrollment', ['student' => $student, 'checklistWithGrades' => $checklistWithGrades, 'filteredChecklist' => $filteredChecklist, 'evaluationStatus' => $evaluationStatus]);
+        }
 
         // Pass the evaluation status to the view
         return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
@@ -337,6 +345,7 @@ class StudentController extends Controller
         $nextCourses = $student->checklist->filter(function ($item) use ($nextYearLevelString, $nextSemesterString) {
             return $item->year == $nextYearLevelString && $item->semester == $nextSemesterString && $item->course;
         });
+
 
         $student->enrollment()->latest()->first()->update([
             'status' => 'enrolled',

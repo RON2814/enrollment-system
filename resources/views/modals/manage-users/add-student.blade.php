@@ -1,15 +1,17 @@
 <!-- Add Student Modal -->
-<div id="addStudentModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 transition-opacity duration-300 ease-in-out">
-  <div class="modal-container bg-white w-full sm:w-[90%] md:w-[90%] lg:w-[70%] max-w-full rounded-lg shadow-xl p-8 relative overflow-y-auto h-[90vh]">
- 
+<div id="addStudentModal"
+  class="hidden fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 transition-opacity duration-300 ease-in-out">
+  <div
+    class="modal-container bg-white w-full sm:w-[90%] md:w-[90%] lg:w-[70%] max-w-full rounded-lg shadow-xl p-8 relative overflow-y-auto h-[90vh]">
+
     <!-- Close Button -->
     <button onclick="closeAddStudentModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
-  </button>
+    </button>
     <h3 class="text-2xl font-semibold mb-6 text-gray-800 border-b border-gray-300">Register New Student</h3>
-    
+
     <form id="addStudentForm"
       action="{{ auth()->user()->role_id === 4 ? route('admin.manageUsers.store-student') : route('registrar.enrollment-lists.store') }}"
       method="POST">
@@ -19,7 +21,8 @@
         <div>
           <label for="studentNumber" class="text-sm font-medium text-gray-700">Student Number <span
               class="text-red-400">*</span></label>
-          <input required type="text" id="studentNumber" name="student_number" value="{{ old('student_number') }}" placeholder="2025####"
+          <input required type="text" id="studentNumber" name="student_number" value="{{ old('student_number') }}"
+            placeholder="2025####"
             class="mt-1 px-4 py-2 border @error('student_number') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
           <x-input-error :messages="$errors->get('student_number')" class="mt-2" id="error-student_number" />
         </div>
@@ -41,7 +44,8 @@
         <div>
           <label for="lastName" class="text-sm font-medium text-gray-700">Last Name <span
               class="text-red-400">*</span></label>
-          <input required type="text" id="lastName" name="last_name" value="{{ old('last_name') }}" placeholder="Enter Last name" 
+          <input required type="text" id="lastName" name="last_name" value="{{ old('last_name') }}"
+            placeholder="Enter Last name"
             class="mt-1 px-4 py-2 border @error('last_name') bg-gray-100 border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
           <x-input-error :messages="$errors->get('last_name')" class="mt-2" id="error-last_name" />
         </div>
@@ -49,7 +53,8 @@
         <div>
           <label for="firstName" class="text-sm font-medium text-gray-700">First Name <span
               class="text-red-400">*</span></label>
-          <input required type="text" id="firstName" name="first_name" value="{{ old('first_name') }}" placeholder="Enter First name"
+          <input required type="text" id="firstName" name="first_name" value="{{ old('first_name') }}"
+            placeholder="Enter First name"
             class="mt-1 px-4 py-2 border  @error('first_name') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
           <x-input-error :messages="$errors->get('first_name')" class="mt-2" id="error-first_name" />
         </div>
@@ -57,35 +62,39 @@
         <div>
           <label for="middleName" class="text-sm font-medium text-gray-700">Middle Name <span
               class="text-red-400">*</span></label>
-          <input type="text" id="middleName" name="middle_name" value="{{ old('middle_name') }}" placeholder="Enter Middle name"
+          <input type="text" id="middleName" name="middle_name" value="{{ old('middle_name') }}"
+            placeholder="Enter Middle name"
             class="mt-1 px-4 py-2 border @error('middle_name') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
           <x-input-error :messages="$errors->get('middle_name')" class="mt-2" id="error-middle_name" />
         </div>
 
         <div>
           <label for="extensionName" class="text-sm font-medium text-gray-700">Extension Name</label>
-          <input type="text" id="extensionName" name="extension_name" value="{{ old('extension_name') }}" placeholder="Jr., Sr., III"
+          <input type="text" id="extensionName" name="extension_name" value="{{ old('extension_name') }}"
+            placeholder="Jr., Sr., III"
             class="mt-1 px-4 py-2 border @error('extension_name') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
           <x-input-error :messages="$errors->get('extension_name')" class="mt-2" id="error-extension_name" />
         </div>
 
         <div>
           <label for="email" class="text-sm font-medium text-gray-700">Email<span
-            class="text-red-400">*</span></label></label>
+              class="text-red-400">*</span></label></label>
           <input type="text" id="email" name="email" value="{{ old('email') }}" placeholder="Enter Email"
             class="mt-1 px-4 py-2 border @error('email') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
           <x-input-error :messages="$errors->get('email')" class="mt-2" id="error-email" />
         </div>
 
         @if (auth()->user()->role_id === 3)
-            <div>
+          <div>
             <label for="contactNumber" class="text-sm font-medium text-gray-700">Contact Number<span
-              class="text-red-400">*</span></label></label>
-            <input type="text" id="contactNumber" name="contact_number" value="{{ old('contact_number') }}" placeholder="+63##########"
+                class="text-red-400">*</span></label></label>
+            <input type="text" id="contactNumber" name="contact_number" value="{{ old('contact_number') }}"
+              placeholder="+63##########"
               class="mt-1 px-4 py-2 border @error('contact_number') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             <x-input-error :messages="$errors->get('contact_number')" class="mt-2" id="error-contact_number" />
-            </div>
+          </div>
         @endif
+        <div>
           <label for="sex" class="text-sm font-medium text-gray-700">Sex</label>
           <select required id="sex" name="sex"
             class="mt-1 px-4 py-2 border @error('sex') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -95,121 +104,128 @@
           </select>
           <x-input-error :messages="$errors->get('sex')" class="mt-2" id="error-sex" />
         </div>
-
-        <div>
-          <label for="email" class="text-sm font-medium text-gray-700">Email</label>
-          <input type="text" id="email" name="email" value="{{ old('email') }}"
-            class="mt-1 px-4 py-2 border @error('email') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-          <x-input-error :messages="$errors->get('email')" class="mt-2" id="error-email" />
-        </div>
-
-        {{-- @if (auth()->user()->role_id === 3) --}}
-        <div>
-          <label for="contactNumber" class="text-sm font-medium text-gray-700">Contact Number</label>
-          <input type="text" id="contactNumber" name="contact_number" value="{{ old('contact_number') }}"
-            class="mt-1 px-4 py-2 border @error('contact_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-          <x-input-error :messages="$errors->get('contact_number')" class="mt-2" id="error-contact_number" />
-        </div>
-        {{-- @endif --}}
-
-        <div>
-          <label for="birthday" class="block text-sm font-medium text-gray-600 mb-1">Birth Date</label>
-          <input id="birthday" type="date" name="birthday" value="{{ old('birthday') }}"
-            class="mt-1 px-4 py-2 border @error('email') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-          <x-input-error :messages="$errors->get('birthday')" class="mt-2" id="error-birthday" />
-        </div>
-
-        <!-- Program Dropdown -->
-        <div>
-          <label for="program" class="text-sm font-medium text-gray-700">Program <span
-              class="text-red-400">*</span></label>
-          <select required id="program" name="program_id"
-            class="mt-1 px-4 py-2 border @error('program_id') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <option value="" disabled selected>Select Program</option>
-            <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BS Computer Science</option>
-            <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS Information Technology</option>
-          </select>
-          <x-input-error :messages="$errors->get('program_id')" class="mt-2" id="error-program_id" />
-        </div>
-
-        <!-- Classification Dropdown -->
-        <div>
-          <label for="classification" class="text-sm font-medium text-gray-700">Classification <span
-              class="text-red-400">*</span></label>
-          <select required id="classification" name="classification"
-            class="mt-1 px-4 py-2 border @error('classification') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <option value="" disabled selected>Select Classification</option>
-            <option value="regular" {{ old('classification') == 'regular' ? 'selected' : '' }}>Regular</option>
-            <option value="irregular" {{ old('classification') == 'irregular' ? 'selected' : '' }}>Irregular</option>
-            <option value="transferee" {{ old('classification') == 'transferee' ? 'selected' : '' }}>Transferee
-            </option>
-            <option value="returnee" {{ old('classification') == 'returnee' ? 'selected' : '' }}>Returnee</option>
-          </select>
-          <x-input-error :messages="$errors->get('classification')" class="mt-2" id="error-classification" />
-        </div>
-
-        {{-- registrar add student --}}
-        {{-- @if (auth()->user()->role_id === 3) --}}
-        <div class="col-start-1">
-          <label for="houseNumber" class="text-sm font-medium text-gray-700">House Number<span
-            class="text-red-400">*</span></label></label>
-          <input type="text" id="houseNumber" name="house_number" value="{{ old('house_number') }}" placeholder="Enter House Number"
-            class="mt-1 px-4 py-2 border @error('house_number') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
-          <x-input-error :messages="$errors->get('house_number')" class="mt-2" id="error-house_number" />
-        </div>
-
-        <div>
-          <label for="street" class="text-sm font-medium text-gray-700">Street<span
-            class="text-red-400">*</span></label></label>
-          <input type="text" id="street" name="street" value="{{ old('street') }}" placeholder="Enter Street"
-            class="mt-1 px-4 py-2 border @error('street') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
-          <x-input-error :messages="$errors->get('street')" class="mt-2" id="error-street" />
-        </div>
-
-        <div>
-          <label for="barangay" class="text-sm font-medium text-gray-700">Barangay<span
-            class="text-red-400">*</span></label></label>
-          <input type="text" id="barangay" name="barangay" value="{{ old('barangay') }}" placeholder="Enter Barangay"
-            class="mt-1 px-4 py-2 border @error('barangay') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
-          <x-input-error :messages="$errors->get('barangay')" class="mt-2" id="error-barangay" />
-        </div>
-
-        <div>
-          <label for="city" class="text-sm font-medium text-gray-700">City<span
-            class="text-red-400">*</span></label></label>
-          <input type="text" id="city" name="city" value="{{ old('city') }}" placeholder="Enter City"
-            class="mt-1 px-4 py-2 border @error('city') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
-          <x-input-error :messages="$errors->get('city')" class="mt-2" id="error-city" />
-        </div>
-
-        <div>
-          <label for="province" class="text-sm font-medium text-gray-700">Province<span
-            class="text-red-400">*</span></label></label>
-          <input type="text" id="province" name="province" value="{{ old('province') }}" placeholder="Enter Province"
-            class="mt-1 px-4 py-2 border @error('province') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
-          <x-input-error :messages="$errors->get('province')" class="mt-2" id="error-province" />
-        </div>
-
-        <div>
-          <label for="zipcode" class="text-sm font-medium text-gray-700">Zip code<span
-            class="text-red-400">*</span></label></label>
-          <input type="text" id="zipcode" name="zip_code" value="{{ old('zip_code') }}" placeholder="Enter Zip Code"
-            class="mt-1 px-4 py-2 border @error('zip_code') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-          <x-input-error :messages="$errors->get('zip_code')" class="mt-2" id="error-zip_code" />
-        </div>
-        {{-- @endif --}}
       </div>
 
-      <!-- Modal Actions -->
-     
+      <div>
+        <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+        <input type="text" id="email" name="email" value="{{ old('email') }}"
+          class="mt-1 px-4 py-2 border @error('email') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <x-input-error :messages="$errors->get('email')" class="mt-2" id="error-email" />
+      </div>
 
-      <div class="flex justify-end">
-        <button type="submit" class="mt-8 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            Save Student 
-        </button>
-    </div>
-    </form>
+      {{-- @if (auth()->user()->role_id === 3) --}}
+      <div>
+        <label for="contactNumber" class="text-sm font-medium text-gray-700">Contact Number</label>
+        <input type="text" id="contactNumber" name="contact_number" value="{{ old('contact_number') }}"
+          class="mt-1 px-4 py-2 border @error('contact_number') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <x-input-error :messages="$errors->get('contact_number')" class="mt-2" id="error-contact_number" />
+      </div>
+      {{-- @endif --}}
+
+      <div>
+        <label for="birthday" class="block text-sm font-medium text-gray-600 mb-1">Birth Date</label>
+        <input id="birthday" type="date" name="birthday" value="{{ old('birthday') }}"
+          class="mt-1 px-4 py-2 border @error('email') border-red-500 @enderror border-gray-300 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+        <x-input-error :messages="$errors->get('birthday')" class="mt-2" id="error-birthday" />
+      </div>
+
+      <!-- Program Dropdown -->
+      <div>
+        <label for="program" class="text-sm font-medium text-gray-700">Program <span
+            class="text-red-400">*</span></label>
+        <select required id="program" name="program_id"
+          class="mt-1 px-4 py-2 border @error('program_id') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <option value="" disabled selected>Select Program</option>
+          <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BS Computer Science</option>
+          <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS Information Technology</option>
+        </select>
+        <x-input-error :messages="$errors->get('program_id')" class="mt-2" id="error-program_id" />
+      </div>
+
+      <!-- Classification Dropdown -->
+      <div>
+        <label for="classification" class="text-sm font-medium text-gray-700">Classification <span
+            class="text-red-400">*</span></label>
+        <select required id="classification" name="classification"
+          class="mt-1 px-4 py-2 border @error('classification') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <option value="" disabled selected>Select Classification</option>
+          <option value="freshmen" {{ old('classification') == 'freshmen' ? 'selected' : '' }}>Freshmen</option>
+          <option value="regular" {{ old('classification') == 'regular' ? 'selected' : '' }}>Regular</option>
+          <option value="irregular" {{ old('classification') == 'irregular' ? 'selected' : '' }}>Irregular</option>
+          <option value="transferee" {{ old('classification') == 'transferee' ? 'selected' : '' }}>Transferee
+          </option>
+          <option value="returnee" {{ old('classification') == 'returnee' ? 'selected' : '' }}>Returnee</option>
+        </select>
+        <x-input-error :messages="$errors->get('classification')" class="mt-2" id="error-classification" />
+      </div>
+
+      {{-- registrar add student --}}
+      {{-- @if (auth()->user()->role_id === 3) --}}
+      <div class="col-start-1">
+        <label for="houseNumber" class="text-sm font-medium text-gray-700">House Number<span
+            class="text-red-400">*</span></label></label>
+        <input type="text" id="houseNumber" name="house_number" value="{{ old('house_number') }}"
+          placeholder="Enter House Number"
+          class="mt-1 px-4 py-2 border @error('house_number') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
+        <x-input-error :messages="$errors->get('house_number')" class="mt-2" id="error-house_number" />
+      </div>
+
+      <div>
+        <label for="street" class="text-sm font-medium text-gray-700">Street<span
+            class="text-red-400">*</span></label></label>
+        <input type="text" id="street" name="street" value="{{ old('street') }}" placeholder="Enter Street"
+          class="mt-1 px-4 py-2 border @error('street') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
+        <x-input-error :messages="$errors->get('street')" class="mt-2" id="error-street" />
+      </div>
+
+      <div>
+        <label for="barangay" class="text-sm font-medium text-gray-700">Barangay<span
+            class="text-red-400">*</span></label></label>
+        <input type="text" id="barangay" name="barangay" value="{{ old('barangay') }}"
+          placeholder="Enter Barangay"
+          class="mt-1 px-4 py-2 border @error('barangay') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
+        <x-input-error :messages="$errors->get('barangay')" class="mt-2" id="error-barangay" />
+      </div>
+
+      <div>
+        <label for="city" class="text-sm font-medium text-gray-700">City<span
+            class="text-red-400">*</span></label></label>
+        <input type="text" id="city" name="city" value="{{ old('city') }}" placeholder="Enter City"
+          class="mt-1 px-4 py-2 border @error('city') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
+        <x-input-error :messages="$errors->get('city')" class="mt-2" id="error-city" />
+      </div>
+
+      <div>
+        <label for="province" class="text-sm font-medium text-gray-700">Province<span
+            class="text-red-400">*</span></label></label>
+        <input type="text" id="province" name="province" value="{{ old('province') }}"
+          placeholder="Enter Province"
+          class="mt-1 px-4 py-2 border @error('province') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
+        <x-input-error :messages="$errors->get('province')" class="mt-2" id="error-province" />
+      </div>
+
+      <div>
+        <label for="zipcode" class="text-sm font-medium text-gray-700">Zip code<span
+            class="text-red-400">*</span></label></label>
+        <input type="text" id="zipcode" name="zip_code" value="{{ old('zip_code') }}"
+          placeholder="Enter Zip Code"
+          class="mt-1 px-4 py-2 border @error('zip_code') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <x-input-error :messages="$errors->get('zip_code')" class="mt-2" id="error-zip_code" />
+      </div>
+      {{-- @endif --}}
   </div>
+
+  <!-- Modal Actions -->
+
+
+  <div class="flex justify-end">
+    <button type="submit"
+      class="mt-8 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      Save Student
+    </button>
+  </div>
+  </form>
+</div>
 </div>
 
 <script>

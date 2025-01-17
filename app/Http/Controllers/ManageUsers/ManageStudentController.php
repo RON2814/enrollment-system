@@ -8,6 +8,7 @@ use App\Models\Checklist\Checklist;
 use App\Models\Roles\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ManageStudentController extends Controller
 {
@@ -86,7 +87,7 @@ class ManageStudentController extends Controller
       "contact_number" => ["nullable", "regex:/^(09|\+639)\d{9}$/"],
       "email" => ["nullable", "email", "max:50"],
       "program_id" => ["required", "exists:programs,id"],
-      "classification" => ["required", "in:regular,irregular,transferee,returnee"],
+      "classification" => ["required", "in:regular,irregular,transferee,returnee,freshmen"],
 
       "birthday" => ["nullable", "date"],
       "sex" => ["nullable", "in:male,female"],
@@ -134,8 +135,7 @@ class ManageStudentController extends Controller
         "password" => bcrypt($request->password),
       ]);
     }
-
-    if (auth()->user()->role_id == 3) {
+    if (Auth::user()->role_id == 3) {
       return redirect()->route('registrar.enrollment-lists')->with('success', 'Student updated successfully.');
     }
     return redirect()->route('admin.manageUsers.student')->with('success', 'Student updated successfully.');
@@ -153,7 +153,7 @@ class ManageStudentController extends Controller
       "contact_number" => ["nullable", "regex:/^(09|\+639)\d{9}$/"],
       "email" => ["nullable", "email", "max:50", "unique:users,email"],
       "program_id" => ["required", "exists:programs,id"],
-      "classification" => ["required", "in:regular,irregular,transferee,returnee"],
+      "classification" => ["required", "in:regular,irregular,transferee,returnee,freshmen"],
 
       "birthday" => ["nullable", "date"],
       "sex" => ["nullable", "in:male,female"],
@@ -185,7 +185,7 @@ class ManageStudentController extends Controller
       "role_id" => 1, // Student role
     ]);
 
-    Student::create([
+    $student = Student::create([
       "student_number" => $request->student_number,
       "last_name" => $request->last_name,
       "first_name" => $request->first_name,
@@ -193,12 +193,21 @@ class ManageStudentController extends Controller
       "extension_name" => $request->extension_name,
       "contact_number" => $request->contact_number,
       "program_id" => $request->program_id,
-      "classification" => $request->classification,
+      "classification" => $request->classification === 'freshmen' ? 'Regular' : $request->classification,
       "address_id" => $address->id,
       "birthday" => $request->birthday,
       "sex" => $request->sex,
     ]);
 
+    if ($request->classification === 'freshmen') {
+      $enrolled = $student->enrollment()->create([
+        'year_level' => 'First Year',
+        'semester' => 'First Semester',
+        'school_year_start' => date('Y'),
+        'school_year_end' => date('Y') + 1,
+        'status' => 'Enrolled',
+      ]);
+    }
 
     // Create checklist for the new student
     $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [
@@ -333,15 +342,21 @@ class ManageStudentController extends Controller
     ];
 
     foreach ($checklistItems as $item) {
-      Checklist::create([
+      $data = [
         'student_number' => $request->student_number,
         'course_code' => $item['course_code'],
         'year' => $item['year'],
         'semester' => $item['semester'],
-      ]);
+      ];
+
+      if (isset($enrolled) && $item['year'] === 'First Year' && $item['semester'] === 'First Semester') {
+        $data['enrollment_id'] = $enrolled->id;
+      }
+
+      Checklist::create($data);
     }
 
-    if (auth()->user()->role_id == 3) {
+    if (Auth::user()->role_id == 3) {
       return redirect()->route('registrar.enrollment-lists')->with('success', 'Student added successfully.');
     }
 
