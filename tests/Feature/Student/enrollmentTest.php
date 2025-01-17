@@ -9,12 +9,14 @@ use Tests\TestCase;
 class enrollmentTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * Test if the enrollment page is accessible.
      */
-    public function test_example(): void
+    public function test_enrollment_page_is_accessible(): void
     {
-        $response = $this->get('/');
+        // Assuming the route for enrollment is '/enrollment'
+        $response = $this->get('/enrollment');
 
+        // Assert that the response status is 200 (OK)
         $response->assertStatus(200);
     }
 }

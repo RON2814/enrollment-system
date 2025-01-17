@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class simple-tailwindTest extends TestCase
+class simple_tailwindTest extends TestCase
 {
     /**
      * A basic feature test example.

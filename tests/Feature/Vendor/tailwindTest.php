@@ -13,8 +13,13 @@ class tailwindTest extends TestCase
      */
     public function test_example(): void
     {
+        // Send a GET request to the homepage
         $response = $this->get('/');
 
+        // Assert that the response status is 200 (OK)
         $response->assertStatus(200);
+
+        // Optional: Check if the page contains specific content related to the pagination
+        $response->assertSee('pagination'); // You can replace this with any relevant text/markup from the tailwind pagination
     }
 }
