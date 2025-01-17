@@ -35,9 +35,9 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             StudentSeeder::class,
             InstructorSeeder::class,
-            // ChecklistSeeder::class,
+            ChecklistSeeder::class,
         ]);
-        
+
 
         // Create initial users with specific roles
 
