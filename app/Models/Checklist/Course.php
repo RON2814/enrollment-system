@@ -24,4 +24,10 @@ class Course extends Model
         'contact_hours_laboratory',
         'pre_requisite',
     ];
+
+    // Add relationships
+    public function checklist()
+    {
+        return $this->belongsToMany(Checklist::class, 'checklist_courses', 'course_code', 'checklist_id');
+    }
 }

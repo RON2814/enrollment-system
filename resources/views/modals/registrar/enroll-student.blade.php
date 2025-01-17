@@ -428,14 +428,14 @@
 
     }
 
-    // Add course to the selected list
-    function addCourse(button) {
-        const row = button.closest('tr');
-        const courseCode = row.querySelector('td:nth-child(1)').innerText;
-        const courseTitle = row.querySelector('td:nth-child(2)').innerText;
+  // Add course to the selected list
+  function addCourse(button) {
+    const row = button.closest('tr');
+    const courseCode = row.querySelector('td:nth-child(1)').innerText;
+    const courseTitle = row.querySelector('td:nth-child(2)').innerText;
 
-        // Example: Add course to the list (could also be an array or a backend update)
-        alert('Course added: ' + courseCode + ' - ' + courseTitle);
+    // Example: Add course to the list (could also be an array or a backend update)
+    alert('Course added: ' + courseCode + ' - ' + courseTitle);
 
         // You can implement an actual logic to save this to an array, backend, or modify the DOM here.
     }
@@ -457,5 +457,6 @@
             // You can implement actual deletion logic here to remove it from an array or database
         }
     }
+  }
 </script>
 ```

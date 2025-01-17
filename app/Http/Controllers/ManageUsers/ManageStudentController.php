@@ -88,6 +88,9 @@ class ManageStudentController extends Controller
       "program_id" => ["required", "exists:programs,id"],
       "classification" => ["required", "in:regular,irregular,transferee,returnee"],
 
+      "birthday" => ["nullable", "date"],
+      "sex" => ["nullable", "in:male,female"],
+
       "house_number" => ["nullable", "string", "max:50"],
       "street" => ["nullable", "string", "max:50"],
       "barangay" => ["nullable", "string", "max:50"],
@@ -106,6 +109,8 @@ class ManageStudentController extends Controller
       "contact_number" => $request->contact_number,
       "program_id" => $request->program_id,
       "classification" => $request->classification,
+      "birthday" => $request->birthday,
+      "sex" => $request->sex,
     ]);
 
     $address = $student->address;
@@ -150,6 +155,9 @@ class ManageStudentController extends Controller
       "program_id" => ["required", "exists:programs,id"],
       "classification" => ["required", "in:regular,irregular,transferee,returnee"],
 
+      "birthday" => ["nullable", "date"],
+      "sex" => ["nullable", "in:male,female"],
+
       "house_number" => ["nullable", "string", "max:50"],
       "street" => ["nullable", "string", "max:50"],
       "barangay" => ["nullable", "string", "max:50"],
@@ -187,8 +195,10 @@ class ManageStudentController extends Controller
       "program_id" => $request->program_id,
       "classification" => $request->classification,
       "address_id" => $address->id,
+      "birthday" => $request->birthday,
+      "sex" => $request->sex,
     ]);
-    
+
 
     // Create checklist for the new student
     $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [
@@ -200,7 +210,7 @@ class ManageStudentController extends Controller
       ['course_code' => 'DCIT 22', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'FITT 1', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'NSTP 1', 'year' => "First Year", 'semester' => "First Semester"],
-      ['course_code' => 'CVSU 101', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'CvSU 101', 'year' => "First Year", 'semester' => "First Semester"],
 
       ['course_code' => 'GNED 01', 'year' => "First Year", 'semester' => "Second Semester"],
       ['course_code' => 'GNED 03', 'year' => "First Year", 'semester' => "Second Semester"],
@@ -267,7 +277,7 @@ class ManageStudentController extends Controller
       ['course_code' => 'DCIT 22', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'FITT 1', 'year' => "First Year", 'semester' => "First Semester"],
       ['course_code' => 'NSTP 1', 'year' => "First Year", 'semester' => "First Semester"],
-      ['course_code' => 'CVSU 101', 'year' => "First Year", 'semester' => "First Semester"],
+      ['course_code' => 'CvSU 101', 'year' => "First Year", 'semester' => "First Semester"],
 
       ['course_code' => 'GNED 01', 'year' => "First Year", 'semester' => "Second Semester"],
       ['course_code' => 'GNED 03', 'year' => "First Year", 'semester' => "Second Semester"],

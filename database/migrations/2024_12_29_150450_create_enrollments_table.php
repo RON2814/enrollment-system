@@ -14,15 +14,16 @@ return new class extends Migration {
             $table->id();
             $table->string("student_number");
             $table->foreignId("section_id")->constrained("sections");
-            $table->year("academic_year");
-            $table->string("course_code");
-            $table->enum("status", ["enrolled", "pending", "dropped", "passed", "failed", "INC", "N/A"]);
+            $table->enum("year_level", ["First Year", "Second Year", "Third Year", "Fourth Year"]);
+            $table->enum("semester", ["First Semester", "Second Semester", "Midyear"]);
+            $table->year("school_year_start");
+            $table->year("school_year_end");
+            $table->enum("status", ["enrolled", "pending", "dropped", "passed", "failed", "INC", "N/A", "completed"]);
             $table->string("registrar_encoder_id")->nullable();
             $table->timestamps();
 
             // Foreign keys
             $table->foreign("student_number")->references("student_number")->on("students")->onDelete('cascade');
-            $table->foreign("course_code")->references("course_code")->on("courses");
             $table->foreign("registrar_encoder_id")->references("registrar_id")->on("registrars");
         });
     }

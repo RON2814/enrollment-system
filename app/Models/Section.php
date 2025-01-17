@@ -22,11 +22,6 @@ class Section extends Model
         return $this->belongsTo(Program::class, "program_id", "id");
     }
 
-    public function student()
-    {
-        return $this->belongsTo(Student::class, "student_number", "student_number");
-    }
-
     public function enrollent()
     {
         return $this->hasMany(Enrollment::class, "section_id", "id");
