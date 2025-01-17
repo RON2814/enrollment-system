@@ -17,6 +17,7 @@ class Checklist extends Model
         "instructor_id",
         "year",
         "semester",
+        "enrollment_id",
     ];
 
     public function student()
@@ -32,5 +33,10 @@ class Checklist extends Model
     public function instructor()
     {
         return $this->belongsTo(Instructor::class, 'instructor_id');
+    }
+
+    public function enrollment()
+    {
+        return $this->belongsTo(Enrollment::class, 'enrollment_id');
     }
 }

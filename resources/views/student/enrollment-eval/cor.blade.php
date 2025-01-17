@@ -18,8 +18,11 @@
                 id="updatedStudentNumber">{{ old('student_number', $student->student_number) }}</span>
             </td>
             <td class="border-none p-2">Semester: <span class="font-medium">{{ $nextSemesterString }}</span></td>
-            <td class="border-none p-2">School Year: <span class="font-medium">{2023-2024}</span></td>
-            <td class="border-none p-2">Date: <span class="font-medium">{date}</span></td>
+            <td class="border-none p-2">School Year: <span
+                class="font-medium">{{ $latestEnrollment->school_year_start . '-' . $latestEnrollment->school_year_end }}</span>
+            </td>
+            <td class="border-none p-2">Date: <span
+                class="font-medium">{{ $latestEnrollment->updated_at->format('F j, Y') }}</span></td>
           </tr>
           <tr>
             <td class="border-none p-2">Name: <span
@@ -31,9 +34,12 @@
             </td>
           </tr>
           <tr>
-            <td class="border-none p-2">Address: <span class="font-medium">Bacoor, Cavite</span></td>
+            <td class="border-none p-2">Address: <span
+                class="font-medium">{{ $student->address->getFullAddress() }}</span>
+            </td>
             <td class="border-none p-2">Section: <span class="font-medium">{BSCS 3-2}</span></td>
-            <td class="border-none p-2">Encoder: <span class="font-medium">{N/A}</span></td>
+            <td class="border-none p-2">Encoder: <span
+                class="font-medium">{{ $latestEnrollment->encoder ?: 'N/A' }}</span></td>
           </tr>
         @endisset
       </table>
@@ -55,7 +61,8 @@
               <td class="border border-gray-400 p-2">{{ $course->course_code }}</td>
               <td class="border border-gray-400 p-2">{{ $course->course->course_title }}</td>
               <td class="border border-gray-400 p-2">
-                {{ ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0) ?: 'N/A' }}
+                {{ $course->course->credit_unit_lecture ?: '' }}
+                {{ $course->course->credit_unit_laboratory ?: '' }}
               </td>
               <td class="border border-gray-400 p-2">TBA</td>
               <td class="border border-gray-400 p-2">TBA</td>
@@ -95,9 +102,9 @@
             Other Fees: <span class="font-medium text-right">&#8369; 80.00</span>
           </td>
           <td class="border border-gray-400 p-2">
-            Total Units: <span class="font-medium text-right">37</span><br>
+            Total Units: <span class="font-medium text-right">{{ $totalUnits }}</span><br>
             <hr>
-            Total Hours: <span class="font-medium text-right">37</span><br>
+            Total Hours: <span class="font-medium text-right">{{ $totalHours }}</span><br>
             <hr>
             <span class="font-medium text-right">TOTAL AMOUNT: &#8369; 10,090.00</span><br><br>
             Scholarship: <span class="font-medium text-right">CHED Free Tuition and Misc. Fee</span><br>
@@ -117,8 +124,8 @@
 
       <div class="mt-8 text-left pb-4 text-sm">
         Registration Status: <span class="font-medium">{{ $student->classification }}</span><br>
-        Date of Birth: <span class="font-medium">{date}</span><br>
-        Sex: <span class="font-medium">MALE</span><br>
+        Date of Birth: <span class="font-medium">{{ $student->birthday->format('F j, Y') }}</span><br>
+        Sex: <span class="font-medium">{{ ucfirst($student->sex) }}</span><br>
         Contact Number: <span class="font-medium">{{ $student->contact_number }}</span><br>
         E-mail Address: <span class="font-medium">{{ $student->user->email }}</span><br>
         <p>Student's Signature: __________________________</p>

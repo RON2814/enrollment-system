@@ -17,6 +17,10 @@ class Student extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $casts = [
+        'birthday' => 'date',
+    ];
+
     protected $fillable = [
         'student_number',
         'last_name',
@@ -48,7 +52,7 @@ class Student extends Model
     public function checklist()
     {
         return $this->hasMany(Checklist::class, 'student_number', 'student_number');
-        
+
     }
 
     public function enrollment()
@@ -56,7 +60,7 @@ class Student extends Model
         return $this->hasMany(Enrollment::class, 'student_number', 'student_number');
     }
 
-    public function getFullNameAttribute()
+    public function getFullName()
     {
         return "{$this->last_name}, {$this->first_name} {$this->middle_name}";
     }

@@ -13,12 +13,12 @@ return new class extends Migration {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
             $table->string("student_number");
-            $table->foreignId("section_id")->constrained("sections");
+            $table->foreignId("section_id")->nullable()->constrained("sections");
             $table->enum("year_level", ["First Year", "Second Year", "Third Year", "Fourth Year"]);
             $table->enum("semester", ["First Semester", "Second Semester", "Midyear"]);
             $table->year("school_year_start");
             $table->year("school_year_end");
-            $table->enum("status", ["enrolled", "pending", "dropped", "passed", "failed", "INC", "N/A", "completed"]);
+            $table->enum("status", ["enrolled", "under evaluation", "evaluated", "pending", "N/A", "completed"]);
             $table->string("registrar_encoder_id")->nullable();
             $table->timestamps();
 

@@ -13,8 +13,10 @@ class Enrollment extends Model
     protected $fillable = [
         "student_number",
         "section_id",
-        "academic_year",
-        "program_id",
+        "year_level",
+        "semester",
+        "school_year_start",
+        "school_year_end",
         "status",
         "registrar_encoder_id",
     ];
