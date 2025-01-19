@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 // Student Authentication / Routes
 Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->name('student.')->group(function () {
     // STUDENT Dashboard
-    Route::get('/dashboard',[StudentController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [StudentController::class, 'index'])->name('dashboard');
 
     // Student Information Route
     Route::get('/student-information', [StudentController::class, 'studentInformation'])->name('student-information');
@@ -31,12 +31,15 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
     // Enrollment Module Route
     Route::get('/enrollment', [StudentController::class, 'enrollmentModule'])->name('enrollment');
 
+    // Enrollment - Check student classification and enrollment status
+    Route::get('/enrollment/check-status', [StudentController::class, 'checkStatus'])->name('enrollment.check-status');
+
     // Enrollment Evaluation - Evaluated Courses Route
     Route::get('/enrollment-eval/evaluated-courses', [StudentController::class, 'evaluatedCourses'])->name('enrollment-eval.evaluated-courses');
 
     // Enrollment Evaluation - Under Review Route
     Route::get('/enrollment-eval/under-review', function () {
-        return view('student.enrollment-eval.under-review'); 
+        return view('student.enrollment-eval.under-review');
     })->name('enrollment-eval.under-review');
 
 

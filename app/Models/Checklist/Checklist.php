@@ -48,4 +48,9 @@ class Checklist extends Model
     {
         return $this->belongsTo(Instructor::class, 'instructor_id');
     }
+
+    public function enrollment()
+    {
+        return $this->belongsTo(Enrollment::class, 'enrollment_id', 'id');
+    }
 }

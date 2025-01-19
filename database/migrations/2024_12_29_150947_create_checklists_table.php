@@ -11,6 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('checklists', function (Blueprint $table) {
+            $table->id();
             $table->string("student_number");
             $table->string("course_code");
             $table->enum("grade", ["1.00", "1.25", "1.50", "1.75", "2.00", "2.25", "2.50", "2.75", "3.00", "4.00", "5.00", "INC", "S", "DROPPED", "CREDITED"])->nullable();

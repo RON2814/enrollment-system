@@ -203,15 +203,6 @@ class StudentController extends Controller
 
         if ($latestEnrollment && $latestEnrollment->status === 'pending' || $latestEnrollment->status === 'enrolled') {
             return redirect()->route('student.enrollment-eval.evaluated-courses');
-        } else {
-            // Create a new enrollment record
-            $enrollment = $student->enrollment()->create([
-                'year_level' => $highestYearLevel,
-                'semester' => $highestSemester,
-                'school_year_start' => date('Y'),
-                'school_year_end' => date('Y') + 1,
-                'status' => 'pending',
-            ]);
         }
 
         if ($checklistWithGrades->isEmpty()) {

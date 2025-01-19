@@ -2,7 +2,6 @@
 
 namespace App\Models\Checklist;
 
-use App\Models\Program;
 use App\Models\Roles\Registrar;
 use App\Models\Roles\Student;
 use App\Models\Section;
@@ -24,11 +23,6 @@ class Enrollment extends Model
     public function student()
     {
         return $this->belongsTo(Student::class, "student_number", "student_number");
-    }
-
-    public function program()
-    {
-        return $this->belongsTo(Program::class, "program_id", "id");
     }
 
     public function section()

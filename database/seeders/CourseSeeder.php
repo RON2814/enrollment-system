@@ -622,7 +622,7 @@ class CourseSeeder extends Seeder
             ],
             [
                 'course_code' => 'COSC 111',
-                'course_title' => 'SC Elective 3 (Internet of Things)',
+                'course_title' => 'CS Elective 3 (Internet of Things)',
                 'credit_unit_lecture' => 2,
                 'credit_unit_laboratory' => 1,
                 'contact_hours_lecture' => 2,
