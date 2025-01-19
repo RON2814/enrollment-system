@@ -31,8 +31,8 @@
           <!-- Advising List -->
           <li
           class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
-         @if (request()->routeIs('department.student-Evaluation')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
-          <a href="{{ route('department.student-Evaluation') }}"
+         @if (request()->routeIs('department.advising')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
+          <a href="{{ route('department.advising') }}"
               class="text-white no-underline flex items-center gap-3">
               <i class="fas fa-user text-xs opacity-75 mr-2"></i>
               <span class="text-xs opacity-80">Advising List</span>

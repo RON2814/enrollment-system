@@ -17,14 +17,6 @@
                     <option value="4">4th Year</option>
                 </select>
 
-                {{-- <select id="classificationFilter"
-                class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
-                <option value="all" class="text-gray-600">Classification</option>
-                <option value="all">All</option>
-                <option value="1">Regular</option>
-                <option value="1">Irregular</option>
-            </select> --}}
-
                 <select id="programFilter"
                     class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
                     <option value="all" class="text-gray-600">Program</option>
@@ -121,7 +113,7 @@
                                                     : ($student->enrollment()->latest()->first()->status == 'evaluated'
                                                         ? 'blue'
                                                         : ($student->enrollment()->latest()->first()->status == 'pending'
-                                                            ? 'orange'
+                                                            ? 'red'
                                                             : ($student->enrollment()->latest()->first()->status == 'N/A'
                                                                 ? 'gray'
                                                                 : ($student->enrollment()->latest()->first()->status == 'completed'
@@ -136,11 +128,10 @@
                                     @php
                                         $latestEnrollment = $student->enrollment()->latest()->first();
                                     @endphp
-                                
+
                                     @if ($latestEnrollment && $latestEnrollment->status == 'enrolled')
                                         <!-- Show 'COR' button for enrolled status -->
-                                        <button onclick='openCORMOdal({{ $student }})'
-                                            style="background-color: #34D399; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
+                                        <button onclick='openCORMOdal({{ $student }})'                                            style="background-color: #34D399; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
                                             COR
                                         </button>
                                     @else
@@ -151,9 +142,9 @@
                                         </button>
                                     @endif
                                 </td>
-                                
-                                
-                                
+
+
+
                             </tr>
                         @endforeach
                     </tbody>

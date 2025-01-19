@@ -4,6 +4,7 @@ use App\Http\Controllers\ManageUsers\ManageStudentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrarController;
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\StudentController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,9 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
 
    
     // COR
-    Route::get("cor", [RegistrarController::class, 'cor'])->name("cor");
+    Route::get('/student/cor', [StudentController::class, 'showStudentCOR'])->name('student.cor');
+
+
 
     // Registrar routes
     Route::get('registrar/checklist/{student_number}', [RegistrarController::class, 'checklist'])->name('checklist');

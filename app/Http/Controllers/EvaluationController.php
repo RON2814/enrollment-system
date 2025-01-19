@@ -16,27 +16,41 @@ class EvaluationController extends Controller
      * @return \Illuminate\View\View
      */
 
-    public function index()
+    public function advising()
     {
-        // Fetch students with related models (program, address, user, checklist with course and instructor)
-        $students = Student::with("program", "address", "user", "checklist.course", "checklist.instructor")->get();
+        // Fetch students who have an enrollment with 'under evaluation' status and related submitted data
+        $students = Student::with([
+            'program',
+            'address',
+            'user',
+            'checklist.course',  // Fetch associated courses
+            'checklist.instructor',  // Fetch associated instructors
+            'enrollment'  // Fetch enrollment details
+        ])
+            ->whereHas('enrollment', function ($query) {
+                $query->where('status', 'under evaluation');
+            })
+            ->get();
 
-        // Get all the checklists for the students
-        $checklist = $students->map(function ($student) {
-            return $student->checklist;
-        })->flatten(); // Flatten to a single level
+        // Get all checklists for the filtered students
+        $checklist = $students->flatMap->checklist; // Flatten to a single collection
 
-        // Get the list of instructors
+        // Filter the checklist to include only submitted courses (those with grades and instructors)
+        $submittedChecklist = $checklist->filter(function ($item) {
+            return !is_null($item->grade) && !is_null($item->instructor);
+        });
+        
+
+        // Get the list of instructors (you can filter if needed)
         $instructors = Instructor::all();
 
-        // Get course codes from the checklist
-        $courseCodes = $checklist->pluck('course_code')->toArray();
+        // Get course codes from the submitted checklist
+        $courseCodes = $submittedChecklist->pluck('course_code')->toArray();
 
-        // Fetch all courses without any filtering
-        $courses = Course::all();
-
+        // Fetch courses based on the submitted course codes
+        $courses = Course::whereIn('course_code', $courseCodes)->get();
 
         // Return the view with the necessary data
-        return view('department.student-Evaluation', compact('students', 'checklist', 'instructors', 'courses'));
+        return view('department.advising', compact('students', 'submittedChecklist', 'instructors', 'courses'));
     }
 }

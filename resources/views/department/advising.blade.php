@@ -68,7 +68,7 @@
                             <th class="py-3 px-4 text-left font-medium">Student Number</th>
                             <th class="py-3 px-4 text-left font-medium">Student Name</th>
                             <th class="py-3 px-4 text-left font-medium">Program</th>
-                            <th class="py-3 px-4 text-left font-medium">Year</th>
+                            <th class="py-3 px-4 text-left font-medium">Year Level</th>
                             <th class="py-3 px-4 text-left font-medium">Classification</th>
                             <th class="py-3 px-4 text-left font-medium">Enrollment Status</th>
                             <th class="py-3 px-4 text-left font-medium">Action</th>
@@ -82,12 +82,34 @@
                                     {{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}
                                 </td>
                                 <td class="py-3 px-4 text-sm border-b">{{ $student->program->title }}</td>
-                                <td class="py-3 px-4 text-sm border-b">{yearlevel}</td>
+                                <td class="py-3 px-4 text-sm border-b">
+                                    {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}
+                                </td>
                                 <td class="py-3 px-4 text-sm border-b">{{ $student->classification }}</td>
-                                <td class="py-3 px-4 text-sm border-b">{Under Review}</td>
+                                <td class="py-3 px-4 text-sm border-b">
+                                    <span class="capitalize font-semibold"
+                                        style="color: {{ $student->enrollment()->latest()->first()
+                                            ? ($student->enrollment()->latest()->first()->status == 'enrolled'
+                                                ? 'blue'
+                                                : ($student->enrollment()->latest()->first()->status == 'under evaluation'
+                                                    ? 'green'
+                                                    : ($student->enrollment()->latest()->first()->status == 'evaluated'
+                                                        ? 'blue'
+                                                        : ($student->enrollment()->latest()->first()->status == 'pending'
+                                                            ? 'red'
+                                                            : ($student->enrollment()->latest()->first()->status == 'N/A'
+                                                                ? 'gray'
+                                                                : ($student->enrollment()->latest()->first()->status == 'completed'
+                                                                    ? 'purple'
+                                                                    : 'red'))))))
+                                            : 'gray' }};">
+                                        {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->status : 'No Enrollment' }}
+                                    </span>
+                                </td>
 
                                 <td class="py-3 px-4 text-sm flex space-x-2 border-b">
-                                    <button onclick="openEvaluationModal({{$student}})" class="bg-blue-500 text-white px-2 p-2 rounded-lg">Evaluate Student</button>
+                                    <button onclick="openEvaluationModal({{ $student }})"
+                                        class="bg-blue-500 text-white px-2 p-2 rounded-lg">Evaluate Student</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -102,8 +124,6 @@
 
 
     <script>
-
-        
         // Debounce function to limit the rate of AJAX calls
         function debounce(func, delay) {
             let timeout;
@@ -261,8 +281,5 @@
                 }
             });
         }
-        
-
-        
     </script>
 </x-app-layout>

@@ -18,20 +18,15 @@ class RegistrarController extends Controller
 
     public function enrollmentLists()
     {
-        $students = Student::with("program", "address", "user", "checklist.course", "checklist.instructor")->get();
-
-        $checklist = $students->map(function ($student) {
-            return $student->checklist;
-        })->flatten();
-
+        $students = Student::with("program", "address", "user", "checklist.course", "checklist.instructor", "enrollment")->get();
+        
+        // You don't need to flatten the checklist, just pass the students
         $instructors = Instructor::all();
-
-        $courseCodes = $checklist->pluck('course_code')->toArray();
-
         $courses = Course::all();
-
-        return view("registrar.enrollment-lists", compact('students'));;
+    
+        return view("registrar.enrollment-lists", compact('students', 'instructors', 'courses'));
     }
+    
 
 
     public function cor()
@@ -90,4 +85,74 @@ class RegistrarController extends Controller
         return redirect()->route('registrar.checklist', ['student_number' => $student_number])
             ->with('success', 'Checklist updated successfully!');
     }
+
+    public function showCOR()
+    {
+        // Get student with related data
+        $student = Student::where('student_number', Auth::user()->id)
+            ->first();
+
+        if (!$student) {
+            abort(404, 'Student not found.');
+        }
+
+        // Mappings
+        $yearMapping = [
+            'First Year' => 1,
+            'Second Year' => 2,
+            'Third Year' => 3,
+            'Fourth Year' => 4,
+        ];
+
+        $semesterMapping = [
+            'First Semester' => 1,
+            'Second Semester' => 2,
+            'Midyear' => 3,
+        ];
+
+        // Filter checklist with grades and instructor
+        $checklistWithGrades = $student->checklist->filter(function ($item) {
+            return $item->grade && $item->instructor;
+        });
+
+        if ($checklistWithGrades->isEmpty()) {
+            $nextYearLevelString = "First Year";
+            $nextSemesterString = "First Semester";
+        } else {
+            // Get highest year and semester
+            $highestYear = $checklistWithGrades->max('year');
+            $highestSemester = $checklistWithGrades->where('year', $highestYear)->max('semester');
+
+            $nextYearLevel = ($highestSemester < 2) ? $yearMapping[$highestYear] : $yearMapping[$highestYear] + 1;
+            $nextSemester = ($highestSemester < 2) ? $highestSemester + 1 : 1;
+
+            $nextYearLevelString = array_search($nextYearLevel, $yearMapping) ?: "First Year";
+            $nextSemesterString = array_search($nextSemester, $semesterMapping) ?: "First Semester";
+        }
+
+        // Get next courses
+        $nextCourses = $student->checklist->filter(function ($item) use ($nextYearLevelString, $nextSemesterString) {
+            return $item->year == $nextYearLevelString && $item->semester == $nextSemesterString && $item->course;
+        });
+
+
+        $student->enrollment()->latest()->first()->update([
+            'status' => 'enrolled',
+        ]);
+
+        // Calculate total units
+        $totalUnits = $nextCourses->sum(function ($course) {
+            return ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0);
+        });
+
+        // Calculate total hours
+        $totalHours = $nextCourses->sum(function ($course) {
+            return ($course->course->contact_hours_lecture ?? 0) + ($course->course->contact_hours_laboratory ?? 0);
+        });
+
+        $latestEnrollment = $student->enrollment()->latest()->first();
+
+        return view('student.enrollment-eval.cor', compact('student', 'nextCourses', 'nextYearLevelString', 'nextSemesterString', 'latestEnrollment', 'totalUnits', 'totalHours'));
+    }
+    
 }

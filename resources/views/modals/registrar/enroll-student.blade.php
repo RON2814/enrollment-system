@@ -5,7 +5,7 @@
         class="modal-container bg-white w-full sm:w-[80%] md:w-[80%] lg:w-[80%] max-w-full h-[92vh] max-h-[92vh] rounded-lg shadow-2xl p-12 py-8 relative overflow-y-auto">
 
         <!-- Close Button -->
-        <button onclick=closeEnrollModal() class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+        <button onclick=c() class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -110,24 +110,6 @@
                     <x-input-error :messages="$errors->get('contact_number')" class="mt-1 text-xs" id="error-contact_number" />
                 </div>
 
-                {{-- Year Level --}}
-                {{-- <div>
-            <label for="year_level" class="text-xs font-medium text-gray-700">Year Level <span
-                class="text-red-400">*</span></label></label>
-            <input type="text" id="year_level" name="year_level" value="{{ old('year_level') }}"
-              class="mt-1 px-3 py-2 border bg-gray-100 @error('year_level') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('year_level')" class="mt-1 text-xs" id="error-year_level" />
-          </div> --}}
-
-                {{-- Semester --}}
-                {{-- <div>
-            <label for="semester" class="text-xs font-medium text-gray-700">Semester <span
-                class="text-red-400">*</span></label></label>
-            <input type="text" id="semester" name="semester" value="{{ old('semester') }}"
-              class="mt-1 px-3 py-2 border bg-gray-100 @error('semester') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-            <x-input-error :messages="$errors->get('semester')" class="mt-1 text-xs" id="error-semester" />
-          </div> --}}
-
                 @if (auth()->user()->role_id === 3)
                     {{-- Address --}}
                     <div class="col-start-1">
@@ -202,7 +184,7 @@
             <!-- Buttons on the right -->
             <div class="flex space-x-4">
                 <!-- Cancel Button -->
-                <button type="button" onclick="closeEnrollModal()"
+                <button type="button" onclick="c()"
                     class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none transition duration-200 ease-in-out">
                     Cancel
                 </button>
@@ -388,7 +370,7 @@
     }
 
     // Close modal
-    function closeEnrollModal() {
+    function c() {
         document.getElementById('enrollModal').classList.add('hidden');
     }
 

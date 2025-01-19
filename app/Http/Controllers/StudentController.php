@@ -82,7 +82,7 @@ class StudentController extends Controller
     public function studentInformation()
     {
         $student = Student::where('student_number', Auth::user()->id)
-        ->first();
+            ->first();
 
         if (!$student) {
             abort(404, 'Student information not found.');
@@ -160,67 +160,71 @@ class StudentController extends Controller
     /**
      * Show the enrollment module
      */
-   /**
- * Show the enrollment module
- */
-public function enrollmentModule(Request $request)
-{
-    // Fetch the current student
-    $student = Student::where('student_number', Auth::user()->id)->first();
-
-    if (!$student) {
-        abort(404, 'Student information not found.');
+    /**
+     * Show the enrollment module
+     */
+    public function enrollmentModule(Request $request)
+    {
+        // Fetch the current student
+        $student = Student::where('student_number', Auth::user()->id)->first();
+    
+        if (!$student) {
+            abort(404, 'Student information not found.');
+        }
+    
+        // Filter checklist for items that have grades and an instructor
+        $checklistWithGrades = $student->checklist->filter(function ($checklist) {
+            return !is_null($checklist->grade) && !is_null($checklist->instructor);
+        });
+    
+        // Get the highest year level and semester
+        $highestYearLevel = $checklistWithGrades->max('year');
+        $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
+    
+        // Filter the checklist to only include courses for the highest year level and semester
+        $filteredChecklist = $checklistWithGrades->filter(function ($checklist) use ($highestYearLevel, $highestSemester) {
+            return $checklist->year == $highestYearLevel && $checklist->semester == $highestSemester;
+        });
+    
+        // Check for grade discrepancies
+        $hasDiscrepancy = $filteredChecklist->contains(function ($checklist) {
+            return in_array($checklist->grade, ['4.00', '5.00', 'INC', 'DROPPED']);
+        });
+    
+        // Determine the evaluation status
+        $evaluationStatus = 'UNDER REVIEW';
+        if (!$hasDiscrepancy && strtoupper($student->classification) === 'REGULAR') {
+            $evaluationStatus = 'PROCEED';
+        }
+    
+        // Check if the student has an existing enrollment
+        $latestEnrollment = $student->enrollment()->latest()->first();
+    
+        if (!$latestEnrollment) {
+            // If no enrollment exists, create a new one and show the enrollment page first
+            $student->enrollment()->create([
+                'year_level' => $highestYearLevel,
+                'semester' => $highestSemester,
+                'school_year_start' => date('Y'),
+                'school_year_end' => date('Y') + 1,
+                'status' => 'pending',
+            ]);
+    
+            return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
+        }
+    
+        // If an enrollment exists and is still in 'pending' or 'enrolled' state, show the enrollment page first
+        if ($latestEnrollment->status === 'pending' || $latestEnrollment->status === 'enrolled') {
+            // Update the status to 'under evaluation'
+            $latestEnrollment->update(['status' => 'under evaluation']);
+            return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
+        }
+    
+        // If enrollment has been evaluated, redirect to evaluated courses
+        return redirect()->route('student.enrollment-eval.evaluated-courses');
     }
-
-    // Filter checklist for items that have grades and an instructor
-    $checklistWithGrades = $student->checklist->filter(function ($checklist) {
-        return !is_null($checklist->grade) && !is_null($checklist->instructor);
-    });
-
-    // Get the highest year level and semester
-    $highestYearLevel = $checklistWithGrades->max('year');
-    $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
-
-    // Filter the checklist to only include courses for the highest year level and semester
-    $filteredChecklist = $checklistWithGrades->filter(function ($checklist) use ($highestYearLevel, $highestSemester) {
-        return $checklist->year == $highestYearLevel && $checklist->semester == $highestSemester;
-    });
-
-    // Check for grade discrepancies
-    $hasDiscrepancy = $filteredChecklist->contains(function ($checklist) {
-        return in_array($checklist->grade, ['4.00', '5.00', 'INC', 'DROPPED']);
-    });
-
-    // Determine the evaluation status
-    $evaluationStatus = 'UNDER REVIEW';
-    if (!$hasDiscrepancy && strtoupper($student->classification) === 'REGULAR') {
-        $evaluationStatus = 'PROCEED';
-    }
-
-    // Check if the student has an existing enrollment
-    $latestEnrollment = $student->enrollment()->latest()->first();
-
-    if (!$latestEnrollment) {
-        // If no enrollment exists, create a new one and show the enrollment page first
-        $student->enrollment()->create([
-            'year_level' => $highestYearLevel,
-            'semester' => $highestSemester,
-            'school_year_start' => date('Y'),
-            'school_year_end' => date('Y') + 1,
-            'status' => 'pending',
-        ]);
-
-        return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
-    }
-
-    // If an enrollment exists but is still in 'pending' or 'enrolled' state, show the enrollment page first
-    if ($latestEnrollment->status === 'pending' || $latestEnrollment->status === 'enrolled') {
-        return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
-    }
-
-    // If enrollment has been evaluated, redirect to evaluated courses
-    return redirect()->route('student.enrollment-eval.evaluated-courses');
-}
+    
+    
 
     public function evaluatedCourses(Request $request)
     {

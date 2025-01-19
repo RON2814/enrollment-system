@@ -118,10 +118,10 @@
                         <select required id="program" name="program_id"
                             class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('program_id') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="" disabled selected>Select Program</option>
-                            <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BS Computer Science
+                            <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BS - Computer
+                                Science
                             </option>
-                            <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS Information
-                                Technology
+                            <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS - Information Technology
                             </option>
                         </select>
                         <x-input-error :messages="$errors->get('program_id')" class="mt-2" id="error-program_id" />
@@ -269,19 +269,22 @@
                     </div>
                     {{-- @endif --}}
                 </div>
+            </div>
+
+            {{-- Billing Information  --}}
+            <div id="billing-fields" class="hidden p-4 border border-gray-200 mt-4 shadow rounded">
+                @include('modals.registrar.partials.billing', ['student' => $student])
 
             </div>
 
-
-            <!-- Modal Actions -->
-
-
             <div class="flex justify-end">
-                <button type="submit"
+                <button id="enrollSaveButton" type="submit"
                     class="mt-8 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <!-- Default text, can be overwritten by JavaScript -->
                     Save Student
                 </button>
             </div>
+
         </form>
     </div>
 </div>
@@ -292,13 +295,13 @@
         document.getElementById("addStudentModal").classList.remove("hidden");
     }
 
-    // Close modal
+    // Close Add Student Modal and clear input fields
     function closeAddStudentModal() {
         document.getElementById('addStudentModal').classList.add('hidden');
         clearInputFields();
     }
-    
 
+    // Reset input fields and remove error indicators
     function clearInputFields() {
         const form = document.getElementById('addStudentForm');
         form.reset();
@@ -312,6 +315,21 @@
         });
     }
 
+    // Update button text based on classification
+    function updateButtonText() {
+        const classification = document.getElementById("classification").value;
+        const enrollSaveButton = document.getElementById("enrollSaveButton");
+        enrollSaveButton.textContent = classification === "freshmen" ? "Enroll Student" : "Save Student";
+    }
+
+    // Handle classification change and update button text
+    document.addEventListener("DOMContentLoaded", function() {
+        const classificationSelect = document.getElementById("classification");
+        updateButtonText(); // Set button text initially
+        classificationSelect.addEventListener("change", updateButtonText);
+    });
+
+    // Generate a random password and toggle the password icon visibility
     function generatePassword() {
         const length = 8;
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -323,14 +341,11 @@
         toggleIcon();
     }
 
+    // Toggle visibility of the password generation icon
     function toggleIcon() {
         const passwordInput = document.getElementById("password");
         const generateIcon = document.getElementById("generatePass");
-        if (passwordInput.value) {
-            generateIcon.style.display = "none";
-        } else {
-            generateIcon.style.display = "block";
-        }
+        generateIcon.style.display = passwordInput.value ? "none" : "block";
     }
 
     // Initialize icon visibility on page load
@@ -342,7 +357,7 @@
         openAddStudentModal();
     @endif
 
-    // Remove error class on input change
+    // Remove error class and error messages on input change
     document.querySelectorAll('input, select').forEach(element => {
         element.addEventListener('input', function() {
             this.classList.remove('border-red-500');
@@ -353,15 +368,37 @@
         });
     });
 
-
+    // Toggle visibility of freshmen-related fields based on classification selection
     document.getElementById('classification').addEventListener('change', function() {
-        var freshmenFields = document.getElementById('freshmen-fields');
-        var classification = this.value;
-
-        if (classification === 'freshmen') {
-            freshmenFields.classList.remove('hidden');
-        } else {
-            freshmenFields.classList.add('hidden');
-        }
+        const freshmenFields = document.getElementById('freshmen-fields');
+        const classification = this.value;
+        freshmenFields.classList.toggle('hidden', classification !== 'freshmen');
     });
+
+    // Toggle billing information visibility based on classification and checkbox state
+    const classificationSelect = document.getElementById('classification');
+    const billingFields = document.getElementById('billing-fields');
+    const applyFreeTuitionCheckbox = document.getElementById('applyFreeTuition');
+
+    function toggleBillingFields() {
+        const isFreshmen = classificationSelect.value === 'freshmen';
+        billingFields.classList.toggle('hidden', !isFreshmen);
+        applyFreeTuitionCheckbox.checked = isFreshmen;
+        togglePaymentFields();
+    }
+
+    // Add event listener for changes in the classification select field
+    classificationSelect.addEventListener('change', toggleBillingFields);
+
+    // Initialize the state based on the current selected value
+    toggleBillingFields();
+
+    // Toggle visibility of payment-related fields based on the free tuition checkbox
+    function togglePaymentFields() {
+        const receivedMoneyDiv = document.getElementById('receivedMoneyDiv');
+        const changeDiv = document.getElementById('changeDiv');
+        const isFreeTuition = applyFreeTuitionCheckbox.checked;
+        receivedMoneyDiv.style.display = isFreeTuition ? 'none' : 'flex';
+        changeDiv.style.display = isFreeTuition ? 'none' : 'flex';
+    }
 </script>
