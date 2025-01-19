@@ -1,4 +1,4 @@
-<h3 class="text-base font-semibold mt-12 mb-4 border-b border-gray-300">Billing Information:</h3>
+<h3 class="text-base font-semibold mt-2 mb-4 border-b border-gray-300">Billing Information:</h3>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <!-- Left Column -->
     <div>

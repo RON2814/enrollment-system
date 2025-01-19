@@ -16,9 +16,8 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
     // Dashboard
     Route::get('/dashboard', [DepartmentController::class, 'dashboard'])->name('dashboard');
 
-
-    // Student Checklist
-    Route::get('/student-Evaluation/student/', [EvaluationController::class, 'index'])->name('student-Evaluation');
+    //Advising
+    Route::get('advising', [EvaluationController::class, 'advising'])->name('advising');
 
 
     // Courses (Controller Method)

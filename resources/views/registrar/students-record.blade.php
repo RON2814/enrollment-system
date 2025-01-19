@@ -58,10 +58,10 @@
                             placeholder="Search student number / name" />
                     </div>
 
-                    <button onclick=""
+                    {{-- <button onclick=""
                         class="px-4 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
                         Export as Excel
-                    </button>
+                    </button> --}}
 
                 </div>
             </div>
@@ -73,7 +73,7 @@
                             <th class="py-3 px-4 text-left font-medium">Student #</th>
                             <th class="py-3 px-4 text-left font-medium">Student Name</th>
                             <th class="py-3 px-4 text-left font-medium">Program</th>
-                            <th class="py-3 px-4 text-left font-medium">Year</th>
+                            <th class="py-3 px-4 text-left font-medium">Year Level</th>
                             <th class="py-3 px-4 text-left font-medium">Semester</th>
                             <th class="py-3 px-4 text-left font-medium">Section</th>
                             <th class="py-3 px-4 text-left font-medium">Classification</th>
@@ -89,15 +89,15 @@
                                     {{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}
                                 </td>
                                 <td class="py-3 px-4 text-sm border-b">{{ $student->program->title }}</td>
-                                <td class="py-3 px-4 text-sm border-b">{yearlevel}</td>
-                                <td class="py-3 px-4 text-sm border-b">{semester}</td>
+                                <td class="py-3 px-4 text-sm border-b">  {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}</td>
+                                <td class="py-3 px-4 text-sm border-b"> {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->semester : 'No Enrollment' }}</td>
                                 <td class="py-3 px-4 text-sm border-b">{section}</td>
                                 <td class="py-3 px-4 text-sm border-b">{{ $student->classification }}</td>
 
                                 <td class="py-3 px-4 text-sm flex space-x-2 border-b">
                                     <a href="{{ route('registrar.checklist', ['student_number' => $student->student_number]) }}"
-                                        class="bg-blue-500 text-white px-2 py-2 rounded-lg text-center">
-                                        View Record
+                                        class="bg-green-500 text-white px-2 py-2 rounded-lg text-center">
+                                        View Checklist Record
                                     </a>
                                 </td>
                             </tr>

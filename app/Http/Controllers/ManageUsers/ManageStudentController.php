@@ -199,15 +199,18 @@ class ManageStudentController extends Controller
       "sex" => $request->sex,
     ]);
 
-    if ($request->classification === 'freshmen') {
-      $enrolled = $student->enrollment()->create([
-        'year_level' => 'First Year',
-        'semester' => 'First Semester',
-        'school_year_start' => date('Y'),
-        'school_year_end' => date('Y') + 1,
-        'status' => 'Enrolled',
-      ]);
-    }
+    // Set enrollment status to 'Pending' for all classifications except 'freshmen'
+    $status = $request->classification === 'freshmen' ? 'Enrolled' : 'Pending';
+
+    $enrolled = $student->enrollment()->create([
+      'year_level' => 'First Year',
+      'semester' => 'First Semester',
+      'school_year_start' => date('Y'),
+      'school_year_end' => date('Y') + 1,
+      'status' => $status, // Set status to 'Pending' or 'Enrolled' based on classification
+    ]);
+
+    
 
     // Create checklist for the new student
     $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [
@@ -362,6 +365,4 @@ class ManageStudentController extends Controller
 
     return redirect()->route('admin.manageUsers.student')->with('success', 'Student added successfully.');
   }
-
-
 }

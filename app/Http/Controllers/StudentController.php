@@ -81,8 +81,7 @@ class StudentController extends Controller
      */
     public function studentInformation()
     {
-        $student = Student::with(['address', 'program', 'checklist'])
-            ->where('student_number', Auth::user()->id)
+        $student = Student::where('student_number', Auth::user()->id)
             ->first();
 
         if (!$student) {
@@ -161,11 +160,13 @@ class StudentController extends Controller
     /**
      * Show the enrollment module
      */
+    /**
+     * Show the enrollment module
+     */
     public function enrollmentModule(Request $request)
     {
         // Fetch the current student
-        $student = Student::where('student_number', Auth::user()->id)
-            ->first();
+        $student = Student::where('student_number', Auth::user()->id)->first();
 
         if (!$student) {
             abort(404, 'Student information not found.');
@@ -178,9 +179,7 @@ class StudentController extends Controller
 
         // Get the highest year level and semester
         $highestYearLevel = $checklistWithGrades->max('year');
-        $highestSemester = $checklistWithGrades
-            ->where('year', $highestYearLevel)
-            ->max('semester');
+        $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
 
         // Filter the checklist to only include courses for the highest year level and semester
         $filteredChecklist = $checklistWithGrades->filter(function ($checklist) use ($highestYearLevel, $highestSemester) {
@@ -193,25 +192,39 @@ class StudentController extends Controller
         });
 
         // Determine the evaluation status
-        $evaluationStatus = 'UNDER REVIEW'; // Default status
+        $evaluationStatus = 'UNDER REVIEW';
         if (!$hasDiscrepancy && strtoupper($student->classification) === 'REGULAR') {
             $evaluationStatus = 'PROCEED';
         }
 
-        // if student is already submit a evaluation return evaluated courses
+        // Check if the student has an existing enrollment
         $latestEnrollment = $student->enrollment()->latest()->first();
 
-        if ($latestEnrollment && $latestEnrollment->status === 'pending' || $latestEnrollment->status === 'enrolled') {
-            return redirect()->route('student.enrollment-eval.evaluated-courses');
+        if (!$latestEnrollment) {
+            // If no enrollment exists, create a new one and show the enrollment page first
+            $student->enrollment()->create([
+                'year_level' => $highestYearLevel,
+                'semester' => $highestSemester,
+                'school_year_start' => date('Y'),
+                'school_year_end' => date('Y') + 1,
+                'status' => 'pending',
+            ]);
+
+            return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
         }
 
-        if ($checklistWithGrades->isEmpty()) {
-            return view('student.enrollment', ['student' => $student, 'checklistWithGrades' => $checklistWithGrades, 'filteredChecklist' => $filteredChecklist, 'evaluationStatus' => $evaluationStatus]);
+        // If an enrollment exists and is still in 'pending' or 'enrolled' state, show the enrollment page first
+        if ($latestEnrollment->status === 'pending' || $latestEnrollment->status === 'enrolled') {
+            // Update the status to 'under evaluation'
+            $latestEnrollment->update(['status' => 'under evaluation']);
+            return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
         }
 
-        // Pass the evaluation status to the view
-        return view('student.enrollment', compact('student', 'filteredChecklist', 'highestYearLevel', 'highestSemester', 'evaluationStatus'));
+        // If enrollment has been evaluated, redirect to evaluated courses
+        return redirect()->route('student.enrollment-eval.evaluated-courses');
     }
+
+
 
     public function evaluatedCourses(Request $request)
     {

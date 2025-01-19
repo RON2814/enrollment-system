@@ -20,16 +20,18 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">School Year</label>
-                    <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        2023-2024
+                    <label class="block text-sm font-medium text-gray-600 mb-1"
+                        for="classification">Classification</label>
+                    <div id="classification"
+                        class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm font-semibold">
+                        {{ strtoupper($student->classification ?? 'N/A') }}
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Section</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{-- {{ $student->semester }}-{{ $student->year }} --}} 3-2
+                       {3-2} 
                     </div>
                 </div>
 
@@ -50,13 +52,13 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Year Level</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-
+                        {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Semester</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-
+                        {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->semester : 'No Enrollment' }}
                     </div>
                 </div>
 
