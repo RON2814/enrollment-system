@@ -12,5 +12,18 @@ export default defineConfig({
     build: {
         outDir: "public/build",
         emptyOutDir: true,
+        rollupOptions: {
+            input: [
+                "resources/assets/back-arrow.svg",
+                "resources/assets/cvsulogo.png",
+                "resources/assets/cvsu-bg.jpg",
+                "resources/assets/stingrays.png",
+                "resources/assets/under_review.png",
+                "resources/css/app.css",
+                "resources/js/app.js",
+                "resources/js/bootstrap.js",
+                "resources/js/modal.js",
+            ],
+        },
     },
 });
