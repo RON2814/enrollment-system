@@ -32,6 +32,15 @@
                     <option value="1">Computer Science</option>
                     <option value="2">Information Technology</option>
                 </select>
+
+                <select id="enrollmentStatusFilter"
+                    class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
+                    <option value="all" class="text-gray-600">Enrollment Status</option>
+                    <option value="all">All</option>
+                    <option value="enrolled">Enrolled</option>
+                    <option value="pending">Pending</option>
+                    <option value="under evaluation">Under Evaluation</option>
+                </select>
             </div>
         </div>
 
@@ -45,8 +54,10 @@
                     <!-- Search Bar -->
                     <div class="relative mt-1">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
                         <input type="text" id="searchBar"
@@ -56,7 +67,7 @@
 
                     <button onclick="openAddStudentModal()"
                         class="px-4 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
-                        + Add New Student
+                        + Enroll New Student
                     </button>
 
                     <!-- Section Capacity Button -->
@@ -72,48 +83,90 @@
                 <table class="min-w-full table-auto border-separate border-spacing-0">
                     <thead class="bg-[#0A6847] text-white text-sm">
                         <tr>
-                            <th class="py-3 px-4 text-left font-medium">Student #</th>
-                            <th class="py-3 px-4 text-left font-medium">Student Name</th>
-                            <th class="py-3 px-4 text-left font-medium">Program</th>
-                            <th class="py-3 px-4 text-left font-medium">Year Level</th>
-                            <th class="py-3 px-4 text-left font-medium">Contact</th>
-                            <th class="py-3 px-4 text-left font-medium">Classification</th>
-                            <th class="py-3 px-4 text-left font-medium">Status</th>
-                            <th class="py-3 px-4 text-left font-medium">Action</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 16.66%;">Student #</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 33.33%;">Student Name</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 16.66%;">Program</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 16.66%;">Year Level</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 16.66%;">Section</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 16.66%;">Classification</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 16.66%;">Status</th>
+                            <th class="py-3 px-4 text-left font-medium" style="width: 16.66%;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="studentTableBody" class="text-gray-700">
                         {{-- Student rows will be inserted here JS will do the job :) --}}
                         @foreach ($students as $student)
                             <tr>
-                                <td class="py-3 px-4 text-sm font-medium border-b ">{{ $student->student_number }}</td>
-                                <td class="py-3 px-4 text-sm border-b">
+                                <td class="py-3 px-4 font-medium border-b" style="white-space: nowrap;">
+                                    {{ $student->student_number }}</td>
+                                <td class="py-3 px-4 text-sm border-b"
+                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     {{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}
                                 </td>
-                                <td class="py-3 px-4 text-sm border-b">{{ $student->program->title }}</td>
-                                <td class="py-3 px-4 text-sm border-b">First Year</td>
-                                <td class="py-3 px-4 text-sm border-b">{{ $student->contact_number }}</td>
-                                <td class="py-3 px-4 text-sm border-b">{{ $student->classification }}</td>
-                                <td class="py-3 px-4 text-sm border-b">
-                                    <span class="text-red-700">Pending</span>
+                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
+                                    {{ $student->program->title }}</td>
+                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
+                                    {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}
                                 </td>
-                                <td class="py-3 px-4 text-sm border-b">
-                                    <button onclick='openEnrollStudentModal({{ $student }})'
-                                        class="bg-blue-500 text-white px-2 p-2 rounded-lg"> Enroll Student  
-                                    </button>
+                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">{Section}</td>
+                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
+                                    {{ $student->classification }}</td>
+                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
+                                    <span class="capitalize"
+                                        style="color: {{ $student->enrollment()->latest()->first()
+                                            ? ($student->enrollment()->latest()->first()->status == 'enrolled'
+                                                ? 'blue'
+                                                : ($student->enrollment()->latest()->first()->status == 'under evaluation'
+                                                    ? 'yellow'
+                                                    : ($student->enrollment()->latest()->first()->status == 'evaluated'
+                                                        ? 'blue'
+                                                        : ($student->enrollment()->latest()->first()->status == 'pending'
+                                                            ? 'orange'
+                                                            : ($student->enrollment()->latest()->first()->status == 'N/A'
+                                                                ? 'gray'
+                                                                : ($student->enrollment()->latest()->first()->status == 'completed'
+                                                                    ? 'purple'
+                                                                    : 'red'))))))
+                                            : 'gray' }};">
+                                        {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->status : 'No Enrollment' }}
+                                    </span>
                                 </td>
+
+                                <td class="py-3 px-4 text-center text-sm border-b" style="white-space: nowrap;">
+                                    @php
+                                        $latestEnrollment = $student->enrollment()->latest()->first();
+                                    @endphp
+                                
+                                    @if ($latestEnrollment && $latestEnrollment->status == 'enrolled')
+                                        <!-- Show 'COR' button for enrolled status -->
+                                        <button onclick='openCORMOdal({{ $student }})'
+                                            style="background-color: #34D399; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
+                                            COR
+                                        </button>
+                                    @else
+                                        <!-- Show 'Enroll' button if not enrolled -->
+                                        <button onclick='openEnrollStudentModal({{ $student }})'
+                                            style="background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
+                                            Enroll
+                                        </button>
+                                    @endif
+                                </td>
+                                
+                                
+                                
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
             </div>
+
         </div>
     </div>
     <!-- Include modals -->
     @include('modals.manage-users.add-student')
     @include('modals.registrar.sectioning')
     @include('modals.registrar.enroll-student')
+    @include('modals.registrar.cor')
 
 
     <script>

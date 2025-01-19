@@ -5,7 +5,7 @@
         class="modal-container bg-white w-full sm:w-[80%] md:w-[80%] lg:w-[80%] max-w-full h-[92vh] max-h-[92vh] rounded-lg shadow-2xl p-12 py-8 relative overflow-y-auto">
 
         <!-- Close Button -->
-        <button onclick=closeUpdateStudentModal() class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+        <button onclick=closeEnrollModal() class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -13,106 +13,105 @@
 
 
         {{-- Page 1  --}}
-        <div id="page1Content" class="page-content">
-            <h3 class="text-xl font-semibold mb-6 text-gray-800 border-b border-gray-300">STUDENT ENROLLMENT </h3>
+        <h3 class="text-xl font-semibold mb-6 text-gray-800 border-b border-gray-300">STUDENT ENROLLMENT </h3>
 
-            <h2
-                class="text-sm font-semibold text-black-600 mb-4 border-b border-gray-200 flex justify-between items-center">
-                <span>Student Personal Information:</span>
-                <span class="text-xs text-red-500">Update information if required</span>
-            </h2>
+        <h2
+            class="text-sm font-semibold text-black-600 mb-4 border-b border-gray-200 flex justify-between items-center">
+            <span>Student Personal Information:</span>
+            <span class="text-xs text-red-500">Update information if required</span>
+        </h2>
 
-            <form id="enrollmentForm" method="POST"
-                action="{{ route('registrar.enrollment-lists', ['student_number' => $student->student_number]) }}">
-                @csrf
-                @method('PATCH')
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-x-4 gap-y-2">
-
-
-                    {{-- Student Number --}}
-                    <div>
-                        <label for="updateStudentNumber" class="text-xs font-medium text-gray-700">Student Number <span
-                                class="text-red-400">*</span></label>
-                        <input required type="text" id="updateStudentNumber" name="student_number"
-                            value="{{ old('student_number') }}" disabled
-                            class="mt-1 px-3 py-2 border bg-gray-200 @error('student_number') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                        <x-input-error :messages="$errors->get('student_number')" class="mt-1 text-xs" id="error-student_number" />
-                    </div>
-                    {{-- Student Full Name  --}}
-                    <div class="col-span-2">
-                        <label for="updatefullName" class="text-xs font-medium text-gray-700">Student Name (LN, FN MN)
-                            <span class="text-red-400">*</span></label>
-                        <input required type="text" id="fullName" name="full_name"
-                            class="mt-1 px-3 py-2 border bg-gray-100 @error('full_name') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent uppercase">
-                        <x-input-error :messages="$errors->get('full_name')" class="mt-1 text-xs" id="error-full_name" />
-                    </div>
-
-                    {{-- Classification --}}
-                    <div>
-                        <label for="updateClassification" class="text-xs font-medium text-gray-700">Classification <span
-                                class="text-red-400">*</span></label>
-                        <select required id="updateClassification" name="classification"
-                            class="mt-1 px-3 py-2 border bg-gray-100 @error('classification') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <option value="" disabled selected>Select Classification</option>
-                            <option value="Regular" @if (old('classification', $student->classification) == 'Regular') selected @endif>Regular</option>
-                            <option value="Irregular" @if (old('classification', $student->classification) == 'Irregular') selected @endif>Irregular
-                            </option>
-                            <option value="Transferee" @if (old('classification', $student->classification) == 'Transferee') selected @endif>Transferee
-                            </option>
-                            <option value="Returnee" @if (old('classification', $student->classification) == 'Returnee') selected @endif>Returnee</option>
-                        </select>
-
-                        <x-input-error :messages="$errors->get('classification')" class="mt-1 text-xs" id="error-classification" />
-                    </div>
-
-                    {{-- Program --}}
-                    <div>
-                        <label for="updateProgram" class="text-xs font-medium text-gray-700">Program <span
-                                class="text-red-400">*</span></label>
-                        <select required id="updateProgram" name="program_id"
-                            class="mt-1 px-3 py-2 border bg-gray-100 @error('program_id') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <option value="" disabled selected>Select Program</option>
-                            <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BSCS</option>
-                            <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BSIT</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('program_id')" class="mt-1 text-xs" id="error-program_id" />
-                    </div>
-
-                    {{-- Section --}}
-                    <div>
-                        <label for="section" class="text-xs font-medium text-gray-700">Section <span
-                                class="text-red-400">*</span></label>
-
-                        <select id="section" name="section"
-                            class="mt-1 px-3 py-2 border bg-gray-100 @error('section') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <option value="" disabled selected>Section</option>
-
-                        </select>
-                        <x-input-error :messages="$errors->get('section')" class="mt-1 text-xs" id="error-section" />
-                    </div>
+        <form id="enrollmentForm" method="POST"
+            action="{{ route('registrar.enrollment-lists', ['student_number' => $student->student_number]) }}">
+            @csrf
+            @method('PATCH')
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-x-4 gap-y-2">
 
 
-                    {{-- Email --}}
-                    <div class="col-span-2">
-                        <label for="updateEmail" class="text-xs font-medium text-gray-700">Email <span
-                                class="text-red-400">*</span></label></label>
-                        <input type="text" id="updateEmail" name="email" value="{{ old('email') }}"
-                            class="mt-1 px-3 py-2 border bg-gray-100 @error('email') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                        <x-input-error :messages="$errors->get('email')" class="mt-1 text-xs" id="error-email" />
-                    </div>
+                {{-- Student Number --}}
+                <div>
+                    <label for="updateStudentNumber" class="text-xs font-medium text-gray-700">Student Number <span
+                            class="text-red-400">*</span></label>
+                    <input required type="text" id="updateStudentNumber" name="student_number"
+                        value="{{ old('student_number') }}" disabled
+                        class="mt-1 px-3 py-2 border bg-gray-200 @error('student_number') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                    <x-input-error :messages="$errors->get('student_number')" class="mt-1 text-xs" id="error-student_number" />
+                </div>
+                {{-- Student Full Name  --}}
+                <div class="col-span-2">
+                    <label for="updatefullName" class="text-xs font-medium text-gray-700">Student Name (LN, FN MN)
+                        <span class="text-red-400">*</span></label>
+                    <input required type="text" id="fullName" name="full_name"
+                        class="mt-1 px-3 py-2 border bg-gray-100 @error('full_name') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent uppercase">
+                    <x-input-error :messages="$errors->get('full_name')" class="mt-1 text-xs" id="error-full_name" />
+                </div>
 
-                    {{-- Contact Number --}}
-                    <div>
-                        <label for="updateContactNumber" class="text-xs font-medium text-gray-700">Contact
-                            Number</label>
-                        <input type="text" id="updateContactNumber" name="contact_number"
-                            value="{{ old('contact_number') }}"
-                            class="mt-1 px-3 py-2 border bg-gray-100 @error('contact_number') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                        <x-input-error :messages="$errors->get('contact_number')" class="mt-1 text-xs" id="error-contact_number" />
-                    </div>
+                {{-- Classification --}}
+                <div>
+                    <label for="updateClassification" class="text-xs font-medium text-gray-700">Classification <span
+                            class="text-red-400">*</span></label>
+                    <select required id="updateClassification" name="classification"
+                        class="mt-1 px-3 py-2 border bg-gray-100 @error('classification') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <option value="" disabled selected>Select Classification</option>
+                        <option value="Regular" @if (old('classification', $student->classification) == 'Regular') selected @endif>Regular</option>
+                        <option value="Irregular" @if (old('classification', $student->classification) == 'Irregular') selected @endif>Irregular
+                        </option>
+                        <option value="Transferee" @if (old('classification', $student->classification) == 'Transferee') selected @endif>Transferee
+                        </option>
+                        <option value="Returnee" @if (old('classification', $student->classification) == 'Returnee') selected @endif>Returnee</option>
+                    </select>
 
-                    {{-- Year Level --}}
-                    {{-- <div>
+                    <x-input-error :messages="$errors->get('classification')" class="mt-1 text-xs" id="error-classification" />
+                </div>
+
+                {{-- Program --}}
+                <div>
+                    <label for="updateProgram" class="text-xs font-medium text-gray-700">Program <span
+                            class="text-red-400">*</span></label>
+                    <select required id="updateProgram" name="program_id"
+                        class="mt-1 px-3 py-2 border bg-gray-100 @error('program_id') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <option value="" disabled selected>Select Program</option>
+                        <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BSCS</option>
+                        <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BSIT</option>
+                    </select>
+                    <x-input-error :messages="$errors->get('program_id')" class="mt-1 text-xs" id="error-program_id" />
+                </div>
+
+                {{-- Section --}}
+                <div>
+                    <label for="section" class="text-xs font-medium text-gray-700">Section <span
+                            class="text-red-400">*</span></label>
+
+                    <select id="section" name="section"
+                        class="mt-1 px-3 py-2 border bg-gray-100 @error('section') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <option value="" disabled selected>Section</option>
+
+                    </select>
+                    <x-input-error :messages="$errors->get('section')" class="mt-1 text-xs" id="error-section" />
+                </div>
+
+
+                {{-- Email --}}
+                <div class="col-span-2">
+                    <label for="updateEmail" class="text-xs font-medium text-gray-700">Email <span
+                            class="text-red-400">*</span></label></label>
+                    <input type="text" id="updateEmail" name="email" value="{{ old('email') }}"
+                        class="mt-1 px-3 py-2 border bg-gray-100 @error('email') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                    <x-input-error :messages="$errors->get('email')" class="mt-1 text-xs" id="error-email" />
+                </div>
+
+                {{-- Contact Number --}}
+                <div>
+                    <label for="updateContactNumber" class="text-xs font-medium text-gray-700">Contact
+                        Number</label>
+                    <input type="text" id="updateContactNumber" name="contact_number"
+                        value="{{ old('contact_number') }}"
+                        class="mt-1 px-3 py-2 border bg-gray-100 @error('contact_number') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                    <x-input-error :messages="$errors->get('contact_number')" class="mt-1 text-xs" id="error-contact_number" />
+                </div>
+
+                {{-- Year Level --}}
+                {{-- <div>
             <label for="year_level" class="text-xs font-medium text-gray-700">Year Level <span
                 class="text-red-400">*</span></label></label>
             <input type="text" id="year_level" name="year_level" value="{{ old('year_level') }}"
@@ -120,8 +119,8 @@
             <x-input-error :messages="$errors->get('year_level')" class="mt-1 text-xs" id="error-year_level" />
           </div> --}}
 
-                    {{-- Semester --}}
-                    {{-- <div>
+                {{-- Semester --}}
+                {{-- <div>
             <label for="semester" class="text-xs font-medium text-gray-700">Semester <span
                 class="text-red-400">*</span></label></label>
             <input type="text" id="semester" name="semester" value="{{ old('semester') }}"
@@ -129,175 +128,94 @@
             <x-input-error :messages="$errors->get('semester')" class="mt-1 text-xs" id="error-semester" />
           </div> --}}
 
-                    @if (auth()->user()->role_id === 3)
-                        {{-- Address --}}
-                        <div class="col-start-1">
-                            <label for="updateHouseNumber" class="text-xs font-medium text-gray-700">House
-                                Number</label>
-                            <input type="text" id="updateHouseNumber" name="house_number"
-                                value="{{ old('house_number') }}"
-                                class="mt-1 px-3 py-2 border bg-gray-100 @error('house_number') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <x-input-error :messages="$errors->get('house_number')" class="mt-1 text-xs" id="error-house_number" />
-                        </div>
-
-                        <div>
-                            <label for="updateStreet" class="text-xs font-medium text-gray-700">Street</label>
-                            <input type="text" id="updateStreet" name="street" value="{{ old('street') }}"
-                                class="mt-1 px-3 py-2 border bg-gray-100 @error('street') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <x-input-error :messages="$errors->get('street')" class="mt-1 text-xs" id="error-street" />
-                        </div>
-
-                        <div>
-                            <label for="updateBarangay" class="text-xs font-medium text-gray-700">Barangay</label>
-                            <input type="text" id="updateBarangay" name="barangay" value="{{ old('barangay') }}"
-                                class="mt-1 px-3 py-2 border bg-gray-100 @error('barangay') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <x-input-error :messages="$errors->get('barangay')" class="mt-1 text-xs" id="error-barangay" />
-                        </div>
-
-                        <div>
-                            <label for="updateCity" class="text-xs font-medium text-gray-700">City</label>
-                            <input type="text" id="updateCity" name="city" value="{{ old('city') }}"
-                                class="mt-1 px-3 py-2 border bg-gray-100 @error('city') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <x-input-error :messages="$errors->get('city')" class="mt-1 text-xs" id="error-city" />
-                        </div>
-
-                        <div>
-                            <label for="updateProvince" class="text-xs font-medium text-gray-700">Province</label>
-                            <input type="text" id="updateProvince" name="province" value="{{ old('province') }}"
-                                class="mt-1 px-3 py-2 border bg-gray-100 @error('province') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <x-input-error :messages="$errors->get('province')" class="mt-1 text-xs" id="error-province" />
-                        </div>
-
-                        <div>
-                            <label for="updateZipcode" class="text-xs font-medium text-gray-700">Zip code</label>
-                            <input type="text" id="updateZipcode" name="zip_code" value="{{ old('zip_code') }}"
-                                class="mt-1 px-3 py-2 border bg-gray-100 @error('zip_code') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
-                            <x-input-error :messages="$errors->get('zip_code')" class="mt-1 text-xs" id="error-zip_code" />
-                        </div>
-                    @endif
-                </div>
-
-                <div class="mt-8 flex space-x-6">
-
-                    <!-- Courses Section -->
-                    <div class="flex-1">
-                        <h3 class="text-base font-semibold mb-3 border-b border-gray-300">Checklist Courses:</h3>
-                        <!-- Courses Table -->
-                        <div id="courses-table" class="block">
-                            <table class="min-w-full table-auto text-xs rounded overflow-hidden">
-                                <thead class="bg-[#0A6847] text-white text-sm">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">
-                                            Course
-                                            Code</th>
-                                        <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">
-                                            Course
-                                            Title </th>
-                                        <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">Total
-                                            Credits</th>
-                                        <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">Total
-                                            Credits Hours</th>
-
-                                        <th class="px-4 py-2 text-left text-sm font-medium border-b align-middle">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="courses-tbody">
-                                    <td colspan="5">
-                                        <strong>{{ $student->student_number }} - {{ $student->user->name }}</strong>
-                                    </td>
-                                    @foreach ($students as $student)
-                                        @foreach ($student->checklist as $item)
-                                            <tr class="align-middle">
-                                                <td class="px-2 py-2 text-sm border-b">{{ $item->course_code }}</td>
-                                                <td class="px-2 py-2 text-sm border-b">
-                                                    {{ $item->course->course_title }}
-                                                </td>
-                                                <td class="px-2 py-2 text-sm border-b text-center">
-                                                    {{ $item->course->credit_unit_lecture + $item->course->credit_unit_laboratory }}
-                                                </td>
-                                                <td class="px-2 py-2 text-sm border-b text-center">
-                                                    {{ $item->course->contact_hours_lecture + $item->course->contact_hours_laboratory }}
-                                                </td>
-                                                <td class="px-2 py-2 text-sm border-b">
-                                                    <button onclick="addCourse(this)"
-                                                        class="p-2 bg-blue-500 hover:bg-blue-700">
-                                                        <i class="fas fa-plus text-white"></i>
-                                                    </button>
-                                                    <button onclick="deleteCourse(this)"
-                                                        class="p-2 bg-red-500 hover:bg-red-700">
-                                                        <i class="fas fa-minus text-white"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endforeach
-                                </tbody>
-
-
-                            </table>
-                        </div>
+                @if (auth()->user()->role_id === 3)
+                    {{-- Address --}}
+                    <div class="col-start-1">
+                        <label for="updateHouseNumber" class="text-xs font-medium text-gray-700">House
+                            Number</label>
+                        <input type="text" id="updateHouseNumber" name="house_number"
+                            value="{{ old('house_number') }}"
+                            class="mt-1 px-3 py-2 border bg-gray-100 @error('house_number') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <x-input-error :messages="$errors->get('house_number')" class="mt-1 text-xs" id="error-house_number" />
                     </div>
+
+                    <div>
+                        <label for="updateStreet" class="text-xs font-medium text-gray-700">Street</label>
+                        <input type="text" id="updateStreet" name="street" value="{{ old('street') }}"
+                            class="mt-1 px-3 py-2 border bg-gray-100 @error('street') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <x-input-error :messages="$errors->get('street')" class="mt-1 text-xs" id="error-street" />
+                    </div>
+
+                    <div>
+                        <label for="updateBarangay" class="text-xs font-medium text-gray-700">Barangay</label>
+                        <input type="text" id="updateBarangay" name="barangay" value="{{ old('barangay') }}"
+                            class="mt-1 px-3 py-2 border bg-gray-100 @error('barangay') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <x-input-error :messages="$errors->get('barangay')" class="mt-1 text-xs" id="error-barangay" />
+                    </div>
+
+                    <div>
+                        <label for="updateCity" class="text-xs font-medium text-gray-700">City</label>
+                        <input type="text" id="updateCity" name="city" value="{{ old('city') }}"
+                            class="mt-1 px-3 py-2 border bg-gray-100 @error('city') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <x-input-error :messages="$errors->get('city')" class="mt-1 text-xs" id="error-city" />
+                    </div>
+
+                    <div>
+                        <label for="updateProvince" class="text-xs font-medium text-gray-700">Province</label>
+                        <input type="text" id="updateProvince" name="province" value="{{ old('province') }}"
+                            class="mt-1 px-3 py-2 border bg-gray-100 @error('province') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <x-input-error :messages="$errors->get('province')" class="mt-1 text-xs" id="error-province" />
+                    </div>
+
+                    <div>
+                        <label for="updateZipcode" class="text-xs font-medium text-gray-700">Zip code</label>
+                        <input type="text" id="updateZipcode" name="zip_code" value="{{ old('zip_code') }}"
+                            class="mt-1 px-3 py-2 border bg-gray-100 @error('zip_code') border-red-500 @enderror border-gray-300 rounded-md w-full shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <x-input-error :messages="$errors->get('zip_code')" class="mt-1 text-xs" id="error-zip_code" />
+                    </div>
+                @endif
+            </div>
+
+            <div class="mt-8 flex space-x-6">
+
+                <!-- Courses Section -->
+                <div id="checklistTable">
+                    {{-- JS will do here  --}}
                 </div>
-            </form>
+            </div>
+        </form>
 
-            {{-- Billing Information  --}}
-            @include('modals.registrar.partials.billing', ['student' => $student])
+        {{-- Billing Information  --}}
+        @include('modals.registrar.partials.billing', ['student' => $student])
 
 
-            <!-- Action Buttons -->
-            <div class="flex justify-between items-center mt-12 border-t border-gray-300 pt-2">
-                <!-- Text on the left -->
-                <div class="flex items-center space-x-2">
-                    <input type="checkbox" id="verifyCheckbox" class="form-checkbox h-4 w-4 text-indigo-600">
-                    <label for="verifyCheckbox" class="text-gray-700">I confirm that the student's information is
-                        accurate
-                        and complete.</label>
-                </div>
+        <!-- Action Buttons -->
+        <div class="flex justify-between items-center mt-12 border-t border-gray-300 pt-2">
+            <!-- Text on the left -->
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="verifyCheckbox" class="form-checkbox h-4 w-4 text-indigo-600">
+                <label for="verifyCheckbox" class="text-gray-700">I confirm that the student's information is
+                    accurate
+                    and complete.</label>
+            </div>
 
-                <!-- Buttons on the right -->
-                <div class="flex space-x-4">
-                    <!-- Cancel Button -->
-                    <button type="button" onclick="closeUpdateStudentModal()"
-                        class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none transition duration-200 ease-in-out">
-                        Cancel
-                    </button>
-                    <!-- Update Button -->
-                    <button type="submit" onclick="showSuccessModal()"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none transition duration-200 ease-in-out">
-                        Submit
-                    </button>
-                </div>
+            <!-- Buttons on the right -->
+            <div class="flex space-x-4">
+                <!-- Cancel Button -->
+                <button type="button" onclick="closeEnrollModal()"
+                    class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none transition duration-200 ease-in-out">
+                    Cancel
+                </button>
+                <!-- Update Button -->
+                <button type="submit" onclick="showSuccessModal()"
+                    class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none transition duration-200 ease-in-out">
+                    Submit
+                </button>
             </div>
         </div>
 
         {{-- Success Modal --}}
         @include('modals.registrar.partials.success-notif')
-
-
-        {{-- Page 2 --}}
-        {{-- <div id="page2Content" class="page-content hidden">
-            <h3 class="text-xl font-semibold mb-6 text-gray-800 border-b border-gray-300">Certificate of Registration
-            </h3>
-            <div class="bg-white p-16 py-2 flex items-start">
-                @include('modals.registrar.partials.page2_COR', ['student' => $student])
-                
-
-                <!-- Download PDF Button -->
-                <div class="flex flex-col justify-between h-full gap-6">
-                    <button
-                        class="ml-6 mt-16 px-6 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        Download PDF
-                    </button>
-
-                    <button
-                        class="ml-6 mb-16 px-6 py-2 bg-gray-500 text-white font-medium rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                        Skip
-                    </button>
-                </div>
-            </div>
-        </div> --}}
 
         </form>
     </div>
@@ -306,6 +224,12 @@
 <script>
     // Open modal with student data
     function openEnrollStudentModal(student) {
+        console.log(student); // Check the student data
+
+        const checklistTable = document.getElementById('checklistTable');
+        checklistTable.innerHTML = '';
+
+
         if (typeof student === 'string') {
             student = JSON.parse(student);
         }
@@ -328,8 +252,6 @@
 
         // Set basic info
         setElementValue('updateStudentNumber', student.student_number);
-        // Concatenate the full name
-        // Set full name as Last Name, First Name Middle Name, Extension
         const fullName =
             `${student.last_name}, ${student.first_name} ${student.middle_name ? student.middle_name + ' ' : ''}${student.extension_name ? student.extension_name : ''}`;
         setElementValue('fullName', fullName);
@@ -348,58 +270,129 @@
         setElementValue('updateCity', student.address.city);
         setElementValue('updateProvince', student.address.province);
         setElementValue('updateZipcode', student.address.zip_code);
+
+        const checklist = student.checklist;
+
+        const yearLevels = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
+        const semesters = ['First Semester', 'Second Semester', 'Midyear'];
+
+        let totalCreditUnits = 0;
+
+        // Create the modal to show when the credit units exceed the limit
+        const creditLimitModal = document.createElement('div');
+        creditLimitModal.classList.add('modal', 'hidden');
+        creditLimitModal.innerHTML = `
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>The Courses Total Credit Units Exceeds the Limit</h2>
+        <p>You cannot select more than 23 credit units.</p>
+    </div>
+    `;
+        document.body.appendChild(creditLimitModal);
+
+        // Close the modal when the close button is clicked
+        const closeBtn = creditLimitModal.querySelector('.close-btn');
+        closeBtn.addEventListener('click', function() {
+            creditLimitModal.classList.add('hidden');
+        });
+
+        // Show the modal when the credit unit limit is exceeded
+        function showCreditLimitModal() {
+            console.log("Credit limit exceeded, showing modal.");
+            creditLimitModal.classList.remove('hidden');
+        }
+
+        function updateCheckboxes() {
+            const checkboxes = document.querySelectorAll('.course-checkbox');
+            checkboxes.forEach(checkbox => {
+                const creditUnits = parseFloat(checkbox.dataset.creditUnits) || 0;
+                const row = checkbox.closest('tr');
+                const grade = row.querySelector('td:nth-child(7)')?.textContent.trim();
+                const instructor = row.querySelector('td:nth-child(8)')?.textContent.trim();
+
+                if (grade !== '..' && instructor !== '..') {
+                    checkbox.disabled = true;
+                    return;
+                }
+
+                if (totalCreditUnits + creditUnits > 23 && !checkbox.checked) {
+                    checkbox.disabled = true;
+                } else {
+                    checkbox.disabled = false;
+                }
+            });
+        }
+
+        yearLevels.forEach(yearLevel => {
+            semesters.forEach(semester => {
+                const filteredItems = checklist.filter(item => item.year === yearLevel && item
+                    .semester === semester);
+
+                if (filteredItems.length > 0) {
+                    const table = document.createElement('table');
+                    table.classList.add('min-w-full', 'table-auto', 'border-collapse',
+                        'border-spacing-0', 'table-fixed');
+
+                    table.innerHTML = `
+                <thead class="bg-gray-200 text-xs">
+                    <tr class="text-left bg-white border-none">
+                        <th colspan="9" class="text-sm border-none font-medium border-b border-gray-300 py-2">
+                            ${yearLevel} - ${semester}
+                        </th>
+                    </tr>
+                    <tr class="border">
+                        <th class="py-3 px-4 text-left font-medium border" style="width: 10%;">COURSE CODE</th>
+                        <th class="py-3 px-4 text-left font-medium border" style="width: 18%;">COURSE TITLE</th>
+                        <th class="py-3 px-4 text-center font-medium border" style="width: 12%;">Credit Units</th>
+                        <th class="py-3 px-4 text-center font-medium border" style="width: 12%;">Contact Hours</th>
+                        <th class="py-3 px-4 text-left font-medium border" style="width: 12%;">Pre-requisites</th>
+                        <th class="py-3 px-4 text-left font-medium border" style="width: 10%;">Semester Taken</th>
+                        <th class="py-3 px-4 text-left font-medium border" style="width: 8%;">Final Grade</th>
+                        <th class="py-3 px-4 text-left font-medium border" style="width: 12%;">Instructor</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700"></tbody>
+                `;
+
+                    checklistTable.appendChild(table);
+
+                    const tbody = table.querySelector('tbody');
+                    filteredItems.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.classList.add('hover', 'rounded-lg', 'transition-colors',
+                            'duration-200');
+
+                        const course = item.course ?? {};
+                        const creditUnits = course.credit_unit_lecture ? Number(course
+                            .credit_unit_lecture) + Number(course.credit_unit_laboratory ||
+                            0) : 0;
+
+                        row.innerHTML = `
+                    <td class="py-4 px-4 text-sm truncate max-w-xs font-semibold border">${course.course_code ?? '..'}</td>
+                    <td class="py-4 px-4 text-sm truncate max-w-[200px] break-words border">${course.course_title ?? '..'}</td>
+                    <td class="text-center py-4 px-4 text-sm truncate max-w-xs border">${creditUnits}</td>
+                    <td class="text-center py-4 px-4 text-sm truncate max-w-xs border">${course.contact_hours_lecture ? Number(course.contact_hours_lecture) + Number(course.contact_hours_laboratory || 0) : '..'}</td>
+                    <td class="py-4 px-4 text-sm truncate border whitespace-normal max-w-[120px] break-words">${item.course?.pre_requisite ?? '..'}</td>
+                    <td class="py-4 px-4 text-sm truncate max-w-xs border">${item.semester ?? '..'}</td>
+                    <td class="py-4 px-4 text-sm font-semibold text-center max-w-xs border">${item.grade ?? '..'}</td>
+                    <td class="py-4 px-4 text-sm font-semibold max-w-xs border"> ${item.instructor?.last_name || item.instructor?.first_name ? `${item.instructor?.last_name ?? '..'}, ${item.instructor?.first_name ? item.instructor.first_name.charAt(0) + '.' : '..'}` : '..'}</td>
+                    `;
+
+                        tbody.appendChild(row);
+                    });
+                }
+            });
+        });
+
+        modal.classList.remove('hidden');
     }
 
     // Close modal
-    function closeUpdateStudentModal() {
+    function closeEnrollModal() {
         document.getElementById('enrollModal').classList.add('hidden');
     }
 
-    document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        this.submit();
-        closeUpdateStudentModal();
-    });
 
-    function generatePassword() {
-        const length = 8;
-        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        let password = "";
-        for (let i = 0, n = charset.length; i < length; ++i) {
-            password += charset.charAt(Math.floor(Math.random() * n));
-        }
-        document.getElementById("password").value = password;
-        toggleIcon();
-    };
-
-    document.querySelectorAll('#enrollmentForm input, #enrollmentForm select').forEach(element => {
-        element.addEventListener('input', function() {
-            this.classList.remove('border-red-500');
-            const errorElement = document.getElementById(`error-${this.name}`);
-            if (errorElement) {
-                errorElement.innerHTML = '';
-            }
-        });
-    });
-
-    function showPage(pageNumber) {
-        const page1Content = document.getElementById("page1Content");
-        const page2Content = document.getElementById("page2Content");
-        const page1Btn = document.getElementById("page1Btn");
-        const page2Btn = document.getElementById("page2Btn");
-
-        if (pageNumber === 1) {
-            page1Content.classList.remove("hidden");
-            page2Content.classList.add("hidden");
-            page1Btn.classList.add("bg-blue-500", "text-white");
-            page2Btn.classList.remove("bg-blue-500", "text-white");
-        } else {
-            page1Content.classList.add("hidden");
-            page2Content.classList.remove("hidden");
-            page2Btn.classList.add("bg-blue-500", "text-white");
-            page1Btn.classList.remove("bg-blue-500", "text-white");
-        }
-    }
 
     function togglePaymentFields() {
         var checkbox = document.getElementById('applyFreeTuition');
@@ -427,36 +420,4 @@
         document.getElementById('enrollModal').classList.add('hidden');
 
     }
-
-  // Add course to the selected list
-  function addCourse(button) {
-    const row = button.closest('tr');
-    const courseCode = row.querySelector('td:nth-child(1)').innerText;
-    const courseTitle = row.querySelector('td:nth-child(2)').innerText;
-
-    // Example: Add course to the list (could also be an array or a backend update)
-    alert('Course added: ' + courseCode + ' - ' + courseTitle);
-
-        // You can implement an actual logic to save this to an array, backend, or modify the DOM here.
-    }
-
-    // Delete course from the list
-    function deleteCourse(button) {
-        const row = button.closest('tr');
-        const courseCode = row.querySelector('td:nth-child(1)').innerText;
-        const courseTitle = row.querySelector('td:nth-child(2)').innerText;
-
-        // Example: Alert before deleting
-        const confirmDelete = confirm('Are you sure you want to delete the course: ' + courseCode + ' - ' +
-            courseTitle + '?');
-
-        if (confirmDelete) {
-            row.remove(); // Removes the row from the table
-            alert('Course deleted: ' + courseCode + ' - ' + courseTitle);
-
-            // You can implement actual deletion logic here to remove it from an array or database
-        }
-    }
-  }
 </script>
-```

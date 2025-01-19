@@ -120,7 +120,7 @@
               @empty
                 <tr>
                   <td colspan="6" class="py-4 px-4 text-center text-sm">No data available for the
-                    enrollment. Please coordinate with the Department.</td>
+                    enrollment. Please coordinate with the University.</td>
                 </tr>
               @endforelse
             </tbody>

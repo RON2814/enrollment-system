@@ -1,5 +1,5 @@
 <aside
-    class="sidebar fixed top-0 left-0 bottom-0 w-[15%] h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+    class="sidebar fixed top-0 left-0 bottom-0 w-[15%] h-full p-4 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo p-4 flex items-center gap-4">
@@ -38,17 +38,7 @@
         </li>
 
 
-        <!-- Enrolled Subjects -->
-        <li
-            class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out
-            @if (request()->routeIs('registrar.enrolled-students')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
-            <a href="{{ route('registrar.enrolled-students') }}"
-                class="text-white no-underline flex items-center gap-3">
-                <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Enrolled Students</span>
-            </a>
-        </li>
-
+        <!-- Student's Record -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out
             @if (request()->routeIs('registrar.students-record') || request()->routeIs('registrar.checklist')) bg-[#4F9A85] 

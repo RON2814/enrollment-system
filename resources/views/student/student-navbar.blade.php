@@ -12,7 +12,7 @@
                 {{-- <h2 class="text-sm font-medium opacity-80">Bacoor Campus</h2> --}}
             </div>
         </div>
-        
+
         <hr class="border-t-2 border-[#2c8c6d] mb-6">
     </div>
 
@@ -36,11 +36,11 @@
             <a href="{{ route('student.student-information') }}"
                 class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Student Information</span>
+                <span class="text-xs opacity-80">Information</span>
             </a>
         </li>
 
-        
+
 
         <!-- Class Schedule -->
         {{-- <li
@@ -65,10 +65,13 @@
         <!-- Enrollment Module -->
         <li
             class="menu-item p-4 my-2 rounded-xl transition-all duration-300 ease-in-out 
-      @if (request()->routeIs('student.enrollment')) bg-[#4F9A85] @else hover:bg-[#2c8c6d] @endif">
+            @if (request()->routeIs('student.enrollment') ||
+                    request()->routeIs('student.enrollment-eval.cor') ||
+                    request()->routeIs('student.enrollment-eval.evaluated-courses')) bg-[#4F9A85]             @else 
+                hover:bg-[#2c8c6d] @endif">
             <a href="{{ route('student.enrollment') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Enrollment Module</span>
+                <span class="text-xs opacity-80">Enrollment</span>
             </a>
         </li>
 

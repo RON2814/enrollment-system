@@ -17,6 +17,7 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <link rel="icon" type="image/png" href="{{ Vite::asset('resources/assets/cvsulogo.png') }}">
+    
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -38,7 +39,7 @@
         .sidebar {
             /* background: white; */
             border-right: 1px solid #e0e0e0;
-            width: 16%;
+            width: 15%;
             height: 100%;
             display: block;
         }

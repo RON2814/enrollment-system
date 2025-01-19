@@ -19,7 +19,7 @@
 </style>
 
 <aside
-    class="sidebar fixed top-0 left-0 bottom-0 w-[15%] h-full p-6 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
+    class="sidebar fixed top-0 left-0 bottom-0 w-[15%] h-full p-4 bg-[#0A6847] text-white shadow-lg z-50 transition-all duration-300 ease-in-out">
     <!-- Sidebar Header -->
     <div class="sidebar-header mb-6">
         <div class="logo p-4 flex items-center gap-4">

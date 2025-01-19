@@ -24,8 +24,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     Route::delete('/enrollment-lists/destroy/{student_number}', [ManageStudentController::class, 'destroy'])
       ->name('/enrollment-lists');
 
-    // Enrolled Students
-    Route::get("enrolled-students", [RegistrarController::class, 'enrolledStudents'])->name("enrolled-students");
+   
     // COR
     Route::get("cor", [RegistrarController::class, 'cor'])->name("cor");
 
