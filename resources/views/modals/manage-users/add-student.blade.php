@@ -121,7 +121,8 @@
                             <option value="1" {{ old('program_id') == 1 ? 'selected' : '' }}>BS - Computer
                                 Science
                             </option>
-                            <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS - Information Technology
+                            <option value="2" {{ old('program_id') == 2 ? 'selected' : '' }}>BS - Information
+                                Technology
                             </option>
                         </select>
                         <x-input-error :messages="$errors->get('program_id')" class="mt-2" id="error-program_id" />
@@ -164,24 +165,24 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     <div>
                         <label for="admissionNumber" class="text-sm font-medium text-gray-700">Admission Control
-                            Number<span class="text-red-400">*</span></label></label>
-                        <input type="text" id="admissionNumber" name="admissionNumber"
-                            value="{{ old('admissionNumber') }}" placeholder="Enter control number"
-                            class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('admissionNumber') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
-                        <x-input-error :messages="$errors->get('admissionNumber')" class="mt-2" id="error-admissionNumber" />
+                            Number<span class="text-red-400">*</span></label>
+                        <input type="text" id="admissionNumber" name="admission_number"
+                            value="{{ old('admission_number') }}" placeholder="Enter control number"
+                            class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('admission_number') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
+                        <x-input-error :messages="$errors->get('admission_number')" class="mt-2" id="error-admission_number" />
                     </div>
 
                     <div>
                         <label for="lrn" class="text-sm font-medium text-gray-700">Learner Reference Number<span
-                                class="text-red-400">*</span></label></label>
+                                class="text-red-400">*</span></label>
                         <input type="text" id="lrn" name="lrn" value="{{ old('lrn') }}"
                             placeholder="Enter LRN"
-                            class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('lrn') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize">
+                            class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('lrn') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <x-input-error :messages="$errors->get('lrn')" class="mt-2" id="error-lrn" />
                     </div>
 
                     <div>
-                        <label for="medicalStatus" class="text-sm font-medium text-gray-700">Medical Status <span
+                        <label for="medicalStatus" class="text-sm font-medium text-gray-700">Medical Status<span
                                 class="text-red-400">*</span></label>
                         <select id="medicalStatus" name="medical_status" value="{{ old('medical_status') }}"
                             class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('medical_status') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -199,11 +200,9 @@
                             class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('previous_school') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <x-input-error :messages="$errors->get('previous_school')" class="mt-2" id="error-previous_school" />
                     </div>
-
                 </div>
-
-
             </div>
+
 
             {{-- Address Informatio  --}}
 
@@ -288,6 +287,7 @@
         </form>
     </div>
 </div>
+@include('modals.registrar.partials.success-notif')
 
 <script>
     // Open Add Student Modal
@@ -322,12 +322,30 @@
         enrollSaveButton.textContent = classification === "freshmen" ? "Enroll Student" : "Save Student";
     }
 
+    // Show success modal
+    function showSuccessModal() {
+        alert("Enrollment Successful!"); // Replace this with your modal logic
+    }
+
     // Handle classification change and update button text
     document.addEventListener("DOMContentLoaded", function() {
         const classificationSelect = document.getElementById("classification");
+        const enrollSaveButton = document.getElementById("enrollSaveButton");
+
         updateButtonText(); // Set button text initially
+
+        // Update button text when classification changes
         classificationSelect.addEventListener("change", updateButtonText);
+
+        // Handle button click
+        enrollSaveButton.addEventListener("click", function() {
+            const classification = document.getElementById("classification").value;
+            if (classification === "freshmen" && enrollSaveButton.textContent === "Enroll Student") {
+                showSuccessModal();
+            }
+        });
     });
+
 
     // Generate a random password and toggle the password icon visibility
     function generatePassword() {

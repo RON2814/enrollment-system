@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
     Route::get('/dashboard', [RegistrarController::class, "dashboard"])->name('dashboard');
 
     Route::get("/enrollment-lists", [RegistrarController::class, 'enrollmentLists'])->name("enrollment-lists");
+    Route::get('/enrollment-lists/search-student', [RegistrarController::class, 'searchStudent'])->name('enrollment-lists.search-student');
 
 
     Route::post("/enrollment-lists/store", [ManageStudentController::class, 'store'])->name("enrollment-lists.store");

@@ -253,6 +253,7 @@
         setElementValue('updateProvince', student.address.province);
         setElementValue('updateZipcode', student.address.zip_code);
 
+        
         const checklist = student.checklist;
 
         const yearLevels = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];

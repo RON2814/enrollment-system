@@ -49,8 +49,6 @@
 </div>
 
 <script>
-    const submittedChecklist = @json($submittedChecklist);
-
     function openEvaluationModal(student) {
         console.log("Opening modal", student);
 
@@ -114,7 +112,7 @@
 
         // Table body
         const tbody = document.createElement('tbody');
-        submittedChecklist.forEach(checklistItem => {
+        checklist.forEach(checklistItem => {
             const row = document.createElement('tr');
             row.classList.add('border-b', 'border-gray-300');
 

@@ -10,6 +10,9 @@
       <h3 class="text-2xl font-semibold text-center text-green-600 mt-4">Successfully Enrolled</h3>
       <p class="text-center text-gray-600 mt-2">The student has been successfully enrolled.</p>
       <div class="flex justify-center mt-6">
+
+
+        //
           <button onclick="closeSuccessModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
               Close
           </button>

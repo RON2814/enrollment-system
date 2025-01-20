@@ -158,6 +158,11 @@ class ManageStudentController extends Controller
       "birthday" => ["nullable", "date"],
       "sex" => ["nullable", "in:male,female"],
 
+      "admission_number" => ["nullable", "string", "max:50"],
+      "lrn" => ["nullable", "string", "max:50"],
+      "medical_status" => ["nullable", "in:PASSED,NOT QUALIFIED"],
+      "previous_school" => ["nullable", "string", "max:100"],
+
       "house_number" => ["nullable", "string", "max:50"],
       "street" => ["nullable", "string", "max:50"],
       "barangay" => ["nullable", "string", "max:50"],
@@ -197,6 +202,10 @@ class ManageStudentController extends Controller
       "address_id" => $address->id,
       "birthday" => $request->birthday,
       "sex" => $request->sex,
+      "admission_number" => $request->admission_number,
+      "lrn" => $request->lrn,
+      "medical_status" => $request->medical_status,
+      "previous_school" => $request->previous_school,
     ]);
 
     // Set enrollment status to 'Pending' for all classifications except 'freshmen'
@@ -210,7 +219,7 @@ class ManageStudentController extends Controller
       'status' => $status, // Set status to 'Pending' or 'Enrolled' based on classification
     ]);
 
-    
+
 
     // Create checklist for the new student
     $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [

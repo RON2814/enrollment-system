@@ -97,7 +97,7 @@
                                 <td class="py-3 px-4 text-sm flex space-x-2 border-b">
                                     <a href="{{ route('registrar.checklist', ['student_number' => $student->student_number]) }}"
                                         class="bg-green-500 text-white px-2 py-2 rounded-lg text-center">
-                                        View Checklist Record
+                                       Checklist Record
                                     </a>
                                 </td>
                             </tr>

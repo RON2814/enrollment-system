@@ -22,6 +22,10 @@ return new class extends Migration {
             $table->foreignId("program_id")->constrained("programs");
             $table->enum("classification", ["Regular", "Irregular", "Transferee", "Returnee"]);
             $table->foreignId("address_id")->constrained("addresses")->onDelete("cascade");
+            $table->string("admission_number")->nullable();
+            $table->string("lrn")->nullable();
+            $table->enum("medical_status", ["PASSED", "NOT QUALIFIED"])->nullable();
+            $table->string("previous_school")->nullable();
             $table->timestamps();
 
             // Foreign keys

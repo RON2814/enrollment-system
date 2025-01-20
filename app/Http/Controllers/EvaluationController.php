@@ -39,7 +39,7 @@ class EvaluationController extends Controller
         $submittedChecklist = $checklist->filter(function ($item) {
             return !is_null($item->grade) && !is_null($item->instructor);
         });
-        
+
 
         // Get the list of instructors (you can filter if needed)
         $instructors = Instructor::all();

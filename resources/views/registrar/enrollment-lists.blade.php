@@ -131,7 +131,8 @@
 
                                     @if ($latestEnrollment && $latestEnrollment->status == 'enrolled')
                                         <!-- Show 'COR' button for enrolled status -->
-                                        <button onclick='openCORMOdal({{ $student }})'                                            style="background-color: #34D399; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
+                                        <button onclick='openCORMOdal({{ $student }})'
+                                            style="background-color: #34D399; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
                                             COR
                                         </button>
                                     @else
@@ -175,7 +176,7 @@
             const searchQuery = document.getElementById('searchBar').value.trim();
             const programId = document.getElementById('programFilter').value;
 
-            let url = `{{ route('admin.manageUsers.search-student') }}?query=${encodeURIComponent(searchQuery)}`;
+            let url = `{{ route('registrar.enrollment-lists.search-student') }}?query=${encodeURIComponent(searchQuery)}`;
 
             if (programId && programId !== 'all') {
                 url += `&program_id=${encodeURIComponent(programId)}`;
@@ -319,9 +320,5 @@
             });
         }
 
-        function toggleDropdown() {
-            const dropdownContent = document.querySelector('.dropdown-content');
-            dropdownContent.classList.toggle('hidden');
-        }
     </script>
 </x-app-layout>

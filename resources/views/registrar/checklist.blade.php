@@ -3,74 +3,100 @@
     {{-- main-content --}}
     <div class="main-content p-10 py-0 bg-[#ebe9e9]">
         <div class="bg-white mt-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-8 py-5">
-            <h2 class="font-medium text-xl border-b mb-4">Student Personal Information:</h2>
+            <h2 class="font-medium text-xl border-b-2 mb-4">Student Personal Information:</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-sm">
 
                 <div>
                     <p class="font-medium">Student Number:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
+                    <p class="mt-1 px-2 py-2 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
                         {{ $student->student_number }}</p>
                 </div>
                 <div>
                     <p class="font-medium">Student Name:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
-                        {{ $student->last_name }}, {{ $student->first_name }}
+                    <p class="mt-1 px-2 py-2 border rounded-lg bg-gray-200 bg-opacity-65">
+                        {{ strtoupper($student->last_name) }}, {{ strtoupper($student->first_name) }}
                         @if ($student->middle_name)
-                            {{ $student->middle_name }}
+                            {{ strtoupper($student->middle_name) }}
                         @endif
                         @if ($student->extension_name)
-                            {{ $student->extension_name }}
+                            {{ strtoupper($student->extension_name) }}
                         @endif
                     </p>
                 </div>
 
                 <div>
                     <p class="font-medium">Program:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
+                    <p class="mt-1 px-2 py-2 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
                         {{ $student->program->title }}</p>
                 </div>
                 <div>
                     <p class="font-medium">Major:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
+                    <p class="mt-1 px-2 py-2 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
                         {{ $student->program->major ?? 'N/A' }}</p>
                 </div>
                 <div>
                     <p class="font-medium">Section:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">{Section}</p>
+                    <p class="mt-1 px-2 py-2 border rounded-lg bg-gray-200 bg-opacity-65">
+                        {{ strtoupper($student->classification) }}
+                    </p>
+                </div>
+                <div>
+                    <p class="font-medium">Section:</p>
+                    <p class="mt-1 px-2 py-2 border rounded-lg bg-gray-200 bg-opacity-65">
+                        {{ strtoupper('{Section}') }}
+                    </p>
                 </div>
                 <div>
                     <p class="font-medium">Year Level:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
-                        {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}
+                    <p class="mt-1 px-2 py-2 border rounded-lg bg-gray-200 bg-opacity-65">
+                        {{ strtoupper($student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment') }}
                     </p>
                 </div>
                 <div>
                     <p class="font-medium">Semester:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
-                        {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->semester : 'No Enrollment' }}
+                    <p class="mt-1 px-2 py-2 border rounded-lg bg-gray-200 bg-opacity-65">
+                        {{ strtoupper($student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->semester : 'No Enrollment') }}
                     </p>
                 </div>
+
                 <div>
                     <p class="font-medium">Contact Number:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg bg-gray-200 bg-opacity-65">{{ $student->contact_number }}
+                    <p class="mt-1 px-2 py-2 border rounded-lg bg-gray-200 bg-opacity-65">
+                        {{ $student->contact_number }}
                     </p>
                 </div>
                 <div>
                     <p class="font-medium">Birthday:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg bg-gray-200 bg-opacity-65">{{ $student->birthday }}</p>
-                </div>
-                <div>
-                    <p class="font-medium">Sex:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
-                        {{ $student->sex }}
+                    <p class="mt-1 px-2 py-2 border rounded-lg bg-gray-200 bg-opacity-65">
+                        {{ $student->birthday ?? 'N/A' }}
                     </p>
                 </div>
+                {{-- <div>
+                    <p class="font-medium">Sex:</p>
+                    <p class="mt-1 px-2 py-2 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
+                        {{ $student->sex ?? 'N/A' }}
+                    </p>
+                </div> --}}
+
                 <div class="col-span-2">
                     <p class="font-medium">Address:</p>
-                    <p class="mt-1 px-2 py-1 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
-                        {{ $student->address->house_number }}, {{ $student->address->street }},
-                        {{ $student->address->barangay }}, {{ $student->address->city }},
-                        {{ $student->address->province }} {{ $student->address->zip_code }}
+                    <p class="mt-1 px-2 py-2 border rounded-lg capitalize bg-gray-200 bg-opacity-65">
+                        @if (
+                            $student->address->house_number &&
+                                $student->address->street &&
+                                $student->address->barangay &&
+                                $student->address->city &&
+                                $student->address->province &&
+                                $student->address->zip_code)
+                            {{ $student->address->house_number }},
+                            {{ $student->address->street }},
+                            {{ $student->address->barangay }},
+                            {{ $student->address->city }},
+                            {{ $student->address->province }}
+                            {{ $student->address->zip_code }}
+                        @else
+                            N/A
+                        @endif
                     </p>
                 </div>
 
@@ -143,10 +169,11 @@
                                                     <td class="py-4 px-4 text-sm text-center w-[100px]">
                                                         <input list="gradeOptions"
                                                             name="grades[{{ $item->course_code }}]"
-                                                            class="border p-1 rounded-lg w-full"
-                                                            value="{{ $item->grade }}">
+                                                            class="border p-1 rounded-lg w-full grade-input"
+                                                            value="{{ $item->grade }}"
+                                                            data-course-code="{{ $item->course_code }}">
                                                         <datalist id="gradeOptions">
-                                                            @foreach (['1.00', '1.25', '1.50', '1.75', '2.00', '2.25', '2.50', '2.75', '3.00', '4.00', '5.00', 'INC', 'S'] as $grade)
+                                                            @foreach (['1.00', '1.25', '1.50', '1.75', '2.00', '2.25', '2.50', '2.75', '3.00', '4.00', '5.00', 'INC', 'S', 'CREDITED'] as $grade)
                                                                 <option value="{{ $grade }}"></option>
                                                             @endforeach
                                                         </datalist>
@@ -157,9 +184,10 @@
                                                         <!-- Visible field for instructor's name -->
                                                         <input list="instructorOptions"
                                                             name="instructors[{{ $item->course_code }}]"
-                                                            class="border p-1 rounded-lg w-full"
+                                                            class="border p-1 rounded-lg w-full instructor-input"
                                                             value="{{ $item->instructor ? $item->instructor->last_name . ', ' . $item->instructor->first_name : '' }}"
-                                                            id="instructor-{{ $item->course_code }}">
+                                                            id="instructor-{{ $item->course_code }}"
+                                                            data-course-code="{{ $item->course_code }}">
 
                                                         <!-- Hidden field for instructor's ID -->
                                                         <input type="hidden"
@@ -213,6 +241,19 @@
                     instructorIdInput.value = selectedOption.getAttribute('data-id');
                 } else {
                     instructorIdInput.value = ''; // Clear if no match
+                }
+            });
+        });
+
+        document.querySelectorAll('.grade-input').forEach(input => {
+            input.addEventListener('input', function() {
+                let courseCode = this.dataset.courseCode;
+                let instructorInput = document.querySelector(`#instructor-${courseCode}`);
+                let instructorIdInput = document.querySelector(`#instructor-id-${courseCode}`);
+
+                if (this.value.trim().toUpperCase() === 'CREDITED') {
+                    instructorInput.value = 'CREDITED';
+                    instructorIdInput.value = ''; // Remove instructor ID
                 }
             });
         });
