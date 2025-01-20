@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Checklist\Checklist;
 use App\Models\Roles\Student;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -208,18 +209,43 @@ class ManageStudentController extends Controller
       "previous_school" => $request->previous_school,
     ]);
 
-    // Set enrollment status to 'Pending' for all classifications except 'freshman'
-    $status = $request->classification === 'freshman' ? 'Enrolled' : 'Pending';
+    if ($request->classification === 'freshman') {
+      $section = Section::where('program_id', $student->program_id)
+        ->where('year_level', 'First Year')->first();
+      if (!$section) {
+        Section::create([
+          'program_id' => $student->program_id,
+          'year_level' => 'First Year',
+          'section' => 0,
+          'current_student_enrolled' => 1,
+          'max_capacity' => 5,
+        ]);
+      } else {
+        if ($section->current_student_enrolled < $section->max_capacity) {
+          $section->increment('current_student_enrolled');
+        } else {
+          $section = Section::create([
+            'program_id' => $student->program_id,
+            'year_level' => 'First Year',
+            'section' => $section->section + 1,
+            'current_student_enrolled' => 1,
+            'max_capacity' => 5,
+          ]);
+        }
+      }
 
-    $enrolled = $student->enrollment()->create([
-      'year_level' => 'First Year',
-      'semester' => 'First Semester',
-      'school_year_start' => date('Y'),
-      'school_year_end' => date('Y') + 1,
-      'status' => $status, // Set status to 'Pending' or 'Enrolled' based on classification
-    ]);
+      // Set enrollment status to 'Pending' for all classifications except 'freshman'
+      $status = $request->classification === 'freshman' ? 'Enrolled' : 'Pending';
 
-
+      $enrolled = $student->enrollment()->create([
+        'section_id' => $section->id,
+        'year_level' => 'First Year',
+        'semester' => 'First Semester',
+        'school_year_start' => date('Y'),
+        'school_year_end' => date('Y') + 1,
+        'status' => $status, // Set status to 'Pending' or 'Enrolled' based on classification
+      ]);
+    }
 
     // Create checklist for the new student
     $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [

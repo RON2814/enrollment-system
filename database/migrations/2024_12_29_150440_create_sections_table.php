@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId("program_id")->constrained("programs");
             $table->enum("year_level", ["First Year", "Second Year", "Third Year", "Fourth Year"]);
-            $table->tinyInteger("section_name")->unsigned();
+            $table->tinyInteger("section")->unsigned();
             $table->tinyInteger("current_student_enrolled")->unsigned();
             $table->tinyInteger("max_capacity")->unsigned();
             $table->timestamps();

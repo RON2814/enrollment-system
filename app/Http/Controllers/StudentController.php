@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checklist\Checklist;
+use App\Models\Section;
 use App\Models\User; // Change to App\Models\Student if using a Student model
 use App\Models\Roles\Student;
 use Illuminate\Http\Request;
@@ -96,7 +97,7 @@ class StudentController extends Controller
      */
     public function studentGrades(Request $request)
     {
-        $student = Student::with(['checklist'])
+        $student = Student::with(['checklist', 'checklist.instructor'])
             ->where('student_number', Auth::user()->id)
             ->first();
 
@@ -161,7 +162,8 @@ class StudentController extends Controller
      */
     public function verifyEnrollmentStatus()
     {
-        $student = Student::where('student_number', Auth::user()->id)->first();
+        $student = Student::with(relations: ['checklist', 'checklist.enrollment'])
+            ->where('student_number', Auth::user()->id)->first();
 
         if (!$student) {
             abort(404, 'Student information not found.');
@@ -227,7 +229,44 @@ class StudentController extends Controller
             ->first();
 
         if (!$nextEnrollmentExist) {
+            $section = Section::where('program_id', $student->program_id)
+                ->where('year_level', $nextYearLevel)->first();
+            if (!$section) {
+                Section::create([
+                    'program_id' => $student->program_id,
+                    'year_level' => $nextYearLevel,
+                    'section' => 0,
+                    'current_student_enrolled' => 1,
+                    'max_capacity' => 5,
+                ]);
+            } else {
+                if ($section->current_student_enrolled < $section->max_capacity) {
+                    $section->increment('current_student_enrolled');
+                } else {
+                    $section = Section::create([
+                        'program_id' => $student->program_id,
+                        'year_level' => $nextYearLevel,
+                        'section' => $section->section + 1,
+                        'current_student_enrolled' => 1,
+                        'max_capacity' => 5,
+                    ]);
+                }
+            }
+
+            if (!$section) {
+                $section->create([
+                    'program_id' => $student->program_id,
+                    'year_level' => $nextYearLevel,
+                    'section' => 1,
+                    'current_student_enrolled' => 0,
+                    'max_capacity' => 5,
+                ]);
+            }
+            if ($section && $section->current_student_enrolled < $section->max_capacity) {
+                $section->increment('current_student_enrolled');
+            }
             $newEnrollment = $student->enrollment()->create([
+                'section_id' => $section->id,
                 'year_level' => $nextYearLevel,
                 'semester' => $nextSemester,
                 'school_year_start' => date('Y'),
@@ -245,6 +284,10 @@ class StudentController extends Controller
             }
         }
 
+        if ($nextEnrollmentExist->status === 'pending') {
+            return redirect()->route('student.enrollment-eval.evaluated-courses');
+        }
+
         // If the student is already enrolled, redirect to COR
         return redirect()->route('student.enrollment-eval.cor');
     }
@@ -256,7 +299,8 @@ class StudentController extends Controller
     public function enrollmentModule(Request $request)
     {
         // Fetch the current student
-        $student = Student::where('student_number', Auth::user()->id)->first();
+        $student = Student::with(relations: ['checklist', 'checklist.instructor', 'checklist.enrollment'])
+            ->where('student_number', Auth::user()->id)->first();
 
         if (!$student) {
             abort(404, 'Student information not found.');
@@ -327,8 +371,8 @@ class StudentController extends Controller
     public function evaluatedCourses(Request $request)
     {
         // Get student with related data
-        $student = Student::where('student_number', Auth::user()->id)
-            ->first();
+        $student = Student::with(relations: ['checklist', 'checklist.instructor', 'checklist.enrollment'])
+            ->where('student_number', Auth::user()->id)->first();
 
         if (!$student) {
             abort(404, 'Student not found.');
@@ -400,31 +444,14 @@ class StudentController extends Controller
                 ->update(['enrollment_id' => $existingEnrollment->id]);
         }
 
-        /* -------- WILL BE REMOVED -------- */
-        // if ($existingEnrollment && $existingEnrollment->status === 'pending') {
-        //     // Update status if needed
-
-        //     return redirect()->route('student.enrollment-eval.cor');
-        // }
-
-        // Create new enrollment
-        // $enrollment = $student->enrollment()->create([
-        //     'year_level' => $nextYearLevelString,
-        //     'semester' => $nextSemesterString,
-        //     'school_year_start' => date('Y'),
-        //     'school_year_end' => date('Y') + 1,
-        //     'status' => 'pending',
-        // ]);
-        /* -------- WILL BE REMOVED -------- */
-
         return view('student.enrollment-eval.evaluated-courses', compact('student', 'nextCourses', 'nextYearLevel', 'nextSemester', 'existingEnrollment'));
     }
 
     public function showCOR()
     {
         // Get student with related data
-        $student = Student::where('student_number', Auth::user()->id)
-            ->first();
+        $student = Student::with(relations: ['checklist', 'checklist.enrollment'])
+            ->where('student_number', Auth::user()->id)->first();
 
         if (!$student) {
             abort(404, 'Student not found.');
