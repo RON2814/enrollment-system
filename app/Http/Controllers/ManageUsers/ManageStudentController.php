@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Checklist\Checklist;
 use App\Models\Roles\Student;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,7 +90,7 @@ class ManageStudentController extends Controller
       "contact_number" => ["nullable", "regex:/^(09|\+639)\d{9}$/"],
       "email" => ["nullable", "email", "max:50"],
       "program_id" => ["required", "exists:programs,id"],
-      "classification" => ["required", "in:regular,irregular,transferee,returnee,freshmen"],
+      "classification" => ["required", "in:regular,irregular,transferee,returnee,freshman"],
 
       "birthday" => ["nullable", "date"],
       "sex" => ["nullable", "in:male,female"],
@@ -155,7 +156,7 @@ class ManageStudentController extends Controller
       "contact_number" => ["nullable", "regex:/^(09|\+639)\d{9}$/"],
       "email" => ["nullable", "email", "max:50", "unique:users,email"],
       "program_id" => ["required", "exists:programs,id"],
-      "classification" => ["required", "in:regular,irregular,transferee,returnee,freshmen"],
+      "classification" => ["required", "in:regular,irregular,transferee,returnee,freshman"],
 
       "birthday" => ["nullable", "date"],
       "sex" => ["nullable", "in:male,female"],
@@ -200,7 +201,7 @@ class ManageStudentController extends Controller
       "extension_name" => $request->extension_name,
       "contact_number" => $request->contact_number,
       "program_id" => $request->program_id,
-      "classification" => $request->classification === 'freshmen' ? 'Regular' : $request->classification,
+      "classification" => $request->classification === 'freshman' ? 'Regular' : $request->classification,
       "address_id" => $address->id,
       "birthday" => $request->birthday,
       "sex" => $request->sex,
@@ -210,18 +211,43 @@ class ManageStudentController extends Controller
       "previous_school" => $request->previous_school,
     ]);
 
-    // Set enrollment status to 'Pending' for all classifications except 'freshmen'
-    $status = $request->classification === 'freshmen' ? 'Enrolled' : 'Pending';
+    if ($request->classification === 'freshman') {
+      $section = Section::where('program_id', $student->program_id)
+        ->where('year_level', 'First Year')->first();
+      if (!$section) {
+        Section::create([
+          'program_id' => $student->program_id,
+          'year_level' => 'First Year',
+          'section' => 0,
+          'current_student_enrolled' => 1,
+          'max_capacity' => 5,
+        ]);
+      } else {
+        if ($section->current_student_enrolled < $section->max_capacity) {
+          $section->increment('current_student_enrolled');
+        } else {
+          $section = Section::create([
+            'program_id' => $student->program_id,
+            'year_level' => 'First Year',
+            'section' => $section->section + 1,
+            'current_student_enrolled' => 1,
+            'max_capacity' => 5,
+          ]);
+        }
+      }
 
-    $enrolled = $student->enrollment()->create([
-      'year_level' => 'First Year',
-      'semester' => 'First Semester',
-      'school_year_start' => date('Y'),
-      'school_year_end' => date('Y') + 1,
-      'status' => $status, // Set status to 'Pending' or 'Enrolled' based on classification
-    ]);
+      // Set enrollment status to 'Pending' for all classifications except 'freshman'
+      $status = $request->classification === 'freshman' ? 'Enrolled' : 'Pending';
 
-
+      $enrolled = $student->enrollment()->create([
+        'section_id' => $section->id,
+        'year_level' => 'First Year',
+        'semester' => 'First Semester',
+        'school_year_start' => date('Y'),
+        'school_year_end' => date('Y') + 1,
+        'status' => $status, // Set status to 'Pending' or 'Enrolled' based on classification
+      ]);
+    }
 
     // Create checklist for the new student
     $checklistItems = $request->program_id == 1 /* Program ID 1 is BSCS */ ? [

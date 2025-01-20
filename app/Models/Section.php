@@ -11,7 +11,7 @@ class Section extends Model
 {
     protected $fillable = [
         "student_number",
-        "section_name",
+        "section",
         "program_id",
         "current_student_enrolled",
         "max_capacity",
