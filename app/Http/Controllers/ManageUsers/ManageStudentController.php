@@ -9,6 +9,8 @@ use App\Models\Roles\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\StudentRegistrationConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 class ManageStudentController extends Controller
 {
@@ -367,6 +369,8 @@ class ManageStudentController extends Controller
 
       Checklist::create($data);
     }
+    Mail::to($request->email)->send(new StudentRegistrationConfirmation($request->student_number, $request->password));
+
 
     if (Auth::user()->role_id == 3) {
       return redirect()->route('registrar.enrollment-lists')->with('success', 'Student added successfully.');

@@ -79,7 +79,8 @@
                     </div>
 
                     <div>
-                        <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+                        <label for="email" class="text-sm font-medium text-gray-700">Email<span
+                            class="text-red-400">*</span></label>
                         <input type="text" id="email" name="email" value="{{ old('email') }}"
                             class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('email') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" id="error-email" />
@@ -87,7 +88,8 @@
 
                     @if (auth()->user()->role_id === 3)
                         <div>
-                            <label for="contactNumber" class="text-sm font-medium text-gray-700">Contact Number</label>
+                            <label for="contactNumber" class="text-sm font-medium text-gray-700">Contact Number<span
+                                class="text-red-400">*</span></label>
                             <input type="text" id="contactNumber" name="contact_number"
                                 value="{{ old('contact_number') }}"
                                 class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('contact_number') border-red-500 @enderror  rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -186,7 +188,7 @@
                                 class="text-red-400">*</span></label>
                         <select id="medicalStatus" name="medical_status" value="{{ old('medical_status') }}"
                             class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('medical_status') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="PASSED" disabled>Select Medical Result</option>
+                            <option value="PASSED" disabled selected>Select Medical Result</option>
                             <option value="PASSED">Passed</option>
                             <option value="NOT QUALIFIED">Not Qualified</option>
                         </select>

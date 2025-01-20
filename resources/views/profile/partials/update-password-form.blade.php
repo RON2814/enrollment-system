@@ -1,4 +1,4 @@
-<section>
+<section class="mt-8 p-6 bg-gray-100 shadow-md rounded-md">
     <header>
         <h2 class="text-lg font-medium text-gray-900 ">
             {{ __('Update Password') }}
@@ -12,7 +12,9 @@
     <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('put')
-
+         <!-- Display the user's name -->
+         <h2 class="capitalize">User Name: <span class="font-medium">{{ Auth::user()->name }}</span></h2>
+        
         <div>
             <x-input-label for="update_password_current_password" :value="__('Current Password')" />
             <x-text-input id="update_password_current_password" name="current_password" type="password"
@@ -35,7 +37,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="button"
+            <button type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Save') }}</button>
 
             @if (session('status') === 'password-updated')

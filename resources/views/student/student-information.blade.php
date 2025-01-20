@@ -39,7 +39,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Program</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ $student->program ? $student->program->title : '' }}
+                        {{ $student->program ? $student->program->title : 'N/A' }}
                     </div>
                 </div>
 
@@ -129,39 +129,39 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="street">Street</label>
                     <div id="street" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ strtoupper($student->address->street ?? '') }}
+                        {{ strtoupper($student->address->street ?? 'N/A') }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="barangay">Barangay</label>
                     <div id="barangay" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ strtoupper($student->address->barangay ?? '') }}
+                        {{ strtoupper($student->address->barangay ?? 'N/A') }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="municipality">Municipality</label>
                     <div id="municipality" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ strtoupper($student->address->city ?? '') }}
+                        {{ strtoupper($student->address->city ?? 'N/A') }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="province">Province</label>
                     <div id="province" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ strtoupper($student->address->province ?? '') }}
+                        {{ strtoupper($student->address->province ?? 'N/A') }}
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="date_of_birth">Date of
                         Birth</label>
                     <div id="date_of_birth" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ strtoupper(\Carbon\Carbon::parse($student->birthday ?? '')->format('F d, Y')) }}
+                        {{ strtoupper(\Carbon\Carbon::parse($student->birthday ?? 'N/A')->format('F d, Y')) }}
                     </div>
 
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1" for="sex">Sex</label>
                     <div id="sex" class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                        {{ strtoupper($student->sex ?? '') }}
+                        {{ strtoupper($student->sex ?? 'N/A') }}
                     </div>
                 </div>
             </div>

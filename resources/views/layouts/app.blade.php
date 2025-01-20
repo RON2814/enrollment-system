@@ -8,16 +8,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    {{-- <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Ionicons -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <link rel="icon" type="image/png" href="{{ Vite::asset('resources/assets/cvsulogo.png') }}">
-    
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -28,24 +23,19 @@
             background: #ebe9e9;
         }
 
-        /* Wrapper for Sidebar and Main Content */
         .layout-wrapper {
             display: flex;
             flex-wrap: wrap;
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
-            /* background: white; */
             border-right: 1px solid #e0e0e0;
             width: 15%;
             height: 100%;
             display: block;
         }
 
-
-        /* Main Content */
         .main-content {
             flex: 1;
             background: #ebe9e9;
@@ -63,7 +53,6 @@
 
             .sidebar.active {
                 display: block;
-                /* Show sidebar when active class is added */
             }
 
             .main-content {
@@ -74,14 +63,12 @@
                 flex-direction: column;
             }
 
-            /* Header Layout for mobile */
             .header-wrapper {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
             }
 
-            /* Burger Icon */
             .burger-icon {
                 display: block;
                 cursor: pointer;
@@ -91,9 +78,13 @@
             .burger-icon.open {
                 transform: rotate(90deg);
             }
+
+            /* Hide welcome text on mobile */
+            .header-title {
+                display: none;
+            }
         }
 
-        /* For larger screens, burger icon is hidden */
         @media screen and (min-width: 769px) {
             .burger-icon {
                 display: none;
@@ -104,27 +95,22 @@
 
 <body class="font-sans antialiased">
     <div class="layout-wrapper">
-        <!-- Sidebar -->
         <aside class="sidebar dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen">
             @if (auth()->check())
                 @switch(auth()->user()->role->id)
                     @case(1)
-                        <!-- Student -->
                         @include('student.student-navbar')
                     @break
 
                     @case(2)
-                        <!-- Department -->
                         @include('department.department-navbar')
                     @break
 
                     @case(3)
-                        <!-- Registrar -->
                         @include('registrar.registrar-navbar')
                     @break
 
                     @case(4)
-                        <!-- Admin -->
                         @include('admin.admin-navbar')
                     @break
 
@@ -136,44 +122,35 @@
             @endif
         </aside>
 
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
             <div class="header-wrapper flex justify-between items-center flex-wrap bg-white p-4 py-3">
-                <!-- Burger Icon for Mobile -->
                 <div class="burger-icon" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </div>
 
+                <!-- Welcome Text for Desktop -->
                 <div class="header-title pl-3 font-semibold text-[#206A5D]">
-                    <h2>{{ $pageTitle ?? 'Welcome, ' . Auth::user()->name }}</h2>
+                    <h2 id="welcomeText">{{ $pageTitle ?? 'Welcome, ' . Str::title(Auth::user()->name) }}</h2>
                 </div>
 
                 <div class="user-info flex items-center gap-2">
                     <div class="dropdown relative inline-block">
-                        <button
-                            class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer"
-                            onclick="toggleDropdown()">
-                            <span id="username">{{ Auth::user()->name }}</span>
+                        <button class="dropdown-button bg-white text-[#333] border border-[#ccc] py-2 px-4 text-sm font-medium rounded-lg flex items-center cursor-pointer" onclick="toggleDropdown()">
+                            <span id="username">{{ ucwords(Auth::user()->name) }}</span>
                             <i class="fas fa-chevron-down ml-2"></i>
                         </button>
 
-                        <div
-                            class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
-                            <a href="{{ route('profile.edit') }}"
-                                class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Profile</a>
+                        <div class="dropdown-content absolute hidden bg-white min-w-[160px] shadow-lg z-10 top-full right-0 rounded-xl py-2">
+                            <a href="{{ route('profile.edit') }}" class="block py-3 px-4 text-sm text-[#333] hover:bg-[#f1f1f1]">Account</a>
                             <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                 @csrf
-                                <button type="submit"
-                                    class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log
-                                    Out</button>
+                                <button type="submit" class="w-full py-3 px-4 text-sm text-[#333] bg-transparent border-0 text-left hover:bg-[#f1f1f1]">Log Out</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
@@ -181,12 +158,9 @@
     </div>
 
     <script>
-        // Toggle sidebar visibility on mobile
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('active');
-
-            // Optional: Add class for animating burger icon
             const burgerIcon = document.querySelector('.burger-icon');
             burgerIcon.classList.toggle('open');
         }
@@ -195,6 +169,19 @@
             const dropdownContent = document.querySelector('.dropdown-content');
             dropdownContent.classList.toggle('hidden');
         }
+
+        // Optional: Handle screen resize to hide welcome text on mobile
+        function handleResize() {
+            const welcomeText = document.getElementById('welcomeText');
+            if (window.innerWidth <= 768) {
+                welcomeText.style.display = 'none';
+            } else {
+                welcomeText.style.display = 'block';
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial check on load
     </script>
 </body>
 

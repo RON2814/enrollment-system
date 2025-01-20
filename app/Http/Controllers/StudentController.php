@@ -367,6 +367,10 @@ class StudentController extends Controller
 
         $latestEnrollment = $student->enrollment()->latest()->first();
 
+        if (Auth::user()->role_id == 3) {
+            return redirect()->route('registrar.certRegistration')->with('success', 'Student added successfully.');
+          }
+
         return view('student.enrollment-eval.cor', compact('student', 'nextCourses', 'nextYearLevelString', 'nextSemesterString', 'latestEnrollment', 'totalUnits', 'totalHours'));
     }
 }

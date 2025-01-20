@@ -52,29 +52,6 @@ class RegistrarController extends Controller
         return view("registrar.dashboard", compact('total', 'cs', 'it', 'year1', 'year2', 'year3', 'year4', 'pending'));
     }
 
-    // RegistrarController.php
-
-    public function searchStudent(Request $request)
-    {
-        $query = $request->input('query');
-        $programId = $request->input('program_id');
-
-        // Modify the query to handle search and filtering
-        $students = Student::query()
-            ->when($query, function ($queryBuilder) use ($query) {
-                return $queryBuilder->where('student_number', 'like', "%{$query}%")
-                    ->orWhere('first_name', 'like', "%{$query}%")
-                    ->orWhere('last_name', 'like', "%{$query}%");
-            })
-            ->when($programId && $programId !== 'all', function ($queryBuilder) use ($programId) {
-                return $queryBuilder->where('program_id', $programId);
-            })
-            ->get();
-
-        // Return the student data as JSON for the AJAX request
-        return response()->json($students);
-    }
-
 
 
     public function enrollmentLists()
@@ -94,7 +71,7 @@ class RegistrarController extends Controller
         return view("registrar.cor", compact("students"));
     }
 
-   
+
 
     public function recordStudents()
     {
@@ -115,15 +92,15 @@ class RegistrarController extends Controller
     public function updateChecklist(Request $request, $student_number)
     {
         $student = Student::where('student_number', $student_number)->firstOrFail();
-    
+
         foreach ($student->checklist as $item) {
             $course_code = $item->course_code;
             $updateData = [];
-    
+
             if ($request->has("grades.$course_code")) {
                 $grade = $request->input("grades.$course_code");
                 $updateData['grade'] = $grade;
-    
+
                 // If the grade is CREDITED, set instructor_id to null
                 if (strtoupper($grade) === 'CREDITED') {
                     $updateData['instructor_id'] = null;
@@ -137,18 +114,15 @@ class RegistrarController extends Controller
                     }
                 }
             }
-    
+
             if (!empty($updateData)) {
                 Checklist::where('student_number', $student_number)
                     ->where('course_code', $course_code)
                     ->update($updateData);
             }
         }
-    
+
         return redirect()->route('registrar.checklist', ['student_number' => $student_number])
             ->with('success', 'Checklist updated successfully!');
     }
-    
-
-
 }

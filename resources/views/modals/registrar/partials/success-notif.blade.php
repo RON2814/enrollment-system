@@ -12,10 +12,7 @@
       <div class="flex justify-center mt-6">
 
 
-        //
-          <button onclick="closeSuccessModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-              Close
-          </button>
+       
       </div>
   </div>
 </div>

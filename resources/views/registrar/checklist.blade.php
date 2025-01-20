@@ -173,7 +173,7 @@
                                                             value="{{ $item->grade }}"
                                                             data-course-code="{{ $item->course_code }}">
                                                         <datalist id="gradeOptions">
-                                                            @foreach (['1.00', '1.25', '1.50', '1.75', '2.00', '2.25', '2.50', '2.75', '3.00', '4.00', '5.00', 'INC', 'S', 'CREDITED'] as $grade)
+                                                            @foreach (['1.00', '1.25', '1.50', '1.75', '2.00', '2.25', '2.50', '2.75', '3.00', '4.00', '5.00', 'INC', 'S', 'DROPPED', 'CREDITED'] as $grade)
                                                                 <option value="{{ $grade }}"></option>
                                                             @endforeach
                                                         </datalist>

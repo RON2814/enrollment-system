@@ -11,18 +11,18 @@
                     class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
                     <option value="all" class="text-gray-600">Year Level</option>
                     <option value="all">All</option>
-                    <option value="1">1st Year</option>
-                    <option value="2">2nd Year</option>
-                    <option value="3">3rd Year</option>
-                    <option value="4">4th Year</option>
+                    <option value="First Year">First Year</option>
+                    <option value="Second Year">Second Year</option>
+                    <option value="Third Year">Third Year</option>
+                    <option value="Fourth Year">Fourth Year</option>
                 </select>
 
                 <select id="programFilter"
                     class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-48 text-sm">
                     <option value="all" class="text-gray-600">Program</option>
                     <option value="all">All</option>
-                    <option value="1">Computer Science</option>
-                    <option value="2">Information Technology</option>
+                    <option value="BSCS">Computer Science</option>
+                    <option value="BSIT">Information Technology</option>
                 </select>
 
                 <select id="enrollmentStatusFilter"
@@ -91,7 +91,7 @@
                             <tr>
                                 <td class="py-3 px-4 font-medium border-b" style="white-space: nowrap;">
                                     {{ $student->student_number }}</td>
-                                <td class="py-3 px-4 text-sm border-b"
+                                <td class="py-3 px-4 text-sm border-b capitalize"
                                     style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     {{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}
                                 </td>
@@ -109,7 +109,7 @@
                                             ? ($student->enrollment()->latest()->first()->status == 'enrolled'
                                                 ? 'blue'
                                                 : ($student->enrollment()->latest()->first()->status == 'under evaluation'
-                                                    ? 'yellow'
+                                                    ? 'green'
                                                     : ($student->enrollment()->latest()->first()->status == 'evaluated'
                                                         ? 'blue'
                                                         : ($student->enrollment()->latest()->first()->status == 'pending'
@@ -131,16 +131,16 @@
 
                                     @if ($latestEnrollment && $latestEnrollment->status == 'enrolled')
                                         <!-- Show 'COR' button for enrolled status -->
-                                        <button onclick='openCORMOdal({{ $student }})'
+                                        <a href="{{ route('registrar.certRegistration') }}"
                                             style="background-color: #34D399; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
                                             COR
-                                        </button>
+                                        </a>
                                     @else
                                         <!-- Show 'Enroll' button if not enrolled -->
-                                        <button onclick='openEnrollStudentModal({{ $student }})'
+                                        {{-- <button onclick='openEnrollStudentModal({{ $student }})'
                                             style="background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
-                                            Enroll
-                                        </button>
+                                            View
+                                        </button> --}}
                                     @endif
                                 </td>
 
@@ -162,7 +162,43 @@
 
 
     <script>
-        // Debounce function to limit the rate of AJAX calls
+        // Function to handle filtering by dropdowns
+        function filterStudents() {
+            const yearLevelFilter = document.getElementById("yearLevelFilter").value.toLowerCase();
+            const programFilter = document.getElementById("programFilter").value.toLowerCase();
+            const enrollmentStatusFilter = document.getElementById("enrollmentStatusFilter").value.toLowerCase();
+
+            const rows = document.querySelectorAll("#studentTableBody tr");
+
+            rows.forEach(row => {
+                const yearLevel = row.querySelector("td:nth-child(4)").textContent.toLowerCase();
+                const program = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+                const status = row.querySelector("td:nth-child(7)").textContent.toLowerCase();
+
+                console.log(
+                    `Filtering: Year Level - ${yearLevel}, Program - ${program}, Status - ${status}`
+                    ); // Debugging logs
+
+                // Check if row matches the selected filters
+                const yearMatch = (yearLevelFilter === "all" || yearLevel.includes(yearLevelFilter));
+                const programMatch = (programFilter === "all" || program.includes(programFilter));
+                const statusMatch = (enrollmentStatusFilter === "all" || status.includes(enrollmentStatusFilter));
+
+                // Show or hide row based on filter conditions
+                if (yearMatch && programMatch && statusMatch) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        // Attach filter function to dropdowns
+        document.getElementById("yearLevelFilter").addEventListener("change", filterStudents);
+        document.getElementById("programFilter").addEventListener("change", filterStudents);
+        document.getElementById("enrollmentStatusFilter").addEventListener("change", filterStudents);
+
+        // Debounce function for search
         function debounce(func, delay) {
             let timeout;
             return function(...args) {
@@ -171,154 +207,28 @@
             };
         }
 
-        // Function to fetch and display students based on search and filter
-        function fetchStudents() {
-            const searchQuery = document.getElementById('searchBar').value.trim();
-            const programId = document.getElementById('programFilter').value;
+        // Search function to filter students based on search term
+        function searchStudents() {
+            const searchTerm = document.getElementById("searchBar").value.toLowerCase();
+            const rows = document.querySelectorAll("#studentTableBody tr");
 
-            let url = `{{ route('registrar.enrollment-lists.search-student') }}?query=${encodeURIComponent(searchQuery)}`;
+            rows.forEach(row => {
+                const studentNumber = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+                const studentName = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
 
-            if (programId && programId !== 'all') {
-                url += `&program_id=${encodeURIComponent(programId)}`;
-            }
-
-            fetch(url, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-
-                    const contentType = response.headers.get('content-type');
-                    if (!contentType || !contentType.includes('application/json')) {
-                        throw new TypeError("Expected JSON, got " + contentType);
-                    }
-
-                    return response.json();
-                })
-                .then(data => {
-                    const tbody = document.getElementById('studentTableBody');
-                    tbody.innerHTML = ''; // Clear existing table rows
-
-                    if (data.length === 0) {
-                        tbody.innerHTML = `
-          <tr>
-            <td colspan="9" class="py-4 px-4 text-center text-sm text-gray-500">No students found.</td>
-          </tr>
-        `;
-                        return;
-                    }
-
-                    data.forEach(student => {
-                        const row = document.createElement('tr');
-                        row.classList.add('hover:bg-gray-100');
-
-                        const email = student.user?.email || '';
-                        const programTitle = student.program?.title || '';
-
-                        row.innerHTML = `
-          <td class="py-4 px-4 text-sm">${student.student_number}</td>
-          <td class="py-4 px-4 text-sm">${student.last_name}</td>
-          <td class="py-4 px-4 text-sm">${student.first_name}</td>
-          <td class="py-4 px-4 text-sm">${student.middle_name}</td>
-          <td class="py-4 px-4 text-sm">${email}</td>
-          <td class="py-4 px-4 text-sm">${programTitle}</td>
-          <td class="py-4 px-4 text-sm">${student.classification}</td>
-          <td class="py-4 px-4 text-sm">
-            <button
-              onclick='openUpdateStudentModal(${JSON.stringify(student).replace(/'/g, "\\'")})'
-              class="text-blue-500 hover:text-blue-700">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button onclick="deleteStudent('${student.student_number}')"
-              class="ml-4 text-red-500 hover:text-red-700">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </td>
-        `;
-                        tbody.appendChild(row);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching students:', error);
-                    alert('An error occurred while fetching students.');
-                });
-        }
-
-        // Event listeners for search and filter
-        document.getElementById('searchBar').addEventListener('input', debounce(fetchStudents, 300));
-        document.getElementById('programFilter').addEventListener('change', fetchStudents);
-
-        function deleteStudent(studentNumber) {
-            Swal.fire({
-                title: 'Are you sure?',
-                html: `<span style="user-select: none;">Type "${studentNumber}" to confirm deletion.</span>`,
-                input: 'text',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Delete',
-                confirmButtonColor: '#d33',
-                showLoaderOnConfirm: true,
-                preConfirm: (input) => {
-                    if (input !== studentNumber) {
-                        Swal.showValidationMessage(`Input does not match "${studentNumber}".`);
-                        return false;
-                    }
-                    return true;
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(`{{ url('/admin/manage-users/student/destroy') }}/${studentNumber}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                if (response.status === 404) {
-                                    throw new Error('Student not found.');
-                                }
-                                throw new Error('Network response was not ok');
-                            }
-
-                            const contentType = response.headers.get('content-type');
-                            if (!contentType || !contentType.includes('application/json')) {
-                                throw new TypeError("Expected JSON, got " + contentType);
-                            }
-
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                // Remove the student's row from the table
-                                const row = document.querySelector(
-                                    `button[onclick="deleteStudent('${studentNumber}')"]`).closest(
-                                    'tr');
-                                row.remove();
-                                Swal.fire('Deleted!', data.message, 'success');
-                            } else {
-                                Swal.fire('Error!', 'Failed to delete student.', 'error');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error deleting student:', error);
-                            Swal.fire('Error!', error.message ||
-                                'An error occurred while deleting the student.', 'error');
-                        });
+                // Show or hide row based on search term match
+                if (studentNumber.includes(searchTerm) || studentName.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
                 }
             });
         }
 
+        // Attach the search function to the search bar with debouncing
+        const searchBar = document.getElementById("searchBar");
+        searchBar.addEventListener("input", debounce(searchStudents, 300));
     </script>
+
+
 </x-app-layout>

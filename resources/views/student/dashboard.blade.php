@@ -5,7 +5,7 @@
             <!-- Student Information -->
             <div class="bg-gray-200 p-4 rounded-lg mb-6 border">
                 <p class="font-bold text-xl mb-1">{{ $student->student_number }}</p>
-                <p class="text-lg mb-1">{{ $student->last_name }}, {{ $student->first_name }}
+                <p class="text-lg mb-1 capitalize">{{ $student->last_name }}, {{ $student->first_name }}
                     @if ($student->middle_name)
                         {{ $student->middle_name }}
                     @endif

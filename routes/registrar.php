@@ -28,8 +28,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
 
    
     // COR
-    Route::get('/student/cor', [StudentController::class, 'showStudentCOR'])->name('student.cor');
-
+    Route::post("certRegistration", [StudentController::class, 'showCOR'])->name("certRegistration");
 
 
     // Registrar routes
