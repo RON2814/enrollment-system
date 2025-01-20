@@ -33,6 +33,10 @@ class Student extends Model
         'program_id',
         'classification',
         'address_id',
+        'admission_number',
+        'lrn',
+        'medical_status',
+        'previous_school',
     ];
 
     public function user()

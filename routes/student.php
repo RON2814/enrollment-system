@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':student'])->nam
     Route::get('/enrollment', [StudentController::class, 'enrollmentModule'])->name('enrollment');
 
     // Enrollment - Check student classification and enrollment status
-    Route::get('/enrollment/check-status', [StudentController::class, 'checkStatus'])->name('enrollment.check-status');
+    Route::get('/enrollment/check-status', [StudentController::class, 'verifyEnrollmentStatus'])->name('enrollment.verify-status');
 
     // Enrollment Evaluation - Evaluated Courses Route
     Route::get('/enrollment-eval/evaluated-courses', [StudentController::class, 'evaluatedCourses'])->name('enrollment-eval.evaluated-courses');

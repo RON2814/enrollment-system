@@ -17,7 +17,7 @@
             <td class="border-none p-2">Student Number:<span class="font-medium"
                 id="updatedStudentNumber">{{ old('student_number', $student->student_number) }}</span>
             </td>
-            <td class="border-none p-2">Semester: <span class="font-medium">{{ $nextSemesterString }}</span></td>
+            <td class="border-none p-2">Semester: <span class="font-medium">{{ $nextSemester }}</span></td>
             <td class="border-none p-2">School Year: <span
                 class="font-medium">{{ $latestEnrollment->school_year_start . '-' . $latestEnrollment->school_year_end }}</span>
             </td>
@@ -28,7 +28,7 @@
             <td class="border-none p-2">Name: <span
                 class="font-medium">{{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}</span>
             </td>
-            <td class="border-none p-2">Year: <span class="font-medium">{{ $nextYearLevelString }}</span></td>
+            <td class="border-none p-2">Year: <span class="font-medium">{{ $nextYearLevel }}</span></td>
             <td class="border-none p-2">Program: <span class="font-medium">{{ $student->program->title }}</span></td>
             <td class="border-none p-2">Major: <span class="font-medium">{{ $student->program->major ?: 'N/A' }}</span>
             </td>

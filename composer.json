@@ -12,7 +12,8 @@
         "blade-ui-kit/blade-heroicons": "^2.5",
         "blade-ui-kit/blade-icons": "^1.7",
         "laravel/framework": "^11.33",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "tightenco/jigsaw": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
