@@ -107,7 +107,7 @@
                 </td>
 
                 <td class="py-3 px-4 text-sm flex space-x-2 border-b">
-                  <button onclick='openEvaluationModal(@json($student), @json($evalChecklist))'
+                  <button onclick='openEvaluationModal(@json($student))'
                     class='bg-blue-500 text-white px-2 p-2 rounded-lg'>Evaluate Student</button>
                 </td>
               </tr>

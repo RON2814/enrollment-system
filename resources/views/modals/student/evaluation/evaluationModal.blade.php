@@ -56,7 +56,7 @@
     </form>
 
     <script>
-      function openEvaluationModal(student, evalChecklist) {
+      function openEvaluationModal(student) {
         console.log("Opening modal", student);
 
         const modal = document.getElementById('evaluationModal');
@@ -110,48 +110,48 @@
         const table = document.createElement('table');
         table.classList.add('w-full', 'border-collapse', 'mb-4');
 
-        // Table header
-        const thead = document.createElement('thead');
-        thead.classList.add('bg-[#0A6847]', 'text-white', 'text-xs');
-        thead.innerHTML = `
-        <tr>
-            <th class="px-4 py-2 text-left">Course Code</th>
-            <th class="px-4 py-2 text-left">Course Title</th>
-            <th class="px-4 py-2 text-left">Credit Units</th>
-            <th class="px-4 py-2 text-center">Final Grades</th>
-            <th class="px-4 py-2 text-left">Instructor</th>
-        </tr>
-    `;
-        table.appendChild(thead);
+        //     // Table header
+        //     const thead = document.createElement('thead');
+        //     thead.classList.add('bg-[#0A6847]', 'text-white', 'text-xs');
+        //     thead.innerHTML = `
+    //     <tr>
+    //         <th class="px-4 py-2 text-left">Course Code</th>
+    //         <th class="px-4 py-2 text-left">Course Title</th>
+    //         <th class="px-4 py-2 text-left">Credit Units</th>
+    //         <th class="px-4 py-2 text-center">Final Grades</th>
+    //         <th class="px-4 py-2 text-left">Instructor</th>
+    //     </tr>
+    // `;
+        //     table.appendChild(thead);
 
-        // Table body
-        const tbody = document.createElement('tbody');
-        evalChecklist.forEach(checklistItem => {
-          const row = document.createElement('tr');
-          row.classList.add('border-b', 'border-gray-300');
+        //     // Table body
+        //     const tbody = document.createElement('tbody');
+        //     evalChecklist.forEach(checklistItem => {
+        //       const row = document.createElement('tr');
+        //       row.classList.add('border-b', 'border-gray-300');
 
-          const courseCode = checklistItem.course_code || 'N/A';
-          const courseTitle = checklistItem.course?.course_title || 'N/A';
-          const creditUnits = (checklistItem.course?.credit_unit_lecture ?? 0) + (checklistItem.course
-            ?.credit_unit_laboratory ?? 0) || 'N/A';
-          const grade = checklistItem.grade || 'TBA';
-          const instructor = checklistItem.instructor ? checklistItem.instructor.last_name : 'TBA';
+        //       const courseCode = checklistItem.course_code || 'N/A';
+        //       const courseTitle = checklistItem.course?.course_title || 'N/A';
+        //       const creditUnits = (checklistItem.course?.credit_unit_lecture ?? 0) + (checklistItem.course
+        //         ?.credit_unit_laboratory ?? 0) || 'N/A';
+        //       const grade = checklistItem.grade || 'TBA';
+        //       const instructor = checklistItem.instructor ? checklistItem.instructor.last_name : 'TBA';
 
-          const gradeClass = ['4.00', '5.00', 'INC', 'DROPPED'].includes(grade) ? 'text-red-500' : 'text-green-600';
+        //       const gradeClass = ['4.00', '5.00', 'INC', 'DROPPED'].includes(grade) ? 'text-red-500' : 'text-green-600';
 
-          row.innerHTML = `
-            <td class="px-4 py-2">${courseCode}</td>
-            <td class="px-4 py-2">${courseTitle}</td>
-            <td class="px-4 py-2">${creditUnits}</td>
-            <td class="px-4 py-2 text-center font-bold ${gradeClass}">${grade}</td>
-            <td class="px-4 py-2">${instructor}</td>
-        `;
-          tbody.appendChild(row);
-        });
+        //       row.innerHTML = `
+    //         <td class="px-4 py-2">${courseCode}</td>
+    //         <td class="px-4 py-2">${courseTitle}</td>
+    //         <td class="px-4 py-2">${creditUnits}</td>
+    //         <td class="px-4 py-2 text-center font-bold ${gradeClass}">${grade}</td>
+    //         <td class="px-4 py-2">${instructor}</td>
+    //     `;
+        //       tbody.appendChild(row);
+        //     });
 
-        table.appendChild(tbody);
-        evalTable.appendChild(table);
-        evalTableContainer.appendChild(evalTable);
+        //     table.appendChild(tbody);
+        //     evalTable.appendChild(table);
+        //     evalTableContainer.appendChild(evalTable);
 
         // Update checkbox state
         function updateCheckboxes() {
