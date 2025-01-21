@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Checklist\Instructor;
 use App\Models\Checklist\Course;
 use App\Models\Checklist\Checklist;
+use App\Models\Checklist\Enrollment;
 
 class RegistrarController extends Controller
 {
@@ -92,17 +93,31 @@ class RegistrarController extends Controller
     public function updateChecklist(Request $request, $student_number)
     {
         $student = Student::where('student_number', $student_number)->firstOrFail();
+        $enrollment = Enrollment::where('student_number', $student_number)->latest()->first();
+
+        if (!$enrollment) {
+            return redirect()->back()->with('error', 'No enrollment record found.');
+        }
+
+        $allPassed = true; // Assume all grades are passing initially
+        $hasDiscrepancy = false; // Flag for failing grades
 
         foreach ($student->checklist as $item) {
             $course_code = $item->course_code;
             $updateData = [];
 
             if ($request->has("grades.$course_code")) {
-                $grade = $request->input("grades.$course_code");
+                $grade = strtoupper($request->input("grades.$course_code"));
                 $updateData['grade'] = $grade;
 
+                // Check for failing grades
+                if (in_array($grade, ['4.00', '5.00', 'INC', 'DROPPED'])) {
+                    $allPassed = false;
+                    $hasDiscrepancy = true;
+                }
+
                 // If the grade is CREDITED, set instructor_id to null
-                if (strtoupper($grade) === 'CREDITED') {
+                if ($grade === 'CREDITED') {
                     $updateData['instructor_id'] = null;
                 } else {
                     // Otherwise, retain instructor if provided
@@ -120,6 +135,13 @@ class RegistrarController extends Controller
                     ->where('course_code', $course_code)
                     ->update($updateData);
             }
+        }
+
+        // Update enrollment status based on grades
+        if ($hasDiscrepancy) {
+            $enrollment->update(['status' => 'under evaluation']);
+        } elseif ($allPassed) {
+            $enrollment->update(['status' => 'completed']);
         }
 
         return redirect()->route('registrar.checklist', ['student_number' => $student_number])

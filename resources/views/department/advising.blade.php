@@ -70,7 +70,7 @@
                             <th class="py-3 px-4 text-left font-medium">Program</th>
                             <th class="py-3 px-4 text-left font-medium">Year Level</th>
                             <th class="py-3 px-4 text-left font-medium">Classification</th>
-                            <th class="py-3 px-4 text-left font-medium">Enrollment Status</th>
+                            <th class="py-3 px-4 text-left font-medium">Status</th>
                             <th class="py-3 px-4 text-left font-medium">Action</th>
                         </tr>
                     </thead>
