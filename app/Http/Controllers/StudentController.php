@@ -162,18 +162,18 @@ class StudentController extends Controller
      */
     public function verifyEnrollmentStatus()
     {
-        $student = Student::with(relations: ['checklist', 'checklist.enrollment'])
+        $student = Student::with(['checklist', 'checklist.enrollment'])
             ->where('student_number', Auth::user()->id)->first();
-
+    
         if (!$student) {
             abort(404, 'Student information not found.');
         }
-
+    
         // Filter checklist for items that have grades and an instructor
         $checklistWithGrades = $student->checklist->filter(function ($checklist) {
             return !is_null($checklist->grade) && !is_null($checklist->instructor);
         });
-
+    
         // Get highest year and semester
         if ($checklistWithGrades->isEmpty()) {
             $highestYearLevel = "First Year";
@@ -182,7 +182,7 @@ class StudentController extends Controller
             $highestYearLevel = $checklistWithGrades->max('year');
             $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
         }
-
+    
         // YearLevel and Semester Mappings
         $yearMapping = [
             'First Year' => 1,
@@ -190,21 +190,20 @@ class StudentController extends Controller
             'Third Year' => 3,
             'Fourth Year' => 4,
         ];
-
+    
         $semesterMapping = [
             'First Semester' => 1,
             'Second Semester' => 2,
             'Midyear' => 3,
         ];
-
-
+    
         // Determine the next year level and semester
         if ($highestYearLevel === 'Third Year' && $highestSemester === 'Second Semester') {
             $nextYearLevel = 'Third Year';
             $nextSemester = 'Midyear';
         } else {
             if ($highestSemester < 2) {
-                $nextSemester = $semesterMapping[$highestSemester + 1];
+                $nextSemester = array_search($semesterMapping[$highestSemester] + 1, $semesterMapping);
                 $nextYearLevel = $highestYearLevel;
             } else {
                 $nextYearNumber = $yearMapping[$highestYearLevel] + 1;
@@ -212,30 +211,35 @@ class StudentController extends Controller
                 $nextSemester = 'First Semester';
             }
         }
-
-        // Filter the checklist to only include courses for the highest year level and semester
+    
+        // Filter checklist for the highest year level and semester
         $filteredChecklist = $checklistWithGrades->filter(function ($checklist) use ($highestYearLevel, $highestSemester) {
             return $checklist->year == $highestYearLevel && $checklist->semester == $highestSemester;
         });
-
+    
         // Check for grade discrepancies
         $hasDiscrepancy = $filteredChecklist->contains(function ($checklist) {
             return in_array($checklist->grade, ['4.00', '5.00', 'INC', 'DROPPED']);
         });
-
+    
+        // Check if next enrollment exists
         $nextEnrollmentExist = $student->enrollment()
             ->where('year_level', $nextYearLevel)
             ->where('semester', $nextSemester)
             ->first();
-
+    
         if (!$nextEnrollmentExist) {
+            // Check if a section exists for the student's program and year level
             $section = Section::where('program_id', $student->program_id)
-                ->where('year_level', $nextYearLevel)->first();
+                ->where('year_level', $nextYearLevel)
+                ->first();
+    
             if (!$section) {
-                Section::create([
+                // Create a new section if none exists
+                $section = Section::create([
                     'program_id' => $student->program_id,
                     'year_level' => $nextYearLevel,
-                    'section' => 0,
+                    'section' => 1,
                     'current_student_enrolled' => 1,
                     'max_capacity' => 5,
                 ]);
@@ -243,6 +247,7 @@ class StudentController extends Controller
                 if ($section->current_student_enrolled < $section->max_capacity) {
                     $section->increment('current_student_enrolled');
                 } else {
+                    // Create a new section if the current one is full
                     $section = Section::create([
                         'program_id' => $student->program_id,
                         'year_level' => $nextYearLevel,
@@ -252,46 +257,37 @@ class StudentController extends Controller
                     ]);
                 }
             }
-
-            if (!$section) {
-                $section->create([
-                    'program_id' => $student->program_id,
+    
+            // Ensure section is not null before proceeding
+            if ($section) {
+                $newEnrollment = $student->enrollment()->create([
+                    'section_id' => $section->id,
                     'year_level' => $nextYearLevel,
-                    'section' => 1,
-                    'current_student_enrolled' => 0,
-                    'max_capacity' => 5,
+                    'semester' => $nextSemester,
+                    'school_year_start' => date('Y'),
+                    'school_year_end' => date('Y') + 1,
+                    'status' => 'pending',
                 ]);
-            }
-            if ($section && $section->current_student_enrolled < $section->max_capacity) {
-                $section->increment('current_student_enrolled');
-            }
-            $newEnrollment = $student->enrollment()->create([
-                'section_id' => $section->id,
-                'year_level' => $nextYearLevel,
-                'semester' => $nextSemester,
-                'school_year_start' => date('Y'),
-                'school_year_end' => date('Y') + 1,
-                'status' => 'pending',
-            ]);
-
-            if ($hasDiscrepancy || $student->classification === 'Irregular') {
-                $newEnrollment->update(['status' => 'under evaluation']);
-                return redirect()->route('student.enrollment-eval.under-review');
-            }
-
-            if (!$hasDiscrepancy && strtoupper($student->classification) === 'REGULAR') {
-                return redirect()->route('student.enrollment-eval.evaluated-courses');
+    
+                if ($hasDiscrepancy || strtoupper($student->classification) === 'IRREGULAR') {
+                    $newEnrollment->update(['status' => 'under evaluation']);
+                    return redirect()->route('student.enrollment-eval.under-review');
+                }
+    
+                if (!$hasDiscrepancy && strtoupper($student->classification) === 'REGULAR') {
+                    return redirect()->route('student.enrollment-eval.evaluated-courses');
+                }
             }
         }
-
-        if ($nextEnrollmentExist->status === 'pending') {
+    
+        if ($nextEnrollmentExist && $nextEnrollmentExist->status === 'pending') {
             return redirect()->route('student.enrollment-eval.evaluated-courses');
         }
-
+    
         // If the student is already enrolled, redirect to COR
         return redirect()->route('student.enrollment-eval.cor');
     }
-
+    
 
     /**
      * Show the enrollment module

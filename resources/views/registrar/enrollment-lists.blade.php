@@ -100,7 +100,11 @@
                                 <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
                                     {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}
                                 </td>
-                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">{Section}</td>
+                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
+                                    {{ $latestEnrollment->section->id ?? 'N/A' }}
+                                </td>
+                                
+                                
                                 <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
                                     {{ $student->classification }}</td>
                                 <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">

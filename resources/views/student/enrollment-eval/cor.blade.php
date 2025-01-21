@@ -37,8 +37,12 @@
             <td class="border-none p-2">Address: <span
                 class="font-medium">{{ $student->address->getFullAddress() }}</span>
             </td>
-            <td class="border-none p-2">Section: <span class="font-medium">{BSCS 3-2}</span></td>
-            <td class="border-none p-2">Encoder: <span
+            <td class="border-none p-2">Section: 
+              <span class="font-medium">
+                {{ $student->enrollment->first()->section->section_name ?? 'N/A' }}
+              </span>
+          </td>
+                      <td class="border-none p-2">Encoder: <span
                 class="font-medium">{{ $latestEnrollment->encoder ?: 'N/A' }}</span></td>
           </tr>
         @endisset
@@ -124,7 +128,8 @@
 
       <div class="mt-8 text-left pb-4 text-sm">
         Registration Status: <span class="font-medium">{{ $student->classification }}</span><br>
-        Date of Birth: <span class="font-medium">{{ $student->birthday->format('F j, Y') }}</span><br>
+        Date of Birth: <span class="font-medium">    {{ $student->birthday ? $student->birthday->format('F j, Y') : 'N/A' }}
+        </span><br>
         Sex: <span class="font-medium">{{ ucfirst($student->sex) }}</span><br>
         Contact Number: <span class="font-medium">{{ $student->contact_number }}</span><br>
         E-mail Address: <span class="font-medium">{{ $student->user->email }}</span><br>
