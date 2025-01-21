@@ -164,25 +164,33 @@ class StudentController extends Controller
     {
         $student = Student::with(['checklist', 'checklist.enrollment'])
             ->where('student_number', Auth::user()->id)->first();
-    
+
         if (!$student) {
             abort(404, 'Student information not found.');
         }
-    
+
         // Filter checklist for items that have grades and an instructor
         $checklistWithGrades = $student->checklist->filter(function ($checklist) {
             return !is_null($checklist->grade) && !is_null($checklist->instructor);
         });
-    
+
         // Get highest year and semester
         if ($checklistWithGrades->isEmpty()) {
             $highestYearLevel = "First Year";
             $highestSemester = "First Semester";
+
+            $freshmanEnrolled = $student->enrollment()
+                ->where('year_level', $highestYearLevel)
+                ->where('semester', $highestSemester)->first();
+
+            if ($freshmanEnrolled) {
+                return redirect()->route('student.enrollment-eval.cor');
+            }
         } else {
             $highestYearLevel = $checklistWithGrades->max('year');
             $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
         }
-    
+
         // YearLevel and Semester Mappings
         $yearMapping = [
             'First Year' => 1,
@@ -190,13 +198,13 @@ class StudentController extends Controller
             'Third Year' => 3,
             'Fourth Year' => 4,
         ];
-    
+
         $semesterMapping = [
             'First Semester' => 1,
             'Second Semester' => 2,
             'Midyear' => 3,
         ];
-    
+
         // Determine the next year level and semester
         if ($highestYearLevel === 'Third Year' && $highestSemester === 'Second Semester') {
             $nextYearLevel = 'Third Year';
@@ -211,53 +219,52 @@ class StudentController extends Controller
                 $nextSemester = 'First Semester';
             }
         }
-    
+
         // Filter checklist for the highest year level and semester
         $filteredChecklist = $checklistWithGrades->filter(function ($checklist) use ($highestYearLevel, $highestSemester) {
             return $checklist->year == $highestYearLevel && $checklist->semester == $highestSemester;
         });
-    
+
         // Check for grade discrepancies
         $hasDiscrepancy = $filteredChecklist->contains(function ($checklist) {
             return in_array($checklist->grade, ['4.00', '5.00', 'INC', 'DROPPED']);
         });
-    
+
         // Check if next enrollment exists
         $nextEnrollmentExist = $student->enrollment()
             ->where('year_level', $nextYearLevel)
-            ->where('semester', $nextSemester)
+            ->where('semester', $nextSemester)->first();
+
+        // Check if a section exists for the student's program and year level
+        $section = Section::where('program_id', $student->program_id)
+            ->where('year_level', $nextYearLevel)
             ->first();
-    
-        if (!$nextEnrollmentExist) {
-            // Check if a section exists for the student's program and year level
-            $section = Section::where('program_id', $student->program_id)
-                ->where('year_level', $nextYearLevel)
-                ->first();
-    
-            if (!$section) {
-                // Create a new section if none exists
+
+        if (!$section) {
+            // Create a new section if none exists
+            $section = Section::create([
+                'program_id' => $student->program_id,
+                'year_level' => $nextYearLevel,
+                'section' => 1,
+                'current_student_enrolled' => 0,
+                'max_capacity' => 5,
+            ]);
+        } else {
+            if ($section->current_student_enrolled < $section->max_capacity) {
+                $section->increment('current_student_enrolled');
+            } else {
+                // Create a new section if the current one is full
                 $section = Section::create([
                     'program_id' => $student->program_id,
                     'year_level' => $nextYearLevel,
-                    'section' => 1,
+                    'section' => $section->section + 1,
                     'current_student_enrolled' => 1,
                     'max_capacity' => 5,
                 ]);
-            } else {
-                if ($section->current_student_enrolled < $section->max_capacity) {
-                    $section->increment('current_student_enrolled');
-                } else {
-                    // Create a new section if the current one is full
-                    $section = Section::create([
-                        'program_id' => $student->program_id,
-                        'year_level' => $nextYearLevel,
-                        'section' => $section->section + 1,
-                        'current_student_enrolled' => 1,
-                        'max_capacity' => 5,
-                    ]);
-                }
             }
-    
+        }
+
+        if (!$nextEnrollmentExist) {
             // Ensure section is not null before proceeding
             if ($section) {
                 $newEnrollment = $student->enrollment()->create([
@@ -268,26 +275,31 @@ class StudentController extends Controller
                     'school_year_end' => date('Y') + 1,
                     'status' => 'pending',
                 ]);
-    
+
                 if ($hasDiscrepancy || strtoupper($student->classification) === 'IRREGULAR') {
                     $newEnrollment->update(['status' => 'under evaluation']);
-                    return redirect()->route('student.enrollment-eval.under-review');
+                    return redirect()->route('student.enrollment-eval.evaluated-courses');
                 }
-    
+
                 if (!$hasDiscrepancy && strtoupper($student->classification) === 'REGULAR') {
                     return redirect()->route('student.enrollment-eval.evaluated-courses');
                 }
             }
         }
-    
+
         if ($nextEnrollmentExist && $nextEnrollmentExist->status === 'pending') {
+            $nextEnrollmentExist->update(['section_id' => $section->id]);
             return redirect()->route('student.enrollment-eval.evaluated-courses');
         }
-    
+
+        if ($nextEnrollmentExist && $nextEnrollmentExist->status === 'under evaluation') {
+            return redirect()->route('student.enrollment-eval.evaluated-courses');
+        }
+
         // If the student is already enrolled, redirect to COR
         return redirect()->route('student.enrollment-eval.cor');
     }
-    
+
 
     /**
      * Show the enrollment module
@@ -325,6 +337,18 @@ class StudentController extends Controller
         if ($checklistWithGrades->isEmpty()) {
             $highestYearLevel = "First Year";
             $highestSemester = "First Semester";
+
+            $freshmanEnrolled = $student->enrollment()
+                ->where('year_level', $highestYearLevel)
+                ->where('semester', $highestSemester)->first();
+
+            if ($freshmanEnrolled && $freshmanEnrolled->status === 'enrolled') {
+                return redirect()->route('student.enrollment.verify-status');
+            }
+
+            if ($freshmanEnrolled && $freshmanEnrolled->status === 'under evaluation') {
+                return redirect()->route('student.enrollment.verify-status');
+            }
         } else {
             $highestYearLevel = $checklistWithGrades->max('year');
             $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
@@ -374,60 +398,21 @@ class StudentController extends Controller
             abort(404, 'Student not found.');
         }
 
-        /* -------- WILL BE REMOVED -------- */
-        // Filter checklist with grades and instructor
-        $checklistWithGrades = $student->checklist->filter(function ($item) {
-            return $item->grade && $item->instructor;
-        });
+        // Check existing enrollment
+        $existingEnrollment = $student->enrollment()->latest()->first();
 
-        // Get highest year and semester
-        if ($checklistWithGrades->isEmpty()) {
-            $highestYearLevel = "First Year";
-            $highestSemester = "First Semester";
-        } else {
-            $highestYearLevel = $checklistWithGrades->max('year');
-            $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
+        if (!$existingEnrollment) {
+            return redirect()->route('student.enrollment.verify-status');
         }
-
-        // YearLevel and Semester Mappings
-        $yearMapping = [
-            'First Year' => 1,
-            'Second Year' => 2,
-            'Third Year' => 3,
-            'Fourth Year' => 4,
-        ];
-
-        $semesterMapping = [
-            'First Semester' => 1,
-            'Second Semester' => 2,
-            'Midyear' => 3,
-        ];
-
-        // Determine the next year level and semester
-        if ($highestYearLevel === 'Third Year' && $highestSemester === 'Second Semester') {
-            $nextYearLevel = 'Third Year';
-            $nextSemester = 'Midyear';
-        } else {
-            if ($highestSemester < 2) {
-                $nextSemester = $semesterMapping[$highestSemester + 1];
-                $nextYearLevel = $highestYearLevel;
-            } else {
-                $nextYearNumber = $yearMapping[$highestYearLevel] + 1;
-                $nextYearLevel = array_search($nextYearNumber, $yearMapping);
-                $nextSemester = 'First Semester';
-            }
-        }
-        /* -------- WILL BE REMOVED -------- */
 
         // Get next courses
-        $nextCourses = $student->checklist()->where('year', $nextYearLevel)
-            ->where('semester', $nextSemester)->get();
+        $nextCourses = $student->checklist()->where('year', $existingEnrollment->year_level)
+            ->where('semester', $existingEnrollment->semester)->get();
 
-        // Check existing enrollment
-        $existingEnrollment = $student->enrollment()
-            ->where('year_level', $nextYearLevel)
-            ->where('semester', $nextSemester)
-            ->first();
+        // Studend if UNDER EVALUATION
+        if ($existingEnrollment && $existingEnrollment->status === 'under evaluation') {
+            return view('student.enrollment-eval.evaluated-courses', (['student' => $student, 'nextCourses' => [], 'existingEnrollment' => $existingEnrollment]));
+        }
 
         // Studend if ENROLLED
         if ($existingEnrollment && $existingEnrollment->status === 'enrolled') {
@@ -436,11 +421,12 @@ class StudentController extends Controller
 
         // If $existingEnrollment is true it will Update checklist with enrollment id
         if ($existingEnrollment) {
-            $student->checklist()->where('year', $nextYearLevel)->where('semester', $nextSemester)
+            $student->checklist()->where('year', $existingEnrollment->year_level)
+                ->where('semester', $existingEnrollment->semester)
                 ->update(['enrollment_id' => $existingEnrollment->id]);
         }
 
-        return view('student.enrollment-eval.evaluated-courses', compact('student', 'nextCourses', 'nextYearLevel', 'nextSemester', 'existingEnrollment'));
+        return view('student.enrollment-eval.evaluated-courses', compact('student', 'nextCourses', 'existingEnrollment'));
     }
 
     public function showCOR()
@@ -453,55 +439,16 @@ class StudentController extends Controller
             abort(404, 'Student not found.');
         }
 
-        // YearLevel and Semester Mappings
-        $yearMapping = [
-            'First Year' => 1,
-            'Second Year' => 2,
-            'Third Year' => 3,
-            'Fourth Year' => 4,
-        ];
-
-        $semesterMapping = [
-            'First Semester' => 1,
-            'Second Semester' => 2,
-            'Midyear' => 3,
-        ];
-
         // Filter checklist with grades and instructor
         $checklistWithGrades = $student->checklist->filter(function ($item) {
             return $item->grade && $item->instructor;
         });
 
-        // Get highest year and semester
-        if ($checklistWithGrades->isEmpty()) {
-            $nextYearLevel = "First Year";
-            $nextSemester = "First Semester";
-        } else {
-            $highestYearLevel = $checklistWithGrades->max('year');
-            $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
-        }
-
-        // Determine the next year level and semester
-        if ($highestYearLevel === 'Third Year' && $highestSemester === 'Second Semester') {
-            $nextYearLevel = 'Third Year';
-            $nextSemester = 'Midyear';
-        } else {
-            if ($highestSemester < 2) {
-                $nextSemester = $semesterMapping[$highestSemester + 1];
-                $nextYearLevel = $highestYearLevel;
-            } else {
-                $nextYearNumber = $yearMapping[$highestYearLevel] + 1;
-                $nextYearLevel = array_search($nextYearNumber, $yearMapping);
-                $nextSemester = 'First Semester';
-            }
-        }
+        $latestEnrollment = $student->enrollment()->latest()->first();
 
         // Get next courses
-        $nextCourses = $student->checklist->filter(function ($item) use ($nextYearLevel, $nextSemester) {
-            return $item->year == $nextYearLevel && $item->semester == $nextSemester && $item->course;
-        });
-
-        $latestEnrollment = $student->enrollment()->latest()->first();
+        $nextCourses = $student->checklist()->where('year', $latestEnrollment->year_level)
+            ->where('semester', $latestEnrollment->semester)->get();
 
         if ($latestEnrollment && $latestEnrollment->status !== 'enrolled') {
             $latestEnrollment->update(['status' => 'enrolled']);
@@ -517,6 +464,6 @@ class StudentController extends Controller
             return ($course->course->contact_hours_lecture ?? 0) + ($course->course->contact_hours_laboratory ?? 0);
         });
 
-        return view('student.enrollment-eval.cor', compact('student', 'nextCourses', 'nextYearLevel', 'nextSemester', 'latestEnrollment', 'totalUnits', 'totalHours'));
+        return view('student.enrollment-eval.cor', compact('student', 'nextCourses', 'latestEnrollment', 'totalUnits', 'totalHours'));
     }
 }

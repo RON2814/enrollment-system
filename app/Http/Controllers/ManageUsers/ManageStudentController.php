@@ -218,8 +218,8 @@ class ManageStudentController extends Controller
         Section::create([
           'program_id' => $student->program_id,
           'year_level' => 'First Year',
-          'section' => 0,
-          'current_student_enrolled' => 1,
+          'section' => 1,
+          'current_student_enrolled' => 0,
           'max_capacity' => 5,
         ]);
       } else {
