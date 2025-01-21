@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Student Grade Table</title>
+    <link rel="icon" type="image/png" href="{{ Vite::asset('resources/assets/cvsulogo.png') }}">
+    <title>Student Checklist</title>
 </head>
 
 <body class="main-content bg-[#ebe9e9]">
@@ -28,7 +29,7 @@
     </div>
 
     {{-- main content --}}
-    <div class="p-16 py-2">
+    <div class="p-8 py-2">
         @foreach (['First Year', 'Second Year', 'Third Year', 'Fourth Year'] as $year_level)
             @foreach (['First Semester', 'Second Semester'] as $semester)
                 {{-- Year Level and Semester Section --}}
@@ -63,20 +64,25 @@
 
                                 @foreach ($checklist as $item)
                                     @if ($item && $item->year == $year_level && $item->semester == $semester)
-                                        
                                         <tr class="hover:bg-gray-100 transition-colors duration-200">
                                             <td class="py-4 px-4 text-sm truncate max-w-xs font-semibold">
-                                                {{ $item->course_code }}</td>
+                                                {{ $item->course_code }}
+                                            </td>
                                             <td class="py-4 px-4 text-sm truncate max-w-xs">
-                                                {{ $item->course->course_title }}</td>
+                                                {{ $item->course->course_title }}
+                                            </td>
                                             <td class="text-center py-4 px-4 text-sm truncate max-w-xs">
-                                                {{ $item->course->credit_unit_lecture }}</td>
+                                                {{ $item->course->credit_unit_lecture }}
+                                            </td>
                                             <td class="text-center py-4 px-4 text-sm truncate max-w-xs">
-                                                {{ $item->course->credit_unit_laboratory }}</td>
+                                                {{ $item->course->credit_unit_laboratory }}
+                                            </td>
                                             <td class="text-center py-4 px-4 text-sm truncate max-w-xs">
-                                                {{ $item->course->contact_hours_lecture }}</td>
+                                                {{ $item->course->contact_hours_lecture }}
+                                            </td>
                                             <td class="text-center py-4 px-4 text-sm truncate max-w-xs">
-                                                {{ $item->course->contact_hours_laboratory }}</td>
+                                                {{ $item->course->contact_hours_laboratory }}
+                                            </td>
                                             <td
                                                 class="py-4 px-4 text-sm truncate whitespace-normal max-w-[120px] break-words">
                                                 {{ $item->course->pre_requisite ?: '...' }}
@@ -84,7 +90,9 @@
                                             <td class="py-4 px-4 text-sm truncate max-w-xs">
                                                 {{ explode(' ', $item->semester)[0] ?? '' }}
                                             </td>
-                                            <td class="py-4 px-4 text-sm truncate max-w-xs font-semibold text-center">
+                                            <td
+                                                class="py-4 px-4 text-sm truncate max-w-xs font-semibold text-center
+            {{ in_array($item->grade, ['4.00', '5.00', 'INC', 'DROPPED']) ? 'text-red-500' : '' }}">
                                                 {{ $item->grade ?? 'N/A' }}
                                             </td>
                                             <td class="py-4 px-4 text-sm truncate max-w-xs font-semibold">
@@ -97,16 +105,21 @@
                                             $credit_units =
                                                 $item->course->credit_unit_lecture +
                                                 $item->course->credit_unit_laboratory;
-                                            $grade_value = floatval(trim($item->grade, 's')); // Assuming grade format includes 's'
 
-                                            // Accumulate totals
-                                            $total_credit_units_lecture += $item->course->credit_unit_lecture;
-                                            $total_credit_units_laboratory += $item->course->credit_unit_laboratory;
-                                            $total_contact_hours_lecture += $item->course->contact_hours_lecture;
-                                            $total_contact_hours_laboratory += $item->course->contact_hours_laboratory;
+                                            // Skip grades 'S', 'DROPPED', and 'CREDITED'
+                                            if (!in_array($item->grade, ['S', 'DROPPED', 'CREDITED'])) {
+                                                $grade_value = floatval(trim($item->grade, 'S')); // Assuming grade format includes 'S'
 
-                                            $total_grade_points += $credit_units * $grade_value;
-                                            $total_credits += $credit_units;
+                                                // Accumulate totals
+                                                $total_credit_units_lecture += $item->course->credit_unit_lecture;
+                                                $total_credit_units_laboratory += $item->course->credit_unit_laboratory;
+                                                $total_contact_hours_lecture += $item->course->contact_hours_lecture;
+                                                $total_contact_hours_laboratory +=
+                                                    $item->course->contact_hours_laboratory;
+
+                                                $total_grade_points += $credit_units * $grade_value;
+                                                $total_credits += $credit_units;
+                                            }
                                         @endphp
                                     @endif
                                 @endforeach

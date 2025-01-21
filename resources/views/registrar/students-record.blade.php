@@ -65,9 +65,9 @@
                             <th class="py-3 px-4 text-left font-medium">Student Name</th>
                             <th class="py-3 px-4 text-left font-medium">Program</th>
                             <th class="py-3 px-4 text-left font-medium">Year Level</th>
-                            <th class="py-3 px-4 text-left font-medium">Semester</th>
                             <th class="py-3 px-4 text-left font-medium">Section</th>
                             <th class="py-3 px-4 text-left font-medium">Classification</th>
+                            <th class="py-3 px-4 text-left font-medium">Status</th>
                             <th class="py-3 px-4 text-left font-medium">Action</th>
                         </tr>
                     </thead>
@@ -84,12 +84,29 @@
                                     {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}
                                 </td>
                                 <td class="py-3 px-4 text-sm border-b">
-                                    {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->semester : 'No Enrollment' }}
-                                </td>
-                                <td class="py-3 px-4 text-sm border-b">
-                                    {{ $student->section ?? 'No Section' }}
+                                    {{ $student->enrollment->first() ? $student->enrollment->first()->section->fullSectionName() : 'N/A' }}
                                 </td>
                                 <td class="py-3 px-4 text-sm border-b">{{ $student->classification }}</td>
+                                <td class="py-3 px-4 text-sm border-b" style="white-space: nowrap;">
+                                    <span class="capitalize"
+                                        style="color: {{ $student->enrollment()->latest()->first()
+                                            ? ($student->enrollment()->latest()->first()->status == 'enrolled'
+                                                ? 'blue'
+                                                : ($student->enrollment()->latest()->first()->status == 'under evaluation'
+                                                    ? 'green'
+                                                    : ($student->enrollment()->latest()->first()->status == 'evaluated'
+                                                        ? 'blue'
+                                                        : ($student->enrollment()->latest()->first()->status == 'pending'
+                                                            ? 'red'
+                                                            : ($student->enrollment()->latest()->first()->status == 'N/A'
+                                                                ? 'gray'
+                                                                : ($student->enrollment()->latest()->first()->status == 'completed'
+                                                                    ? 'purple'
+                                                                    : 'red'))))))
+                                            : 'gray' }};">
+                                        {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->status : 'No Enrollment' }}
+                                    </span>
+                                </td>
 
                                 <td class="py-3 px-4 text-sm flex space-x-2 border-b">
                                     <a href="{{ route('registrar.checklist', ['student_number' => $student->student_number]) }}"

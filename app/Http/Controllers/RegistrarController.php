@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Checklist\Instructor;
 use App\Models\Checklist\Course;
 use App\Models\Checklist\Checklist;
+use App\Models\Checklist\Enrollment;
 
 class RegistrarController extends Controller
 {
@@ -65,14 +66,6 @@ class RegistrarController extends Controller
 
 
 
-    public function cor()
-    {
-        $students = Student::with("program", "address", "user", "enrollment")->get();
-        return view("registrar.cor", compact("students"));
-    }
-
-
-
     public function recordStudents()
     {
         $students = Student::with("program", "address", "user")->get();
@@ -92,17 +85,31 @@ class RegistrarController extends Controller
     public function updateChecklist(Request $request, $student_number)
     {
         $student = Student::where('student_number', $student_number)->firstOrFail();
+        $enrollment = Enrollment::where('student_number', $student_number)->latest()->first();
+
+        if (!$enrollment) {
+            return redirect()->back()->with('error', 'No enrollment record found.');
+        }
+
+        $allPassed = true; // Assume all grades are passing initially
+        $hasDiscrepancy = false; // Flag for failing grades
 
         foreach ($student->checklist as $item) {
             $course_code = $item->course_code;
             $updateData = [];
 
             if ($request->has("grades.$course_code")) {
-                $grade = $request->input("grades.$course_code");
+                $grade = strtoupper($request->input("grades.$course_code"));
                 $updateData['grade'] = $grade;
 
+                // Check for failing grades
+                if (in_array($grade, ['4.00', '5.00', 'INC', 'DROPPED'])) {
+                    $allPassed = false;
+                    $hasDiscrepancy = true;
+                }
+
                 // If the grade is CREDITED, set instructor_id to null
-                if (strtoupper($grade) === 'CREDITED') {
+                if ($grade === 'CREDITED') {
                     $updateData['instructor_id'] = null;
                 } else {
                     // Otherwise, retain instructor if provided
@@ -122,7 +129,70 @@ class RegistrarController extends Controller
             }
         }
 
+        // Update enrollment status based on grades
+        if ($hasDiscrepancy) {
+            $enrollment->update(['status' => 'under evaluation']);
+        } elseif ($allPassed) {
+            $enrollment->update(['status' => 'completed']);
+        }
+
         return redirect()->route('registrar.checklist', ['student_number' => $student_number])
             ->with('success', 'Checklist updated successfully!');
+    }
+
+
+
+    public function showCOR()
+    {
+        // Debugging Step 1: Ensure authentication works
+        if (!Auth::check()) {
+            abort(403, 'Unauthorized. Please log in.');
+        }
+
+        $userId = Auth::user()->id; // Get authenticated user ID
+
+        // Debugging Step 2: Check if the student exists
+        $student = Student::with(['checklist.course', 'checklist.instructor', 'enrollment'])
+            ->where('student_number', $userId)
+            ->first();
+
+        if (!$student) {
+            abort(404, 'Student not found.');
+        }
+
+        // Get latest enrollment record
+        $latestEnrollment = $student->enrollment()->latest()->first();
+
+        if (!$latestEnrollment) {
+            abort(404, 'No enrollment record found.');
+        }
+
+        // Get next courses based on year level and semester
+        $nextCourses = $student->checklist()
+            ->where('year', $latestEnrollment->year_level)
+            ->where('semester', $latestEnrollment->semester)
+            ->get();
+
+        // Ensure enrollment status is updated
+        if ($latestEnrollment->status !== 'enrolled') {
+            $latestEnrollment->update(['status' => 'enrolled']);
+        }
+
+        // Calculate total units
+        $totalUnits = $nextCourses->sum(function ($course) {
+            return ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0);
+        });
+
+        // Calculate total hours
+        $totalHours = $nextCourses->sum(function ($course) {
+            return ($course->course->contact_hours_lecture ?? 0) + ($course->course->contact_hours_laboratory ?? 0);
+        });
+
+        // Debugging Step 3: Ensure the view exists
+        if (!view()->exists('registrar.certRegistration')) {
+            abort(500, 'View file "certRegistration.blade.php" is missing.');
+        }
+
+        return view('registrar.certRegistration', compact('student', 'nextCourses', 'latestEnrollment', 'totalUnits', 'totalHours'));
     }
 }

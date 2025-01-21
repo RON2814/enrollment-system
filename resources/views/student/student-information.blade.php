@@ -28,12 +28,7 @@
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Section</label>
-                    <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
-                       {3-2} 
-                    </div>
-                </div>
+
 
 
                 <div>
@@ -53,6 +48,12 @@
                     <label class="block text-sm font-medium text-gray-600 mb-1">Year Level</label>
                     <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
                         {{ $student->enrollment()->latest()->first() ? $student->enrollment()->latest()->first()->year_level : 'No Enrollment' }}
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Section</label>
+                    <div class="w-full px-4 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
+                        {{ $student->enrollment->first() ? $student->enrollment->first()->section->fullSectionName() : 'N/A' }}
                     </div>
                 </div>
                 <div>
