@@ -17,7 +17,8 @@
             <td class="border-none p-2">Student Number:<span class="font-medium"
                 id="updatedStudentNumber">{{ old('student_number', $student->student_number) }}</span>
             </td>
-            <td class="border-none p-2">Semester: <span class="font-medium">{{ $nextSemester }}</span></td>
+            <td class="border-none p-2">Semester: <span
+                class="font-medium">{{ $latestEnrollment ? $latestEnrollment->semester : 'N/A' }}</span></td>
             <td class="border-none p-2">School Year: <span
                 class="font-medium">{{ $latestEnrollment->school_year_start . '-' . $latestEnrollment->school_year_end }}</span>
             </td>
@@ -28,7 +29,8 @@
             <td class="border-none p-2">Name: <span
                 class="font-medium capitalize">{{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}</span>
             </td>
-            <td class="border-none p-2">Year: <span class="font-medium">{{ $nextYearLevel }}</span></td>
+            <td class="border-none p-2">Year: <span
+                class="font-medium">{{ $latestEnrollment ? $latestEnrollment->year_level : 'N/A' }}</span></td>
             <td class="border-none p-2">Program: <span class="font-medium">{{ $student->program->title }}</span></td>
             <td class="border-none p-2">Major: <span class="font-medium">{{ $student->program->major ?: 'N/A' }}</span>
             </td>
@@ -37,12 +39,12 @@
             <td class="border-none p-2">Address: <span
                 class="font-medium">{{ $student->address->getFullAddress() }}</span>
             </td>
-            <td class="border-none p-2">Section: 
+            <td class="border-none p-2">Section:
               <span class="font-medium">
                 {{ $student->enrollment->first()->section->section ?? 'N/A' }}
               </span>
-          </td>
-                      <td class="border-none p-2">Encoder: <span
+            </td>
+            <td class="border-none p-2">Encoder: <span
                 class="font-medium">{{ $latestEnrollment->encoder ?: 'N/A' }}</span></td>
           </tr>
         @endisset
@@ -65,9 +67,9 @@
               <td class="border border-gray-400 p-2">{{ $course->course_code }}</td>
               <td class="border border-gray-400 p-2">{{ $course->course->course_title }}</td>
               <td class="border border-gray-400 p-2">
-                {{ ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0) }}
-            </td>
-            
+                {{ $course->course->credit_unit_lecture ?? 0 }} | {{ $course->course->credit_unit_laboratory ?: '' }}
+              </td>
+
               <td class="border border-gray-400 p-2">TBA</td>
               <td class="border border-gray-400 p-2">TBA</td>
               <td class="border border-gray-400 p-2">TBA</td>
@@ -128,7 +130,8 @@
 
       <div class="mt-8 text-left pb-4 text-sm">
         Registration Status: <span class="font-medium">{{ $student->classification }}</span><br>
-        Date of Birth: <span class="font-medium">    {{ $student->birthday ? $student->birthday->format('F j, Y') : 'N/A' }}
+        Date of Birth: <span class="font-medium">
+          {{ $student->birthday ? $student->birthday->format('F j, Y') : 'N/A' }}
         </span><br>
         Sex: <span class="font-medium">{{ ucfirst($student->sex) }}</span><br>
         Contact Number: <span class="font-medium">{{ $student->contact_number }}</span><br>
@@ -138,35 +141,39 @@
 
       </div>
     </div>
-    <button id="downloadPdf" class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded md:static md:mt-4 md:right-auto md:left-auto md:block">
+    <button id="downloadPdf"
+      class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded md:static md:mt-4 md:right-auto md:left-auto md:block">
       Download PDF</button>
   </div>
 
-   <script>
-  document.getElementById('downloadPdf').addEventListener('click', function () {
-    const element = document.querySelector('.cor'); // Select the content to export
+  <script>
+    document.getElementById('downloadPdf').addEventListener('click', function() {
+      const element = document.querySelector('.cor'); // Select the content to export
 
-    const options = {
-      margin: 0, // Remove margin to ensure the content fits within the page size
-      filename: 'registration_form.pdf',
-      image: { type: 'jpeg', quality: 1 },  // Highest quality JPEG
-      html2canvas: { 
-        scale: 2, // Enhance resolution by increasing scale
-        logging: true,  // Enable logging for debugging
-        useCORS: true,  // Ensure external images are loaded
-        letterRendering: true,  // Improve font rendering
-      },
-      jsPDF: { 
-        unit: 'mm', 
-        format: [210, 297], // Set custom page size to match the .cor dimensions
-        orientation: 'portrait' 
-      }
-    };
+      const options = {
+        margin: 0, // Remove margin to ensure the content fits within the page size
+        filename: 'registration_form.pdf',
+        image: {
+          type: 'jpeg',
+          quality: 1
+        }, // Highest quality JPEG
+        html2canvas: {
+          scale: 2, // Enhance resolution by increasing scale
+          logging: true, // Enable logging for debugging
+          useCORS: true, // Ensure external images are loaded
+          letterRendering: true, // Improve font rendering
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: [210, 297], // Set custom page size to match the .cor dimensions
+          orientation: 'portrait'
+        }
+      };
 
-    // Convert the selected content to PDF
-    html2pdf().from(element).set(options).save();
-  });
-</script>
+      // Convert the selected content to PDF
+      html2pdf().from(element).set(options).save();
+    });
+  </script>
 
-  
+
 </x-app-layout>

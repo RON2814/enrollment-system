@@ -62,13 +62,13 @@
           <div>
             <label class="block text-sm font-medium text-gray-600 mb-1" for="year_level">Year Level</label>
             <div id="year_level" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
-              {{ $nextYearLevel }}
+              {{ $existingEnrollment ? $existingEnrollment->year_level : 'N/A' }}
             </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-600 mb-1" for="semester">Semester</label>
             <div id="semester" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
-              {{ $nextSemester }}
+              {{ $existingEnrollment ? $existingEnrollment->semester : 'N/A' }}
             </div>
           </div>
 
@@ -89,7 +89,7 @@
               </tr>
             </thead>
             <tbody class="text-gray-700 border border-gray-200">
-              @if ($nextCourses->isEmpty())
+              @if (empty($nextCourses))
                 <tr>
                   <td colspan="4" class="py-4 px-4 text-center text-sm">No evaluated courses
                     available.</td>
