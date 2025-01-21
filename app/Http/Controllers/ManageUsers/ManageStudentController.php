@@ -214,6 +214,7 @@ class ManageStudentController extends Controller
     if ($request->classification === 'freshman') {
       $section = Section::where('program_id', $student->program_id)
         ->where('year_level', 'First Year')->first();
+
       if (!$section) {
         Section::create([
           'program_id' => $student->program_id,
@@ -223,7 +224,7 @@ class ManageStudentController extends Controller
           'max_capacity' => 5,
         ]);
       } else {
-        if ($section->current_student_enrolled < $section->max_capacity) {
+        if ($section->current_student_enrolled <= $section->max_capacity) {
           $section->increment('current_student_enrolled');
         } else {
           $section = Section::create([

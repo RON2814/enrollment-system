@@ -180,17 +180,17 @@
             <x-input-error :messages="$errors->get('lrn')" class="mt-2" id="error-lrn" />
           </div>
 
-                    <div>
-                        <label for="medicalStatus" class="text-sm font-medium text-gray-700">Medical Status<span
-                                class="text-red-400">*</span></label>
-                        <select id="medicalStatus" name="medical_status" value="{{ old('medical_status') }}"
-                            class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('medical_status') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="PASSED" disabled selected>Select Medical Result</option>
-                            <option value="PASSED">Passed</option>
-                            <option value="NOT QUALIFIED">Not Qualified</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('medical_status')" class="mt-2" id="error-medical_status" />
-                    </div>
+          <div>
+            <label for="medicalStatus" class="text-sm font-medium text-gray-700">Medical Status<span
+                class="text-red-400">*</span></label>
+            <select id="medicalStatus" name="medical_status" value="{{ old('medical_status') }}"
+              class="mt-1 px-4 py-2 border border-gray-500 border-opacity-70 @error('medical_status') border-red-500 @enderror rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <option value="PASSED" disabled>Select Medical Result</option>
+              <option value="PASSED">Passed</option>
+              <option value="NOT QUALIFIED">Not Qualified</option>
+            </select>
+            <x-input-error :messages="$errors->get('medical_status')" class="mt-2" id="error-medical_status" />
+          </div>
 
           <div class="col-span-2">
             <label for="previousSchool" class="text-sm font-medium text-gray-700">Previous School</label>

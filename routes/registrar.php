@@ -22,11 +22,11 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':registrar'])
 
     Route::post("/enrollment-lists/store", [ManageStudentController::class, 'store'])->name("enrollment-lists.store");
 
-    Route::patch("/enrollment-lists/update/{student_id}", [ManageStudentController::class, 'update'])->name("enrollment-lists.update");
+    Route::patch("/enrollment-lists/update/{student_number}", [ManageStudentController::class, 'update'])->name("enrollment-lists.update");
     Route::delete('/enrollment-lists/destroy/{student_number}', [ManageStudentController::class, 'destroy'])
       ->name('/enrollment-lists');
 
-   
+
     // COR
     Route::post("certRegistration", [StudentController::class, 'showCOR'])->name("certRegistration");
 

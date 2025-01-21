@@ -113,8 +113,9 @@
           </table>
 
           @if ($existingEnrollment && $existingEnrollment->status === 'under evaluation')
-            <p class="text-center text-red-500 font-semibold mt-4">Your enrollment is under review due to
-              grade discrepancies.</p>
+            <p class="text-center text-red-500 font-semibold mt-4">
+              Your enrollment is under review due to discrepancies.
+            </p>
           @else
             <button type="submit" formaction="{{ route('student.enrollment-eval.cor') }}"
               class="w-full bg-green-800 hover:bg-green-700 text-white py-1.5 px-2 shadow text-sm mt-4">

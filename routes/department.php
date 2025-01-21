@@ -17,8 +17,8 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
     Route::get('/dashboard', [DepartmentController::class, 'dashboard'])->name('dashboard');
 
     //Advising
-    Route::get('advising', [EvaluationController::class, 'advising'])->name('advising');
-
+    Route::get('/advising', [EvaluationController::class, 'advising'])->name('advising');
+    Route::post('/advising/update', [EvaluationController::class, 'advisingUpdate'])->name('advising.update');
 
     // Courses (Controller Method)
     Route::get('/courses', [CourseController::class, 'showCourses'])->name('courses');
@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified', RoleMiddleware::class . ':department'])
     Route::post('/instructor', [InstructorController::class, 'addInstructor'])->name('instructor.add-instructor');
 
     //update instructor
-    Route::patch('instructor/update-instructor/{id}', [InstructorController::class, 'updateInstructor'])->name('instructor.update-instructor');
+    Route::patch('/instructor/update-instructor/{id}', [InstructorController::class, 'updateInstructor'])->name('instructor.update-instructor');
 
     // Schedule (Controller method)
     Route::get('/schedule', [InstructorController::class, 'schedule'])->name('schedule');
