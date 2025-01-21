@@ -66,14 +66,6 @@ class RegistrarController extends Controller
 
 
 
-    public function cor()
-    {
-        $students = Student::with("program", "address", "user", "enrollment")->get();
-        return view("registrar.cor", compact("students"));
-    }
-
-
-
     public function recordStudents()
     {
         $students = Student::with("program", "address", "user")->get();
@@ -146,5 +138,61 @@ class RegistrarController extends Controller
 
         return redirect()->route('registrar.checklist', ['student_number' => $student_number])
             ->with('success', 'Checklist updated successfully!');
+    }
+
+
+
+    public function showCOR()
+    {
+        // Debugging Step 1: Ensure authentication works
+        if (!Auth::check()) {
+            abort(403, 'Unauthorized. Please log in.');
+        }
+
+        $userId = Auth::user()->id; // Get authenticated user ID
+
+        // Debugging Step 2: Check if the student exists
+        $student = Student::with(['checklist.course', 'checklist.instructor', 'enrollment'])
+            ->where('student_number', $userId)
+            ->first();
+
+        if (!$student) {
+            abort(404, 'Student not found.');
+        }
+
+        // Get latest enrollment record
+        $latestEnrollment = $student->enrollment()->latest()->first();
+
+        if (!$latestEnrollment) {
+            abort(404, 'No enrollment record found.');
+        }
+
+        // Get next courses based on year level and semester
+        $nextCourses = $student->checklist()
+            ->where('year', $latestEnrollment->year_level)
+            ->where('semester', $latestEnrollment->semester)
+            ->get();
+
+        // Ensure enrollment status is updated
+        if ($latestEnrollment->status !== 'enrolled') {
+            $latestEnrollment->update(['status' => 'enrolled']);
+        }
+
+        // Calculate total units
+        $totalUnits = $nextCourses->sum(function ($course) {
+            return ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0);
+        });
+
+        // Calculate total hours
+        $totalHours = $nextCourses->sum(function ($course) {
+            return ($course->course->contact_hours_lecture ?? 0) + ($course->course->contact_hours_laboratory ?? 0);
+        });
+
+        // Debugging Step 3: Ensure the view exists
+        if (!view()->exists('registrar.certRegistration')) {
+            abort(500, 'View file "certRegistration.blade.php" is missing.');
+        }
+
+        return view('registrar.certRegistration', compact('student', 'nextCourses', 'latestEnrollment', 'totalUnits', 'totalHours'));
     }
 }

@@ -32,7 +32,8 @@
         <div>
           <label class="block text-sm font-medium text-gray-600 mb-1" for="section">Section</label>
           <div id="section" class="w-full px-4 py-1 rounded-md text-gray-700 bg-gray-100 text-sm">
-            current section
+            {{ $student->enrollment->first()->section->fullSectionName() ?? 'N/A' }}
+
           </div>
         </div>
 

@@ -41,7 +41,7 @@
             </td>
             <td class="border-none p-2">Section:
               <span class="font-medium">
-                {{ $student->enrollment->first()->section->section ?? 'N/A' }}
+                {{ $student->enrollment->first()->section->fullSectionName() ?? 'N/A' }}
               </span>
             </td>
             <td class="border-none p-2">Encoder: <span
@@ -55,7 +55,7 @@
           <tr class="bg-gray-200 text-xs">
             <th class="border border-gray-400 p-2">Course Code</th>
             <th class="border border-gray-400 p-2">Course Title</th>
-            <th class="border border-gray-400 p-2">Units</th>
+            <th class="border border-gray-400 p-2" colspan="2">Units</th>
             <th class="border border-gray-400 p-2">Time</th>
             <th class="border border-gray-400 p-2">Day</th>
             <th class="border border-gray-400 p-2">Room</th>
@@ -67,7 +67,10 @@
               <td class="border border-gray-400 p-2">{{ $course->course_code }}</td>
               <td class="border border-gray-400 p-2">{{ $course->course->course_title }}</td>
               <td class="border border-gray-400 p-2">
-                {{ $course->course->credit_unit_lecture ?? 0 }} | {{ $course->course->credit_unit_laboratory ?: '' }}
+                {{ $course->course->credit_unit_lecture ?? 0 }}
+              </td>
+              <td class="border border-gray-400 p-2">
+                {{ $course->course->credit_unit_laboratory ?: '' }}
               </td>
 
               <td class="border border-gray-400 p-2">TBA</td>
@@ -142,8 +145,10 @@
       </div>
     </div>
     <button id="downloadPdf"
-      class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded md:static md:mt-4 md:right-auto md:left-auto md:block">
-      Download PDF</button>
+    class="absolute top-full right-4 bg-blue-500 text-white px-4 py-2 rounded md:static md:mt-4 md:right-auto md:left-auto md:block">
+    Download PDF
+  </button>
+  
   </div>
 
   <script>

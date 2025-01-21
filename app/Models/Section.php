@@ -27,6 +27,8 @@ class Section extends Model
         return $this->hasOne(Enrollment::class, "section_id", "id");
     }
 
+
+
     public function fullSectionName()
     {
         $yearMapping = [
@@ -35,7 +37,26 @@ class Section extends Model
             'Third Year' => 3,
             'Fourth Year' => 4,
         ];
-
-        return $this->program->title . " " . ($yearMapping[$this->year_level] ?? 'Unknown') . "-" . $this->section;
+    
+        // Get the latest enrollment and use its year_level
+        $latestEnrollment = $this->enrollment()->latest()->first();
+    
+        // If there's a latest enrollment, use its year_level; otherwise, default to 'Unknown'
+        $yearLevel = $latestEnrollment ? $latestEnrollment->year_level : 'Unknown';
+    
+        // Ensure the year_level value is valid
+        if (!array_key_exists($yearLevel, $yearMapping)) {
+            // Default to 'Unknown Year' if the year_level is invalid
+            $yearLevelNumeric = 'Unknown Year';
+        } else {
+            // Map the year level to numeric value
+            $yearLevelNumeric = $yearMapping[$yearLevel];
+        }
+    
+        // Ensure the section exists before accessing it
+        $sectionName = $this->section ? $this->section : 'Unknown Section';
+    
+        return $sectionName;
     }
+    
 }
