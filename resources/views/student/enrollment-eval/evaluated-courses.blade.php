@@ -118,7 +118,7 @@
               Your enrollment is under review due to discrepancies.
             </p>
           @else
-            <button type="submit" formaction="{{ route('student.enrollment-eval.cor') }}"
+            <button type="button" id="proceedToAssessment"
               class="w-full bg-green-800 hover:bg-green-700 text-white py-1.5 px-2 shadow text-sm mt-4">
               PROCEED TO ASSESSMENT
             </button>
@@ -187,6 +187,66 @@
 
       </div>
 
+      <!-- Confirmation Modal -->
+      <div id="confirmationModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 transition-opacity duration-300 ease-in-out">
+        <div
+          class="modal-container bg-white w-full sm:w-[80%] md:w-[80%] lg:w-[80%] max-w-full h-[92vh] max-h-[92vh] rounded-lg shadow-2xl p-12 py-8 relative overflow-y-auto">
+
+          <!-- Close Button -->
+          <button onclick=c() class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <h3 class="text-2xl text-center font-bold mb-2 text-dark-green border-b border-gray-300 w-full">
+            <span class="text-green-700">CONFIRMATION OF ENROLLMENT</span>
+          </h3>
+          <p class="text-gray-600 mb-8">
+            Please check the evaluated courses and review the information carefully before proceeding with the
+            Certificate of Registration (COR).
+          </p>
+
+          <h3 class="text-base font-semibold mt-2 mb-2 border-b border-gray-300">Courses to Enroll:</h3>
+
+          <!-- Table to show evaluated courses -->
+          <div class="mt-2 flex space-x-6 mb-8">
+            <table class="min-w-full table-auto border-spacing-0 table-fixed border-collapse border border-gray-300">
+              <thead>
+                <tr class="bg-gray-200 text-sm">
+                  <th class="border border-gray-300 py-2 px-4">Course Code</th>
+                  <th class="border border-gray-300 py-2 px-4">Course Title</th>
+                  <th class="border border-gray-300 py-2 px-4">Credit Units</th>
+                  <th class="border border-gray-300 py-2 px-4">instructor</th>
+                </tr>
+              </thead>
+              <tbody id="modalCourseList" class="text-gray-700"></tbody>
+            </table>
+          </div>
+
+
+
+          {{-- Billing Information  --}}
+          @include('modals.registrar.partials.billing', ['student' => $student])
+
+
+          <!-- Buttons -->
+          <div class="flex justify-end mt-6 space-x-4">
+            <button id="cancelModal"
+              class="px-6 py-3 text-base font-semibold text-gray-800 bg-gray-300 rounded-xl shadow-md transition-all duration-300 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">
+              Cancel
+            </button>
+            <button type="submit" id="enrollSaveButton" formaction="{{ route('student.enrollment-eval.cor') }}"
+              class="px-7 py-3 text-base font-semibold text-white bg-green-600 rounded-xl shadow-lg transition-all duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+              Confirm Enrollment
+            </button>
+          </div>
+
+
+        </div>
+
+      </div>
     </div>
     </form>
 
