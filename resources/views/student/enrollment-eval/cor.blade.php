@@ -39,7 +39,7 @@
             </td>
             <td class="border-none p-2">Section: 
               <span class="font-medium">
-                {{ $student->enrollment->first()->section->section_name ?? 'N/A' }}
+                {{ $student->enrollment->first()->section->section ?? 'N/A' }}
               </span>
           </td>
                       <td class="border-none p-2">Encoder: <span

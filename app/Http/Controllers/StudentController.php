@@ -164,16 +164,16 @@ class StudentController extends Controller
     {
         $student = Student::with(['checklist', 'checklist.enrollment'])
             ->where('student_number', Auth::user()->id)->first();
-    
+
         if (!$student) {
             abort(404, 'Student information not found.');
         }
-    
+
         // Filter checklist for items that have grades and an instructor
         $checklistWithGrades = $student->checklist->filter(function ($checklist) {
             return !is_null($checklist->grade) && !is_null($checklist->instructor);
         });
-    
+
         // Get highest year and semester
         if ($checklistWithGrades->isEmpty()) {
             $highestYearLevel = "First Year";
@@ -182,7 +182,8 @@ class StudentController extends Controller
             $highestYearLevel = $checklistWithGrades->max('year');
             $highestSemester = $checklistWithGrades->where('year', $highestYearLevel)->max('semester');
         }
-    
+        
+
         // YearLevel and Semester Mappings
         $yearMapping = [
             'First Year' => 1,
@@ -190,13 +191,13 @@ class StudentController extends Controller
             'Third Year' => 3,
             'Fourth Year' => 4,
         ];
-    
+
         $semesterMapping = [
             'First Semester' => 1,
             'Second Semester' => 2,
             'Midyear' => 3,
         ];
-    
+
         // Determine the next year level and semester
         if ($highestYearLevel === 'Third Year' && $highestSemester === 'Second Semester') {
             $nextYearLevel = 'Third Year';
@@ -211,29 +212,29 @@ class StudentController extends Controller
                 $nextSemester = 'First Semester';
             }
         }
-    
+
         // Filter checklist for the highest year level and semester
         $filteredChecklist = $checklistWithGrades->filter(function ($checklist) use ($highestYearLevel, $highestSemester) {
             return $checklist->year == $highestYearLevel && $checklist->semester == $highestSemester;
         });
-    
+
         // Check for grade discrepancies
         $hasDiscrepancy = $filteredChecklist->contains(function ($checklist) {
             return in_array($checklist->grade, ['4.00', '5.00', 'INC', 'DROPPED']);
         });
-    
+
         // Check if next enrollment exists
         $nextEnrollmentExist = $student->enrollment()
             ->where('year_level', $nextYearLevel)
             ->where('semester', $nextSemester)
             ->first();
-    
+
         if (!$nextEnrollmentExist) {
             // Check if a section exists for the student's program and year level
             $section = Section::where('program_id', $student->program_id)
                 ->where('year_level', $nextYearLevel)
                 ->first();
-    
+
             if (!$section) {
                 // Create a new section if none exists
                 $section = Section::create([
@@ -257,7 +258,7 @@ class StudentController extends Controller
                     ]);
                 }
             }
-    
+
             // Ensure section is not null before proceeding
             if ($section) {
                 $newEnrollment = $student->enrollment()->create([
@@ -268,26 +269,26 @@ class StudentController extends Controller
                     'school_year_end' => date('Y') + 1,
                     'status' => 'pending',
                 ]);
-    
+
                 if ($hasDiscrepancy || strtoupper($student->classification) === 'IRREGULAR') {
                     $newEnrollment->update(['status' => 'under evaluation']);
                     return redirect()->route('student.enrollment-eval.under-review');
                 }
-    
+
                 if (!$hasDiscrepancy && strtoupper($student->classification) === 'REGULAR') {
                     return redirect()->route('student.enrollment-eval.evaluated-courses');
                 }
             }
         }
-    
+
         if ($nextEnrollmentExist && $nextEnrollmentExist->status === 'pending') {
             return redirect()->route('student.enrollment-eval.evaluated-courses');
         }
-    
+
         // If the student is already enrolled, redirect to COR
         return redirect()->route('student.enrollment-eval.cor');
     }
-    
+
 
     /**
      * Show the enrollment module

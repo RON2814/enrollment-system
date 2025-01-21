@@ -21,10 +21,10 @@
         </div>
 
 
-        <div class="user-info flex items-center gap-2">
+        {{-- <div class="user-info flex items-center gap-2">
             <button onclick="open_request_grades()"
                 class="text-sm text-blue-500 font-semibold py-2 px-4 underline">Request for Missing Grades</button>
-        </div>
+        </div> --}}
     </div>
 
     {{-- main content --}}

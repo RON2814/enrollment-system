@@ -47,7 +47,7 @@
 
             <a href="{{ route('registrar.students-record') }}" class="text-white no-underline flex items-center gap-3">
                 <i class="fas fa-user text-xs opacity-75 mr-2"></i>
-                <span class="text-xs opacity-80">Student's Record</span>
+                <span class="text-xs opacity-80">Checklist</span>
             </a>
         </li>
 

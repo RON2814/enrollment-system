@@ -28,29 +28,16 @@ class EvaluationController extends Controller
             'enrollment'  // Fetch enrollment details
         ])
             ->whereHas('enrollment', function ($query) {
-                $query->where('status', 'under evaluation');
+                $query->where('status', 'enrolled');
             })
             ->get();
-
-        // Get all checklists for the filtered students
-        $checklist = $students->flatMap->checklist; // Flatten to a single collection
-
-        // Filter the checklist to include only submitted courses (those with grades and instructors)
-        $submittedChecklist = $checklist->filter(function ($item) {
-            return !is_null($item->grade) && !is_null($item->instructor);
-        });
-
 
         // Get the list of instructors (you can filter if needed)
         $instructors = Instructor::all();
 
-        // Get course codes from the submitted checklist
-        $courseCodes = $submittedChecklist->pluck('course_code')->toArray();
-
-        // Fetch courses based on the submitted course codes
-        $courses = Course::whereIn('course_code', $courseCodes)->get();
+        $courses = Course::all();
 
         // Return the view with the necessary data
-        return view('department.advising', compact('students', 'submittedChecklist', 'instructors', 'courses'));
+        return view('department.advising', compact('students', 'instructors', 'courses'));
     }
 }

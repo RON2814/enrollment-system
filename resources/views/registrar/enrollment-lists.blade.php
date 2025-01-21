@@ -141,10 +141,10 @@
                                         </a>
                                     @else
                                         <!-- Show 'Enroll' button if not enrolled -->
-                                        {{-- <button onclick='openEnrollStudentModal({{ $student }})'
+                                        <button onclick='openEnrollStudentModal({{ $student }})'
                                             style="background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
                                             View
-                                        </button> --}}
+                                        </button>
                                     @endif
                                 </td>
 

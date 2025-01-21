@@ -87,7 +87,7 @@
                                 </td>
                                 <td class="py-3 px-4 text-sm border-b">{{ $student->classification }}</td>
                                 <td class="py-3 px-4 text-sm border-b">
-                                    <span class="capitalize font-semibold"
+                                    <span class="capitalize"
                                         style="color: {{ $student->enrollment()->latest()->first()
                                             ? ($student->enrollment()->latest()->first()->status == 'enrolled'
                                                 ? 'blue'
