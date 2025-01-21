@@ -1,7 +1,7 @@
 <x-app-layout>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="overflow-hidden bg-white p-16 rounded-lg shadow-2xl mt-2 border border-gray-300"
-      style="width: 210mm; height: 297mm; overflow: hidden;">
+  <div class="relative flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="cor overflow-hidden bg-white p-14 rounded-lg shadow-2xl mt-2 border border-gray-300"
+      style="width: 210mm; height: 297mm;">
       <div class="flex items-center justify-center mb-5">
         <img src="{{ Vite::asset('resources/assets/cvsulogo.png') }}" alt="University Logo" class="h-10 mr-4">
         <div class="flex flex-col h-auto">
@@ -26,7 +26,7 @@
           </tr>
           <tr>
             <td class="border-none p-2">Name: <span
-                class="font-medium">{{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}</span>
+                class="font-medium capitalize">{{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}</span>
             </td>
             <td class="border-none p-2">Year: <span class="font-medium">{{ $nextYearLevel }}</span></td>
             <td class="border-none p-2">Program: <span class="font-medium">{{ $student->program->title }}</span></td>
@@ -65,9 +65,9 @@
               <td class="border border-gray-400 p-2">{{ $course->course_code }}</td>
               <td class="border border-gray-400 p-2">{{ $course->course->course_title }}</td>
               <td class="border border-gray-400 p-2">
-                {{ $course->course->credit_unit_lecture ?: '' }}
-                {{ $course->course->credit_unit_laboratory ?: '' }}
-              </td>
+                {{ ($course->course->credit_unit_lecture ?? 0) + ($course->course->credit_unit_laboratory ?? 0) }}
+            </td>
+            
               <td class="border border-gray-400 p-2">TBA</td>
               <td class="border border-gray-400 p-2">TBA</td>
               <td class="border border-gray-400 p-2">TBA</td>
@@ -134,6 +134,39 @@
         Contact Number: <span class="font-medium">{{ $student->contact_number }}</span><br>
         E-mail Address: <span class="font-medium">{{ $student->user->email }}</span><br>
         <p>Student's Signature: __________________________</p>
+
+
       </div>
     </div>
+    <button id="downloadPdf" class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded md:static md:mt-4 md:right-auto md:left-auto md:block">
+      Download PDF</button>
+  </div>
+
+   <script>
+  document.getElementById('downloadPdf').addEventListener('click', function () {
+    const element = document.querySelector('.cor'); // Select the content to export
+
+    const options = {
+      margin: 0, // Remove margin to ensure the content fits within the page size
+      filename: 'registration_form.pdf',
+      image: { type: 'jpeg', quality: 1 },  // Highest quality JPEG
+      html2canvas: { 
+        scale: 2, // Enhance resolution by increasing scale
+        logging: true,  // Enable logging for debugging
+        useCORS: true,  // Ensure external images are loaded
+        letterRendering: true,  // Improve font rendering
+      },
+      jsPDF: { 
+        unit: 'mm', 
+        format: [210, 297], // Set custom page size to match the .cor dimensions
+        orientation: 'portrait' 
+      }
+    };
+
+    // Convert the selected content to PDF
+    html2pdf().from(element).set(options).save();
+  });
+</script>
+
+  
 </x-app-layout>
